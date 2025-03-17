@@ -1,0 +1,28 @@
+:: StoryData
+{
+    "ifid": "DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9",
+    "format": "SugarCube",
+    "format-version": "2.37.3",
+    "start": "Start"
+}
+
+:: StoryTitle
+ASCend
+
+:: Start
+This is the first passage in a Twine game!
+Test line. Hello.
+@@.box;
+!! Gsap animated text
+using .box class
+@@
+
+!! <<link [[This is a link|Next Passage]]>><</link>>
+
+
+:: Next Passage
+@@.box; text-align: center; align-content: center;
+The player just clicked a link to get here!
+@@
+
+@@border:solid 1px blue; padding: 1rem; <<link [[Go to Test|Test]]>><</link>>@@

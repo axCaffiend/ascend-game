@@ -1,0 +1,7 @@
+:: Test
+This is a test page 
+Hello :)
+@@.box;
+Another box using .box class.
+@@
+<<link [[Return to start|Start]]>><</link>>

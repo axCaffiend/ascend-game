@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+html {
+    font-family: "Space Mono", "Consolas", monospace;
+}
+
+
+.passage .box {
+    color: green;
+    border: solid 1px green;
+    width: 200px;
+    height: 200px;
+}
+
+.passage {
+    margin: 0 auto;
+    justify-items: center;
+}
