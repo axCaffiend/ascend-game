@@ -9,20 +9,24 @@
 :: StoryTitle
 ASCend
 
+:: StoryMenu
+<<link [[Start|Start]]>><</link>>
+
 :: Start
-This is the first passage in a Twine game!
-Test line. Hello.
-@@.box;
-!! Gsap animated text
-using .box class
+! <<link [[Dream...|Dream Sequence]]>><</link>>
+<<link [[Test page|Test]]>><</link>>
+
+
+:: Dream Sequence
+@@.dream-img;@@
+<<link [[Ignore it|Start]]>><</link>>
+<<link [[Wake up|Intro]]>><</link>>
+
+
+:: Intro
+@@.fade-in;
+... Another night...
+...the same dream...
+
+...is it a sign?
 @@
-
-!! <<link [[This is a link|Next Passage]]>><</link>>
-
-
-:: Next Passage
-@@.box; text-align: center; align-content: center;
-The player just clicked a link to get here!
-@@
-
-@@border:solid 1px blue; padding: 1rem; <<link [[Go to Test|Test]]>><</link>>@@

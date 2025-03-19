@@ -4,4 +4,8 @@ Hello :)
 @@.box;
 Another box using .box class.
 @@
+
+@@.reveal;
+Click to <<linkappend "reveal" t8n>> more text here...<</linkappend>>!!
+@@
 <<link [[Return to start|Start]]>><</link>>

@@ -104,12 +104,21 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="1" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="2" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 html {
-    font-family: "Space Mono", "Consolas", monospace;
+    font-family: "Fira Code", "Consolas", monospace;
 }
 
+body {
+    background-color: #000;
+}
+
+.passage a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+}
 
 .passage .box {
     color: green;
@@ -121,9 +130,47 @@ html {
 .passage {
     margin: 0 auto;
     justify-items: center;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript">// Import GSAP in Promise object so game scripts don't start before GSAP is loaded.
+    text-align: center;
+    align-content: center;
+    min-height: 256px;
+    /* border: solid 1px red; */
+}
+
+#passage-dream-sequence .dream-img {
+    display: block;
+    width: 512px;
+    aspect-ratio: 1/1;
+    background-image: url("/img/dream-sequence/frame_001.png");
+    background-size: contain;
+}
+
+a[data-passage="Dream Sequence"] {
+    --transition-dur: 0.5s;
+    font-size: 2rem;
+    text-align: left;
+    font-weight: 300;
+    display: inl;
+    color: #fff;
+    transition: all var(--transition-dur) linear;
+}
+
+a[data-passage="Dream Sequence"]:hover {
+    font-size: 3rem;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all var(--transition-dur) linear;
+}
+
+.reveal {
+    border: green;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "MAIN.js" */
+// NOTE: Tweego compiles all files in src directory into a single HTML file in project root, so JS module imports/exports don't work. HOWEVER functions can just be referenced as they would if they were all in the same JS file. (e.g. boxHover() below)
+    // Solution: 
+
+// Import GSAP in Promise object so game scripts don't start before GSAP is loaded.
 importScripts([
     "https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js",
+    "https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/TextPlugin.min.js"
 
 ]).then(function() {
     console.log("*** GSAP Loaded ***");
@@ -136,48 +183,114 @@ importScripts([
         console.groupEnd();
     });
 
-    // Use on :passagedisplay event to wait until .box is loaded in DOM to execute GSAP scripts.
+    // Register Plugins
+    gsap.registerPlugin(TextPlugin)
+
+    // Trigger animations after :passagedisplay event to wait until elements have loaded in DOM.
     $(document).on(':passagedisplay', function(e) {
 
-        gsap.fromTo(".box", 
-            { 
-            y: 20,
-            duration: 1.5,
-            repeat: -1,
-            yoyo: true
-        },
-        {
-            y: 10,
-            duration: 1.5,
-            repeat: -1,
-            yoyo: true
-        }
+        // *** PUT ALL ANIMATION FUNCTIONS HERE ***
 
-    );
+        // Function in boxHover.js
+        boxHover();
+        dreamSequence();
+        textBreatheFX();
+
     })
 })
 .catch(function(err) {
     console.log("*** GSAP loading failed ***")
 });
 
-// Hides default UIBar and reclaims space with stow.
-UIBar.hide().stow();
+// Hides default UIBar and reclaims space with stow
+// ** ADD .hide() WHEN DONE
+UIBar.stow();
 
-</script><tw-passagedata pid="1" name="Start" tags="" position="100,100" size="100,100">This is the first passage in a Twine game!
-Test line. Hello.
-@@.box;
-!! Gsap animated text
-using .box class
-@@
+/* twine-user-script #2: "boxHover.js" */
+function boxHover () {
 
-!! &lt;&lt;link [[This is a link|Next Passage]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Next Passage" tags="" position="225,100" size="100,100">@@.box; text-align: center; align-content: center;
-The player just clicked a link to get here!
-@@
+    
+    gsap.fromTo(".box", 
+        { 
+        y: 20,
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true
+    },
+    {
+        y: 10,
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true
+    }
+    );
+}
+/* twine-user-script #3: "dreamSquence.js" */
+function dreamSequence () {
+    console.log("dream.js running");
+    if(passage()==="Dream Sequence") {
+        console.log("dream sequence passage");
 
-@@border:solid 1px blue; padding: 1rem; &lt;&lt;link [[Go to Test|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;@@</tw-passagedata><tw-passagedata pid="3" name="Test" tags="" position="350,100" size="100,100">This is a test page 
+        const tl = gsap.timeline({
+            delay: 1,
+            defaults: {
+                duration: 0.5,
+                ease: 'steps(1)'
+            },
+            repeat: -1
+        })
+        
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_001.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_002.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_003.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_004.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_005.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_006.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_007.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_008.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_009.png)'});
+        tl.to(".dream-img", {backgroundImage: 'url(img/dream-sequence/frame_010.png)', duration: 2});
+    }
+
+
+}
+/* twine-user-script #4: "global-effects.js" */
+// For GSAP and other JS effects used throughout the story
+
+function textBreatheFX () {
+    console.log("breatheFX running");
+
+    // LIST OF SELECTORS TO APPLY TO
+    // Passage links
+    const dreamSeqLink = 'a[data-passage="Dream Sequence"]';
+
+    gsap.fromTo(dreamSeqLink, 
+        {
+            letterSpacing: 0,
+        },
+        {
+        letterSpacing: '0.75rem',
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        easing: "none",
+    })
+} </script><tw-passagedata pid="1" name="StoryMenu" tags="" position="100,100" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Start" tags="" position="225,100" size="100,100">! &lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[Test page|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="Dream Sequence" tags="" position="350,100" size="100,100">@@.dream-img;@@
+&lt;&lt;link [[Ignore it|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="4" name="Intro" tags="" position="475,100" size="100,100">@@.fade-in;
+... Another night...
+...the same dream...
+
+...is it a sign?
+@@</tw-passagedata><tw-passagedata pid="5" name="Test" tags="" position="600,100" size="100,100">This is a test page 
 Hello :)
 @@.box;
 Another box using .box class.
+@@
+
+@@.reveal;
+Click to &lt;&lt;linkappend &quot;reveal&quot; t8n&gt;&gt; more text here...&lt;&lt;/linkappend&gt;&gt;!!
 @@
 &lt;&lt;link [[Return to start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
