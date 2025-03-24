@@ -26,7 +26,48 @@ ASCend
 :: Intro
 @@.fade-in;
 ... Another night...
+
 ...the same dream...
 
-...is it a sign?
+You've been having the same dream for the past year, at least that's when you knew it wasn't going away.
+
+<<link [[Check your phone | Phone]]>><</link>>
+
+They're still missing.
+
+<<link [[Go to their house|House]]>><</link>>
 @@
+
+
+:: House
+Time to check the house.
+You've been keeping it just how you found it - how they left it.
+It's like they're still on holiday.
+
+<<link [[Water the Plants|Water Plants]]>><</link>>
+<<link [[Check the Fridge|Fridge]]>><</link>>
+<<link [[Sort the post|Check Post]]>><</link>>
+
+
+:: Water Plants
+You go to the kitchen and fill up small metal can.
+A monstera in the sitting room.
+Two spider plants in the bathroom.
+The mint plant on the kitchen window sill is starting to wilt, so you give it some extra water and pluck the brown leaves.
+
+<<link [[Done|House]]>><</link>>
+
+
+:: Fridge
+You keep it stocked just in case.
+
+The foil covered mac and cheese sits untouched, but there's nothing worse than getting back and finding nothing to eat.
+
+So you replace it with a bowl of curry and throw away the sour milk.
+
+<<link [[Done|House]]>><</link>>
+
+:: Check Post
+Nothing today.
+Not that you were expecting anything, since you moved all the bills over to your name.
+<<link [[Done|House]]>><</link>>
