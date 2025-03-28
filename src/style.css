@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+:root {
+    --colour-link--default: lightgreen;
+}
+
 html {
     font-family: "Fira Code", "Consolas", monospace;
     font-weight: 300;
@@ -11,7 +15,7 @@ body {
 
 .passage a {
     text-decoration: none;
-    color: lightgreen;
+    color: var(--colour-link--default);
     font-weight: 700;
 }
 
@@ -30,6 +34,28 @@ body {
     min-height: 256px;
     /* border: solid 1px red; */
 }
+
+.reveal {
+    border: green;
+}
+
+.fade-in {
+    /* border: solid 1px red; */
+    font-size: clamp(0.9rem, 1vw + 0.9rem, 1.1rem);
+}
+
+.ascii-art {
+    font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
+    white-space: pre;
+    /* line-height: clamp(1rem, 1vw + 1rem, 1.5rem); */
+}
+
+
+/* =================================== */
+/* PASSAGE SPECIFIC STYLING            */
+/* =================================== */
+
+/* --- DREAM SEQUENCE ---------- */
 
 #passage-dream-sequence .dream-img {
     display: block;
@@ -56,17 +82,8 @@ a[data-passage="Dream Sequence"]:hover {
     transition: all var(--transition-dur) linear;
 }
 
-.reveal {
-    border: green;
-}
+/* --- HOUSE ---------- */
 
-.fade-in {
-    /* border: solid 1px red; */
-    font-size: clamp(0.9rem, 1vw + 0.9rem, 1.1rem);
-}
-
-.ascii-art {
-    font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
-    white-space: pre;
-    /* line-height: clamp(1rem, 1vw + 1rem, 1.5rem); */
+#passage-house .chores a.done {
+    text-decoration: line-through;
 }

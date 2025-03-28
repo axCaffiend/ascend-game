@@ -16,6 +16,14 @@ ASCend
 ! <<link [[Dream...|Dream Sequence]]>><</link>>
 <<link [[Test page|Test]]>><</link>>
 
+<<set $chores = {
+    water_plants: false,
+    check_fridge: false,
+    sort_post: false
+}
+>>
+<span><<- $chores.water_plants>></span>
+
 
 :: Dream Sequence
 @@.dream-img;@@
@@ -44,9 +52,25 @@ Time to check the house.
 You've been keeping it just how you found it - how they left it.
 It's like they're still on holiday.
 
-<<link [[Water the Plants|Water Plants]]>><</link>>
-<<link [[Check the Fridge|Fridge]]>><</link>>
-<<link [[Sort the post|Check Post]]>><</link>>
+@@.chores;
+/* Debugging - print $chores obj keys with values */
+<<for _k, _v range $chores>>
+    <span><<-_k>> : <<- _v>></span>
+<</for>>
+
+<<link [[Water the Plants|Water Plants]]>><</link>> \
+    <span><<- " visited: " + visited('Water Plants')>></span> \
+<<if $chores.water_plants == true>>\
+    <span><<- "You have watered the plants">></span> \
+<</if>>
+<<link [[Check the Fridge|Fridge]]>><</link>> <span><<- " visited: " + visited('Fridge')>></span>
+<<link [[Sort the post|Sort Post]]>><</link>> <span><<- " visited: " + visited('Sort Post')>></span>
+
+<<if $chores.water_plants && $chores.check_fridge && $chores.sort_post>>
+    <span><<- "Chores done - chill for a bit?">></span>
+    <<link [[Yes|Study]]>><</link>>
+<</if>>
+@@
 
 
 :: Water Plants
@@ -54,6 +78,7 @@ You go to the kitchen and fill up small metal can.
 A monstera in the sitting room.
 Two spider plants in the bathroom.
 The mint plant on the kitchen window sill is starting to wilt, so you give it some extra water and pluck the brown leaves.
+<<set $chores.water_plants = true>>
 
 <<link [[Done|House]]>><</link>>
 
@@ -64,10 +89,30 @@ You keep it stocked just in case.
 The foil covered mac and cheese sits untouched, but there's nothing worse than getting back and finding nothing to eat.
 
 So you replace it with a bowl of curry and throw away the sour milk.
+<<set $chores.check_fridge = true>>
 
 <<link [[Done|House]]>><</link>>
 
-:: Check Post
+
+:: Sort Post
 Nothing today.
 Not that you were expecting anything, since you moved all the bills over to your name.
+<<set $chores.sort_post = true>>
+
 <<link [[Done|House]]>><</link>>
+
+
+:: Study
+You climb upstairs and open the door to the study.
+
+On the opposite wall beside the window, your friend's PC sits on the desk.
+
+Sometimes you <<link "log in">><<script>>window.open('https://ascii-game-test.netlify.app/')<</script>><</link>> to play through the game they were working on. Maybe they'll come back to finish it one day? 
+
+There's <<link [[other things you need to do today though|Another Day]]>><</link>>
+
+
+:: Another Day
+You leave the house and carry on with your day - bills need paying after all.
+
+<<link [[Sleep|Dream Sequence]]>><</link>> after a long day's work.

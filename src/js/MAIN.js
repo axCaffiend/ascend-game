@@ -36,6 +36,9 @@ importScripts([
     console.log("*** GSAP loading failed ***")
 });
 
+// === Config Options ===
+Config.addVisitedLinkClass = true;
+
 // Hides default UIBar and reclaims space with stow
 // ** ADD .hide() WHEN DONE
 UIBar.stow();
