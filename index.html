@@ -106,6 +106,10 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 	</div>
 	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="2" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+:root {
+    --colour-link--default: lightgreen;
+}
+
 html {
     font-family: "Fira Code", "Consolas", monospace;
     font-weight: 300;
@@ -117,7 +121,7 @@ body {
 
 .passage a {
     text-decoration: none;
-    color: lightgreen;
+    color: var(--colour-link--default);
     font-weight: 700;
 }
 
@@ -136,6 +140,28 @@ body {
     min-height: 256px;
     /* border: solid 1px red; */
 }
+
+.reveal {
+    border: green;
+}
+
+.fade-in {
+    /* border: solid 1px red; */
+    font-size: clamp(0.9rem, 1vw + 0.9rem, 1.1rem);
+}
+
+.ascii-art {
+    font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
+    white-space: pre;
+    /* line-height: clamp(1rem, 1vw + 1rem, 1.5rem); */
+}
+
+
+/* =================================== */
+/* PASSAGE SPECIFIC STYLING            */
+/* =================================== */
+
+/* --- DREAM SEQUENCE ---------- */
 
 #passage-dream-sequence .dream-img {
     display: block;
@@ -162,19 +188,10 @@ a[data-passage="Dream Sequence"]:hover {
     transition: all var(--transition-dur) linear;
 }
 
-.reveal {
-    border: green;
-}
+/* --- HOUSE ---------- */
 
-.fade-in {
-    /* border: solid 1px red; */
-    font-size: clamp(0.9rem, 1vw + 0.9rem, 1.1rem);
-}
-
-.ascii-art {
-    font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
-    white-space: pre;
-    /* line-height: clamp(1rem, 1vw + 1rem, 1.5rem); */
+#passage-house .chores a.done {
+    text-decoration: line-through;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "MAIN.js" */
 // NOTE: Tweego compiles all files in src directory into a single HTML file in project root, so JS module imports/exports don't work. HOWEVER functions can just be referenced as they would if they were all in the same JS file. (e.g. boxHover() below)
     // Solution: 
@@ -213,6 +230,9 @@ importScripts([
 .catch(function(err) {
     console.log("*** GSAP loading failed ***")
 });
+
+// === Config Options ===
+Config.addVisitedLinkClass = true;
 
 // Hides default UIBar and reclaims space with stow
 // ** ADD .hide() WHEN DONE
@@ -288,7 +308,15 @@ function textBreatheFX () {
         easing: "none",
     })
 } </script><tw-passagedata pid="1" name="StoryMenu" tags="" position="100,100" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Start" tags="" position="225,100" size="100,100">! &lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Test page|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="Dream Sequence" tags="" position="350,100" size="100,100">@@.dream-img;@@
+&lt;&lt;link [[Test page|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+
+&lt;&lt;set $chores = {
+    water_plants: false,
+    check_fridge: false,
+    sort_post: false
+}
+&gt;&gt;
+&lt;span&gt;&lt;&lt;- $chores.water_plants&gt;&gt;&lt;/span&gt;</tw-passagedata><tw-passagedata pid="3" name="Dream Sequence" tags="" position="350,100" size="100,100">@@.dream-img;@@
 &lt;&lt;link [[Ignore it|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="4" name="Intro" tags="" position="475,100" size="100,100">@@.fade-in;
 ... Another night...
@@ -306,22 +334,50 @@ They&#39;re still missing.
 You&#39;ve been keeping it just how you found it - how they left it.
 It&#39;s like they&#39;re still on holiday.
 
-&lt;&lt;link [[Water the Plants|Water Plants]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Check the Fridge|Fridge]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Sort the post|Check Post]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="Water Plants" tags="" position="725,100" size="100,100">You go to the kitchen and fill up small metal can.
+@@.chores;
+/* Debugging - print $chores obj keys with values */
+&lt;&lt;for _k, _v range $chores&gt;&gt;
+    &lt;span&gt;&lt;&lt;-_k&gt;&gt; : &lt;&lt;- _v&gt;&gt;&lt;/span&gt;
+&lt;&lt;/for&gt;&gt;
+
+&lt;&lt;link [[Water the Plants|Water Plants]]&gt;&gt;&lt;&lt;/link&gt;&gt; \
+    &lt;span&gt;&lt;&lt;- &quot; visited: &quot; + visited(&#39;Water Plants&#39;)&gt;&gt;&lt;/span&gt; \
+&lt;&lt;if $chores.water_plants == true&gt;&gt;\
+    &lt;span&gt;&lt;&lt;- &quot;You have watered the plants&quot;&gt;&gt;&lt;/span&gt; \
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;link [[Check the Fridge|Fridge]]&gt;&gt;&lt;&lt;/link&gt;&gt; &lt;span&gt;&lt;&lt;- &quot; visited: &quot; + visited(&#39;Fridge&#39;)&gt;&gt;&lt;/span&gt;
+&lt;&lt;link [[Sort the post|Sort Post]]&gt;&gt;&lt;&lt;/link&gt;&gt; &lt;span&gt;&lt;&lt;- &quot; visited: &quot; + visited(&#39;Sort Post&#39;)&gt;&gt;&lt;/span&gt;
+
+&lt;&lt;if $chores.water_plants &amp;&amp; $chores.check_fridge &amp;&amp; $chores.sort_post&gt;&gt;
+    &lt;span&gt;&lt;&lt;- &quot;Chores done - chill for a bit?&quot;&gt;&gt;&lt;/span&gt;
+    &lt;&lt;link [[Yes|Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+@@</tw-passagedata><tw-passagedata pid="6" name="Water Plants" tags="" position="725,100" size="100,100">You go to the kitchen and fill up small metal can.
 A monstera in the sitting room.
 Two spider plants in the bathroom.
 The mint plant on the kitchen window sill is starting to wilt, so you give it some extra water and pluck the brown leaves.
+&lt;&lt;set $chores.water_plants = true&gt;&gt;
 
 &lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="Fridge" tags="" position="850,100" size="100,100">You keep it stocked just in case.
 
 The foil covered mac and cheese sits untouched, but there&#39;s nothing worse than getting back and finding nothing to eat.
 
 So you replace it with a bowl of curry and throw away the sour milk.
+&lt;&lt;set $chores.check_fridge = true&gt;&gt;
 
-&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="Check Post" tags="" position="975,100" size="100,100">Nothing today.
+&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="Sort Post" tags="" position="975,100" size="100,100">Nothing today.
 Not that you were expecting anything, since you moved all the bills over to your name.
-&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="Phone" tags="" position="1100,100" size="100,100">@@.ascii-art;
+&lt;&lt;set $chores.sort_post = true&gt;&gt;
+
+&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="Study" tags="" position="1100,100" size="100,100">You climb upstairs and open the door to the study.
+
+On the opposite wall beside the window, your friend&#39;s PC sits on the desk.
+
+Sometimes you &lt;&lt;link &quot;log in&quot;&gt;&gt;&lt;&lt;script&gt;&gt;window.open(&#39;https://ascii-game-test.netlify.app/&#39;)&lt;&lt;/script&gt;&gt;&lt;&lt;/link&gt;&gt; to play through the game they were working on. Maybe they&#39;ll come back to finish it one day? 
+
+There&#39;s &lt;&lt;link [[other things you need to do today though|Another Day]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="Another Day" tags="" position="1225,100" size="100,100">You leave the house and carry on with your day - bills need paying after all.
+
+&lt;&lt;link [[Sleep|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt; after a long day&#39;s work.</tw-passagedata><tw-passagedata pid="11" name="Phone" tags="" position="100,225" size="100,100">@@.ascii-art;
 &quot;&quot;&quot;
 .--------------.
 |--------------|
@@ -337,7 +393,7 @@ Not that you were expecting anything, since you moved all the bills over to your
 &#39;--------------&#39;
 &quot;&quot;&quot;
 @@
-&lt;&lt;link [[back|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="Test" tags="" position="1225,100" size="100,100">This is a test page 
+&lt;&lt;link [[back|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="Test" tags="" position="225,225" size="100,100">This is a test page 
 Hello :)
 @@.box;
 Another box using .box class.
