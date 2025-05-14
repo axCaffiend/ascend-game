@@ -21,6 +21,10 @@ body {
     background-color: #000;
 }
 
+/* =================================== */
+/* STORY WIDE STYLING                  */
+/* =================================== */
+
 .passage a {
     text-decoration: none;
     color: var(--colour-link--default);

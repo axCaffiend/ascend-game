@@ -13,17 +13,18 @@ ASCend
 <<link [[Start|Start]]>><</link>>
 <<link [[Game Chapter 1 - Start]]>><</link>>
 
-:: Start
-! <<link [[Dream...|Dream Sequence]]>><</link>>
-<<link [[Test page|Test]]>><</link>>
-
+:: StoryInit
 <<set $chores = {
     water_plants: false,
     check_fridge: false,
     sort_post: false
 }
 >>
-<span><<- $chores.water_plants>></span>
+
+:: Start
+! <<link [[Dream...|Dream Sequence]]>><</link>>
+/* <<link [[Test page|Test]]>><</link>> */
+/* <span><<- $chores.water_plants>></span> */
 
 
 :: Dream Sequence
@@ -52,13 +53,12 @@ They're still missing.
 Time to check the house.
 You've been keeping it just how you found it - how they left it.
 It's like they're still on holiday.
-
 @@.chores;
-/* Debugging - print $chores obj keys with values */
-<<for _k, _v range $chores>>
+<<nobr>>/* Debugging - print $chores obj keys with values */
+/* <<for _k, _v range $chores>>
     <span><<-_k>> : <<- _v>></span>
-<</for>>
-
+<</for>> */ 
+<</nobr>>
 <<link [[Water the Plants|Water Plants]]>><</link>> \
     <span><<- " visited: " + visited('Water Plants')>></span> \
 <<if $chores.water_plants == true>>\

@@ -28,6 +28,7 @@ importScripts([
         // Function in boxHover.js
         boxHover();
         dreamSequence();
+        // In global-effects.js
         textBreatheFX();
         
         // LOAD GAME SCREEN JAVASCRIPT ON PASSAGES TAGGED WITH 'game-screen'
