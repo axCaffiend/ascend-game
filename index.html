@@ -104,10 +104,18 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="2" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="4" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
+STORY STYLESHEET
+- Tweego automatically compiles supported file types including css and JavaScript files into the head element of the html file
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
+    --game-screen-green: rgb(0, 174, 0);
     --colour-link--default: lightgreen;
+    --border-green-01rem: solid 0.1rem var(--game-screen-green);
+    --main-font: 'Space Mono', Courier, monospace;
 }
 
 html {
@@ -118,6 +126,10 @@ html {
 body {
     background-color: #000;
 }
+
+/* =================================== */
+/* STORY WIDE STYLING                  */
+/* =================================== */
 
 .passage a {
     text-decoration: none;
@@ -192,7 +204,157 @@ a[data-passage="Dream Sequence"]:hover {
 
 #passage-house .chores a.done {
     text-decoration: line-through;
-}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "MAIN.js" */
+}
+
+/* ==================== */
+/*  GAME SCREEN         */
+/* ==================== */
+/* --- Notes --- */
+/*  
+    - Content from Game Screen passage is inserted with <<include>> into all Game Chapter passages - so styling is applied to all passages which includes 'game-screen' in tags 
+    - '*=' selector searches for 'game-screen' in passage data-tags attribute
+    - Passages inserted into another don't preserve their tags?? Didn't want to override by setting id on <<include>> container, so doesn't conflict with Sugarcube system where slugified passage names are passage IDs.
+ */
+/* ---- OUTPUT DISPLAY ---- */
+
+.passage[data-tags*="game-screen"] .display {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 1rem auto;
+    content: "";
+    width: 250px;
+    color: var(--game-screen-green);
+    text-align: center;
+    font-size: 1.5rem;
+    border: var(--border-green-01rem);
+    background: #000;
+}
+
+.passage[data-tags*="game-screen"] .output-title {
+    margin: 0.1rem;
+    padding: 0;
+}
+
+/* Text output goes here */
+.passage[data-tags*="game-screen"] .output {
+    /* background-color: blue; */
+    border-top: var(--border-green-01rem);
+    width: 100%;
+    aspect-ratio: 1/1;
+    flex-grow: 1;
+    align-content: center;
+}
+
+.passage[data-tags*="game-screen"] .display-text-2 {
+    /* border: solid 1px purple; */
+    margin: auto;
+    width: 3ch;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    line-height: 95%;
+    font-size: 2rem;
+    animation: 
+        float 1s ease-in-out infinite alternate; 
+        /* spin 15s linear infinite; */
+}
+
+.passage[data-tags*="game-screen"] .display-text-2>.box {
+    border: none;
+    width: 1em;
+    height: 1em;
+}
+
+@keyframes float {
+    0% {
+        gap: 0.2rem;
+        /* font-size: 2rem; */
+    }
+    100% {
+        gap: 0rem;
+        /* font-size: 1.25rem; */
+        color: rgb(45, 213, 45);
+    }
+}
+
+/* ---- USER CONTROLS ---- */
+
+.passage[data-tags*="game-screen"] .user-control-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* User input container */
+.passage[data-tags*="game-screen"] .control {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: fit-content;
+    margin: 1rem;
+    justify-content: center;
+    padding: 0.25rem;
+    border: double 0.25rem var(--game-screen-green);
+    background: #000;
+}
+
+/* User input text fields */
+.passage[data-tags*="game-screen"] .user-input {
+    /* background-color: grey; */
+    background-color: transparent;
+    color: green;
+    border: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    min-width: 0;
+    width: 1em;
+    height: 1.25em;
+    text-align: center;
+    align-content: center;
+    font-family: var(--main-font);
+    font-size: 2rem;
+}
+
+.passage[data-tags*="game-screen"] .user-input:focus {
+    outline: none;
+    background: var(--game-screen-green);
+    color: #000;
+}
+
+/* ---- BUTTONS ---- */
+
+.passage[data-tags*="game-screen"] .buttons {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.passage[data-tags*="game-screen"] .btn {
+    display: block;
+    color: var(--game-screen-green);
+    background-color: #000;
+    border: var(--border-green-01rem);
+    font-family: inherit;
+    font-size: 1.1rem;
+}
+
+.passage[data-tags*="game-screen"] .btn:focus {
+    outline: none;
+    background: var(--game-screen-green);
+    color: #000;
+}
+
+
+/* Test text area */
+.passage[data-tags*="game-screen"] .test-text-area {
+    min-width: 3rem;
+    max-width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+    font-family: var(--main-font);
+    line-height: 1rem;
+}
+</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "MAIN.js" */
 // NOTE: Tweego compiles all files in src directory into a single HTML file in project root, so JS module imports/exports don't work. HOWEVER functions can just be referenced as they would if they were all in the same JS file. (e.g. boxHover() below)
     // Solution: 
 
@@ -223,7 +385,15 @@ importScripts([
         // Function in boxHover.js
         boxHover();
         dreamSequence();
+        // In global-effects.js
         textBreatheFX();
+        
+        // LOAD GAME SCREEN JAVASCRIPT ON PASSAGES TAGGED WITH 'game-screen'
+        // Uses passage tags since Game Screen content is included in 
+        if (e.detail.passage.tags.includes("game-screen")) {
+            console.log("!! Current Passage = Game Screen");
+            gameScreenLoad();
+        }
 
     })
 })
@@ -286,7 +456,147 @@ function dreamSequence () {
 
 
 }
-/* twine-user-script #4: "global-effects.js" */
+/* twine-user-script #4: "gameScreen.js" */
+
+function gameScreenLoad () {
+    console.log("*** gameScreenLoad running ***")
+    const userControl = document.querySelector(".passage[data-tags*='game-screen'] .control");
+    const output = document.querySelector(".passage[data-tags*='game-screen'] .display .output");
+    const messageDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display .message");
+    const enterBtn = document.querySelector(".passage[data-tags*='game-screen'] .enter-btn");
+    // Add a test div for outputting display
+    const displayText2 = output.appendChild(document.createElement("div"));
+    displayText2.classList.add("display-text-2");
+    const userInputDisplay = document.querySelector(".passage[data-tags*='game-screen'] .user-input-display");
+    let userInput = [];
+    let dialogueData;
+
+    userInputDisplay.textContent = `userInput Array: ${userInput}`
+
+    // Upddates userInput array on userControl inputs change
+    console.log("Added userControl event listener");
+    userControl.addEventListener("input", (e) => {
+
+            // Reset
+            console.log(e.target.name + e.data);
+            userInput = [];
+
+            // Add values from text inputs to userInput array
+            // If input is empty, convert to a whitespace
+            for (const child of userControl.children) {
+                if (child.value)
+                    userInput.push(child.value);
+                else {
+                    userInput.push(" ");
+                }
+            }
+            console.log(userInput);
+            userInputDisplay.textContent = `userInput Array: ${userInput}`;
+            
+            // First checks whether character divs have been added to displayText2 container by checking for child nodes
+            if (displayText2.hasChildNodes()) {
+
+                console.log("has child nodes")
+                console.log(displayText2.childNodes);
+
+                //displayText2 already has character tiles added (i.e. user input has occurred since page load)
+                const displayText2Arr = [...displayText2.childNodes];
+                console.log("DisplayText2 converted to an array");
+                console.log(displayText2Arr);
+
+                const currentDisplay = displayText2Arr.map(function (i) {
+                    console.log("map function - adding text content")
+                    console.log(i.firstChild.textContent);
+                    return i.firstChild.textContent;
+                })
+
+                console.log("Current display values array");
+                console.log(currentDisplay);
+
+                // Check that userInput array is same length as currentDisplay array
+                if (userInput.length === currentDisplay.length) {
+                    console.log("userInput and currentDisplay length is same.")
+
+                    // Iterate with length of userInput array
+                    for (let i = 0; i < userInput.length; i++) {
+
+                        // Compare values at same index in both arrays, if it's different then update the character
+                        if (userInput[i] !== currentDisplay[i]) {
+                            console.log("*** Change detected ***");
+                            console.log(`User input ${userInput[i]} \n Current Display ${currentDisplay[i]}`)
+
+                            displayText2.children[i].querySelector(".char").textContent = userInput[i];
+
+                        } else {
+                            // If not - log no change message
+                            console.log("No change")
+                            console.log(`User input ${userInput[i]} \n Current Display ${currentDisplay[i]}`)
+                        }
+                    }
+
+                } else {
+                    console.log("userInput and currentDisplay not same length...")
+                }
+
+            /* 
+            No child nodes on displayText2 - creates character tiles 
+            Structure: (<div class="box">
+            <span class="char">INPUT_CHARACTER</span>
+            </div>)
+            INPUT_CHARACTER is added for each userInput text input.
+            */
+            } else {
+                console.log("No child nodes - creating new");
+                for (const i in userInput) {
+                    // Create elements and add classes
+                    const box = document.createElement("div");
+                    box.classList.add("box");
+                    const char = document.createElement("span");
+                    char.classList.add("char");
+                    box.appendChild(char);
+                    displayText2.appendChild(box);
+
+                    // Update from userInput
+                    console.log(userInput[i]);
+                    char.textContent = userInput[i];
+                }
+            }
+        })
+
+    // COPIED CODE - adjusted from:
+    // https://stackoverflow.com/questions/15595652/focus-next-input-once-reaching-maxlength-value
+
+    // Automatically focus next or previous input in user control on input
+    userControl.addEventListener("keyup", (e) => {
+        let target = e.target;
+        let maxLength = parseInt(target.attributes["maxlength"].value, 10);
+        let myLength = target.value.length;
+        if (myLength >= maxLength) {
+            let next = target;
+            while (next = next.nextElementSibling) {
+                if (next == null)
+                    break;
+                if (next.tagName.toLowerCase() === "input") {
+                    next.focus();
+                    break;
+                }
+            }
+        }
+        // Move to previous field if empty (user pressed backspace)
+        else if (myLength === 0) {
+            let previous = target;
+            while (previous = previous.previousElementSibling) {
+                if (previous == null)
+                    break;
+                if (previous.tagName.toLowerCase() === "input") {
+                    previous.focus();
+                    break;
+                }
+            }
+        }
+    })
+}
+/* twine-user-script #5: "global-effects.js" */
 // For GSAP and other JS effects used throughout the story
 
 function textBreatheFX () {
@@ -307,18 +617,47 @@ function textBreatheFX () {
         yoyo: true,
         easing: "none",
     })
-} </script><tw-passagedata pid="1" name="StoryMenu" tags="" position="100,100" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="Start" tags="" position="225,100" size="100,100">! &lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Test page|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-
-&lt;&lt;set $chores = {
+} </script><tw-passagedata pid="1" name="Game Screen" tags="game-screen" position="100,100" size="100,100">&lt;html&gt;
+    &lt;div class=&quot;display&quot;&gt;
+        &lt;p class=&quot;output-title&quot;&gt;Output&lt;/p&gt;
+        &lt;div class=&quot;output&quot;&gt;&lt;/div&gt;
+        &lt;p class=&quot;message&quot;&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/html&gt;
+&lt;html&gt;
+    &lt;div class=&quot;user-control-container&quot;&gt;
+        &lt;!-- USER CONTROLS --&gt;
+            &lt;div class=&quot;control&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-1&quot; class=&quot;user-input&quot; name=&quot;ui1&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-2&quot; class=&quot;user-input&quot; name=&quot;ui2&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-3&quot; class=&quot;user-input&quot; name=&quot;ui3&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-4&quot; class=&quot;user-input&quot; name=&quot;ui4&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-5&quot; class=&quot;user-input&quot; name=&quot;ui5&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-6&quot; class=&quot;user-input&quot; name=&quot;ui6&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-7&quot; class=&quot;user-input&quot; name=&quot;ui7&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-8&quot; class=&quot;user-input&quot; name=&quot;ui8&quot;&gt;
+            &lt;input type=&quot;text&quot; maxlength=&quot;1&quot; id=&quot;ui-9&quot; class=&quot;user-input&quot; name=&quot;ui9&quot;&gt;
+        &lt;/div&gt;
+        &lt;!-- BUTTONS --&gt;
+        &lt;div class=&quot;buttons&quot;&gt;
+            &lt;button type=&quot;button&quot; class=&quot;btn enter-btn&quot;&gt;
+            Enter
+            &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;!-- User controls  container end --&gt;
+    &lt;/div&gt;
+&lt;/html&gt;
+/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="2" name="StoryMenu" tags="" position="225,100" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[Game Chapter 1 - Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="StoryInit" tags="" position="350,100" size="100,100">&lt;&lt;set $chores = {
     water_plants: false,
     check_fridge: false,
     sort_post: false
 }
-&gt;&gt;
-&lt;span&gt;&lt;&lt;- $chores.water_plants&gt;&gt;&lt;/span&gt;</tw-passagedata><tw-passagedata pid="3" name="Dream Sequence" tags="" position="350,100" size="100,100">@@.dream-img;@@
+&gt;&gt;</tw-passagedata><tw-passagedata pid="4" name="Start" tags="" position="475,100" size="100,100">! &lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+/* &lt;&lt;link [[Test page|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt; */
+/* &lt;span&gt;&lt;&lt;- $chores.water_plants&gt;&gt;&lt;/span&gt; */</tw-passagedata><tw-passagedata pid="5" name="Dream Sequence" tags="" position="600,100" size="100,100">@@.dream-img;@@
 &lt;&lt;link [[Ignore it|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="4" name="Intro" tags="" position="475,100" size="100,100">@@.fade-in;
+&lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="Intro" tags="" position="725,100" size="100,100">@@.fade-in;
 ... Another night...
 
 ...the same dream...
@@ -330,16 +669,15 @@ You&#39;ve been having the same dream for the past year, at least that&#39;s whe
 They&#39;re still missing.
 
 &lt;&lt;link [[Go to their house|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-@@</tw-passagedata><tw-passagedata pid="5" name="House" tags="" position="600,100" size="100,100">Time to check the house.
+@@</tw-passagedata><tw-passagedata pid="7" name="House" tags="" position="850,100" size="100,100">Time to check the house.
 You&#39;ve been keeping it just how you found it - how they left it.
 It&#39;s like they&#39;re still on holiday.
-
 @@.chores;
-/* Debugging - print $chores obj keys with values */
-&lt;&lt;for _k, _v range $chores&gt;&gt;
+&lt;&lt;nobr&gt;&gt;/* Debugging - print $chores obj keys with values */
+/* &lt;&lt;for _k, _v range $chores&gt;&gt;
     &lt;span&gt;&lt;&lt;-_k&gt;&gt; : &lt;&lt;- _v&gt;&gt;&lt;/span&gt;
-&lt;&lt;/for&gt;&gt;
-
+&lt;&lt;/for&gt;&gt; */ 
+&lt;&lt;/nobr&gt;&gt;
 &lt;&lt;link [[Water the Plants|Water Plants]]&gt;&gt;&lt;&lt;/link&gt;&gt; \
     &lt;span&gt;&lt;&lt;- &quot; visited: &quot; + visited(&#39;Water Plants&#39;)&gt;&gt;&lt;/span&gt; \
 &lt;&lt;if $chores.water_plants == true&gt;&gt;\
@@ -352,32 +690,52 @@ It&#39;s like they&#39;re still on holiday.
     &lt;span&gt;&lt;&lt;- &quot;Chores done - chill for a bit?&quot;&gt;&gt;&lt;/span&gt;
     &lt;&lt;link [[Yes|Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-@@</tw-passagedata><tw-passagedata pid="6" name="Water Plants" tags="" position="725,100" size="100,100">You go to the kitchen and fill up small metal can.
+@@</tw-passagedata><tw-passagedata pid="8" name="Water Plants" tags="" position="975,100" size="100,100">You go to the kitchen and fill up small metal can.
 A monstera in the sitting room.
 Two spider plants in the bathroom.
 The mint plant on the kitchen window sill is starting to wilt, so you give it some extra water and pluck the brown leaves.
 &lt;&lt;set $chores.water_plants = true&gt;&gt;
 
-&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="Fridge" tags="" position="850,100" size="100,100">You keep it stocked just in case.
+&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="Fridge" tags="" position="1100,100" size="100,100">You keep it stocked just in case.
 
 The foil covered mac and cheese sits untouched, but there&#39;s nothing worse than getting back and finding nothing to eat.
 
 So you replace it with a bowl of curry and throw away the sour milk.
 &lt;&lt;set $chores.check_fridge = true&gt;&gt;
 
-&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="Sort Post" tags="" position="975,100" size="100,100">Nothing today.
+&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="Sort Post" tags="" position="1225,100" size="100,100">Nothing today.
 Not that you were expecting anything, since you moved all the bills over to your name.
 &lt;&lt;set $chores.sort_post = true&gt;&gt;
 
-&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="Study" tags="" position="1100,100" size="100,100">You climb upstairs and open the door to the study.
+&lt;&lt;link [[Done|House]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="Study" tags="" position="100,225" size="100,100">You climb upstairs and open the door to the study.
 
 On the opposite wall beside the window, your friend&#39;s PC sits on the desk.
 
-Sometimes you &lt;&lt;link &quot;log in&quot;&gt;&gt;&lt;&lt;script&gt;&gt;window.open(&#39;https://ascii-game-test.netlify.app/&#39;)&lt;&lt;/script&gt;&gt;&lt;&lt;/link&gt;&gt; to play through the game they were working on. Maybe they&#39;ll come back to finish it one day? 
+Sometimes you &lt;&lt;link [[log in|Game Chapter 1 - Start]]&gt;&gt;&lt;&lt;/link&gt;&gt; to play through the game they were working on. Maybe they&#39;ll come back to finish it one day? 
 
-There&#39;s &lt;&lt;link [[other things you need to do today though|Another Day]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="Another Day" tags="" position="1225,100" size="100,100">You leave the house and carry on with your day - bills need paying after all.
+There&#39;s &lt;&lt;link [[other things you need to do today though|Another Day]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="Another Day" tags="" position="225,225" size="100,100">You leave the house and carry on with your day - bills need paying after all.
 
-&lt;&lt;link [[Sleep|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt; after a long day&#39;s work.</tw-passagedata><tw-passagedata pid="11" name="Phone" tags="" position="100,225" size="100,100">@@.ascii-art;
+&lt;&lt;link [[Sleep|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt; after a long day&#39;s work.</tw-passagedata><tw-passagedata pid="13" name="Game Chapter 1 - Start" tags="chapter1" position="350,225" size="100,100">&lt;&lt;set $gameCh1 = [
+    &quot;Ta daaa!! My first ever game!!&quot;,
+    &quot;Work in progress - let me know what you think!&quot;,
+    &quot;All feedback is constructive :)&quot;,
+    ]
+    &gt;&gt;\
+&lt;&lt;set $speech_num = 0&gt;&gt;\
+&lt;&lt;set $speech_len = $gameCh1.length&gt;&gt;
+
+&lt;&lt;do tag &quot;game-ch1&quot;&gt;&gt;$gameCh1[$speech_num]&lt;&lt;/do&gt;&gt;
+Speech Num: &lt;&lt;do tag &quot;game-ch1&quot;&gt;&gt;$speech_num&lt;&lt;/do&gt;&gt;
+
+&lt;&lt;link &quot;Next&quot;&gt;&gt;\
+    &lt;&lt;if $speech_num &lt; $speech_len-1&gt;&gt;
+        &lt;&lt;set $speech_num++&gt;&gt;
+        &lt;&lt;redo &quot;game-ch1&quot;&gt;&gt;
+        &lt;&lt;elseif $speech_num &lt;= $speech_len&gt;&gt;
+            &lt;&lt;goto &quot;Game Chapter 1a&quot;&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="Game Chapter 1a" tags="game-screen chapter1" position="475,225" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
+@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="15" name="Phone" tags="" position="600,225" size="100,100">@@.ascii-art;
 &quot;&quot;&quot;
 .--------------.
 |--------------|
@@ -393,7 +751,7 @@ There&#39;s &lt;&lt;link [[other things you need to do today though|Another Day]
 &#39;--------------&#39;
 &quot;&quot;&quot;
 @@
-&lt;&lt;link [[back|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="Test" tags="" position="225,225" size="100,100">This is a test page 
+&lt;&lt;link [[back|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="Test" tags="" position="725,225" size="100,100">This is a test page 
 Hello :)
 @@.box;
 Another box using .box class.
