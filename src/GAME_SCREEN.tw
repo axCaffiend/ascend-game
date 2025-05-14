@@ -1,0 +1,32 @@
+:: Game Screen [game-screen]
+<html>
+    <div class="display">
+        <p class="output-title">Output</p>
+        <div class="output"></div>
+        <p class="message"></p>
+    </div>
+</html>
+<html>
+    <div class="user-control-container">
+        <!-- USER CONTROLS -->
+            <div class="control">
+            <input type="text" maxlength="1" id="ui-1" class="user-input" name="ui1">
+            <input type="text" maxlength="1" id="ui-2" class="user-input" name="ui2">
+            <input type="text" maxlength="1" id="ui-3" class="user-input" name="ui3">
+            <input type="text" maxlength="1" id="ui-4" class="user-input" name="ui4">
+            <input type="text" maxlength="1" id="ui-5" class="user-input" name="ui5">
+            <input type="text" maxlength="1" id="ui-6" class="user-input" name="ui6">
+            <input type="text" maxlength="1" id="ui-7" class="user-input" name="ui7">
+            <input type="text" maxlength="1" id="ui-8" class="user-input" name="ui8">
+            <input type="text" maxlength="1" id="ui-9" class="user-input" name="ui9">
+        </div>
+        <!-- BUTTONS -->
+        <div class="buttons">
+            <button type="button" class="btn enter-btn">
+            Enter
+            </button>
+        </div>
+        <!-- User controls  container end -->
+    </div>
+</html>
+/* @@.user-input-display;@@ */

@@ -11,6 +11,7 @@ ASCend
 
 :: StoryMenu
 <<link [[Start|Start]]>><</link>>
+<<link [[Game Chapter 1 - Start]]>><</link>>
 
 :: Start
 ! <<link [[Dream...|Dream Sequence]]>><</link>>
@@ -107,7 +108,7 @@ You climb upstairs and open the door to the study.
 
 On the opposite wall beside the window, your friend's PC sits on the desk.
 
-Sometimes you <<link "log in">><<script>>window.open('https://ascii-game-test.netlify.app/')<</script>><</link>> to play through the game they were working on. Maybe they'll come back to finish it one day? 
+Sometimes you <<link [[log in|Game Chapter 1 - Start]]>><</link>> to play through the game they were working on. Maybe they'll come back to finish it one day? 
 
 There's <<link [[other things you need to do today though|Another Day]]>><</link>>
 

@@ -29,6 +29,13 @@ importScripts([
         boxHover();
         dreamSequence();
         textBreatheFX();
+        
+        // LOAD GAME SCREEN JAVASCRIPT ON PASSAGES TAGGED WITH 'game-screen'
+        // Uses passage tags since Game Screen content is included in 
+        if (e.detail.passage.tags.includes("game-screen")) {
+            console.log("!! Current Passage = Game Screen");
+            gameScreenLoad();
+        }
 
     })
 })

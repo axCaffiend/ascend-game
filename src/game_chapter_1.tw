@@ -1,0 +1,30 @@
+:: Game Chapter 1 - Start [chapter1]
+<<set $gameCh1 = [
+    "Ta daaa!! My first ever game!!",
+    "Work in progress - let me know what you think!",
+    "All feedback is constructive :)",
+    ]
+    >>\
+<<set $speech_num = 0>>\
+<<set $speech_len = $gameCh1.length>>
+
+<<do tag "game-ch1">>$gameCh1[$speech_num]<</do>>
+Speech Num: <<do tag "game-ch1">>$speech_num<</do>>
+
+<<link "Next">>\
+    <<if $speech_num < $speech_len-1>>
+        <<set $speech_num++>>
+        <<redo "game-ch1">>
+        <<elseif $speech_num <= $speech_len>>
+            <<goto "Game Chapter 1a">>
+    <</if>>
+<</link>>
+
+
+:: Game Chapter 1a [game-screen chapter1]
+<<include "Game Screen">>
+@@.user-input-display;@@
+
+
+
+

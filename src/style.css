@@ -1,7 +1,15 @@
+/*
+STORY STYLESHEET
+- Tweego automatically compiles supported file types including css and JavaScript files into the head element of the html file
+ */
+
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
+    --game-screen-green: rgb(0, 174, 0);
     --colour-link--default: lightgreen;
+    --border-green-01rem: solid 0.1rem var(--game-screen-green);
+    --main-font: 'Space Mono', Courier, monospace;
 }
 
 html {
@@ -86,4 +94,153 @@ a[data-passage="Dream Sequence"]:hover {
 
 #passage-house .chores a.done {
     text-decoration: line-through;
+}
+
+/* ==================== */
+/*  GAME SCREEN         */
+/* ==================== */
+/* --- Notes --- */
+/*  
+    - Content from Game Screen passage is inserted with <<include>> into all Game Chapter passages - so styling is applied to all passages which includes 'game-screen' in tags 
+    - '*=' selector searches for 'game-screen' in passage data-tags attribute
+    - Passages inserted into another don't preserve their tags?? Didn't want to override by setting id on <<include>> container, so doesn't conflict with Sugarcube system where slugified passage names are passage IDs.
+ */
+/* ---- OUTPUT DISPLAY ---- */
+
+.passage[data-tags*="game-screen"] .display {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 1rem auto;
+    content: "";
+    width: 250px;
+    color: var(--game-screen-green);
+    text-align: center;
+    font-size: 1.5rem;
+    border: var(--border-green-01rem);
+    background: #000;
+}
+
+.passage[data-tags*="game-screen"] .output-title {
+    margin: 0.1rem;
+    padding: 0;
+}
+
+/* Text output goes here */
+.passage[data-tags*="game-screen"] .output {
+    /* background-color: blue; */
+    border-top: var(--border-green-01rem);
+    width: 100%;
+    aspect-ratio: 1/1;
+    flex-grow: 1;
+    align-content: center;
+}
+
+.passage[data-tags*="game-screen"] .display-text-2 {
+    /* border: solid 1px purple; */
+    margin: auto;
+    width: 3ch;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    line-height: 95%;
+    font-size: 2rem;
+    animation: 
+        float 1s ease-in-out infinite alternate; 
+        /* spin 15s linear infinite; */
+}
+
+.passage[data-tags*="game-screen"] .display-text-2>.box {
+    border: none;
+    width: 1em;
+    height: 1em;
+}
+
+@keyframes float {
+    0% {
+        gap: 0.2rem;
+        /* font-size: 2rem; */
+    }
+    100% {
+        gap: 0rem;
+        /* font-size: 1.25rem; */
+        color: rgb(45, 213, 45);
+    }
+}
+
+/* ---- USER CONTROLS ---- */
+
+.passage[data-tags*="game-screen"] .user-control-container {
+    display: flex;
+    justify-content: center;
+}
+
+/* User input container */
+.passage[data-tags*="game-screen"] .control {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: fit-content;
+    margin: 1rem;
+    justify-content: center;
+    padding: 0.25rem;
+    border: double 0.25rem var(--game-screen-green);
+    background: #000;
+}
+
+/* User input text fields */
+.passage[data-tags*="game-screen"] .user-input {
+    /* background-color: grey; */
+    background-color: transparent;
+    color: green;
+    border: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    min-width: 0;
+    width: 1em;
+    height: 1.25em;
+    text-align: center;
+    align-content: center;
+    font-family: var(--main-font);
+    font-size: 2rem;
+}
+
+.passage[data-tags*="game-screen"] .user-input:focus {
+    outline: none;
+    background: var(--game-screen-green);
+    color: #000;
+}
+
+/* ---- BUTTONS ---- */
+
+.passage[data-tags*="game-screen"] .buttons {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.passage[data-tags*="game-screen"] .btn {
+    display: block;
+    color: var(--game-screen-green);
+    background-color: #000;
+    border: var(--border-green-01rem);
+    font-family: inherit;
+    font-size: 1.1rem;
+}
+
+.passage[data-tags*="game-screen"] .btn:focus {
+    outline: none;
+    background: var(--game-screen-green);
+    color: #000;
+}
+
+
+/* Test text area */
+.passage[data-tags*="game-screen"] .test-text-area {
+    min-width: 3rem;
+    max-width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+    font-family: var(--main-font);
+    line-height: 1rem;
 }
