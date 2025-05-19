@@ -18,7 +18,7 @@ importScripts([
     });
 
     // Register Plugins
-    gsap.registerPlugin(TextPlugin)
+    gsap.registerPlugin(TextPlugin);
 
     // Trigger animations after :passagedisplay event to wait until elements have loaded in DOM.
     $(document).on(':passagedisplay', function(e) {
@@ -37,7 +37,7 @@ importScripts([
             console.log("!! Current Passage = Game Screen");
             gameScreenLoad();
         }
-
+        
     })
 })
 .catch(function(err) {

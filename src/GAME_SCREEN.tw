@@ -9,7 +9,7 @@
 <html>
     <div class="user-control-container">
         <!-- USER CONTROLS -->
-            <div class="control">
+        <div class="control">
             <input type="text" maxlength="1" id="ui-1" class="user-input" name="ui1">
             <input type="text" maxlength="1" id="ui-2" class="user-input" name="ui2">
             <input type="text" maxlength="1" id="ui-3" class="user-input" name="ui3">
