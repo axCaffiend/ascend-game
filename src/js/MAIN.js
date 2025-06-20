@@ -46,6 +46,8 @@ importScripts([
 
 // === Config Options ===
 Config.addVisitedLinkClass = true;
+// Do not type on previously visited passages
+Config.macros.typeVisitedPassages = false;
 
 // Hides default UIBar and reclaims space with stow
 // ** ADD .hide() WHEN DONE

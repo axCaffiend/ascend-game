@@ -13,13 +13,14 @@ ASCend
 <<link [[Start|Start]]>><</link>>
 <<link [[Game Chapter 1 - Start]]>><</link>>
 
+:: PassageFooter
+@@.passage-footer;
+Press 'Spacebar' on keyboard to skip typewriter animated text
+@@
+
 :: StoryInit
-<<set $chores = {
-    water_plants: false,
-    check_fridge: false,
-    sort_post: false
-}
->>
+<<set $line_delay = "1500ms">>
+<<set $type_ms_default = "40ms">>
 
 :: Start
 ! <<link [[Dream...|Dream Sequence]]>><</link>>
@@ -36,86 +37,75 @@ ASCend
 
 
 :: Intro
-@@.fade-in;
-... Another night...
-
-...the same dream...
-
-You've been having the same dream for the past year, at least that's when you knew it wasn't going away.
-
-<<link [[Check your phone | Phone]]>><</link>>
-
-They're still missing.
-
-<<link [[Go to their house|House]]>><</link>>
-@@
-
-
-:: House
-Time to check the house.
-You've been keeping it just how you found it - how they left it.
-It's like they're still on holiday.
-@@.chores;
-<<nobr>>/* Debugging - print $chores obj keys with values */
-/* <<for _k, _v range $chores>>
-    <span><<-_k>> : <<- _v>></span>
-<</for>> */ 
+<<nobr>>
+<<if visited("Intro")> 1>>
+    <<set $line_delay = "40ms">>
+    <<set _letterbox_delay = "40ms">>
+    <<else>>
+        <<set _letterbox_delay = "3s">>
+<</if>>
 <</nobr>>
-<<link [[Water the Plants|Water Plants]]>><</link>> \
-    <span><<- " visited: " + visited('Water Plants')>></span> \
-<<if $chores.water_plants == true>>\
-    <span><<- "You have watered the plants">></span> \
+<<timed 40ms t8n>>
+<<next $line_delay>>You've been having the same dream for the past year - at least that's when you realised it wasn't going away.
+
+<<next $line_delay>>The last warm hues of evening light filter through the window to the left of your bed. 
+
+<<next $line_delay>>You're still wearing yesterday's clothes.
+
+<<next $line_delay>>@@.note-sfx;//sfx : letterbox sound (delayed 5 seconds from :passagedisplay)//@@
+
+<<next _letterbox_delay>>A new case has landed. 
+
+<<next $line_delay>>Your hallway is dark. You pick up the brown paper <<link [[envelope|Case Envelope]]>><</link>>. It's blank except for your address on the back.
+
+<<next $line_delay>>There's still time to grab a bite to <<link [[eat and drink|Intro - eat drink]]>><</link>> before you leave.
+
+<<if visited("Case Envelope", "Intro - eat drink")>>
+    <<type $type_ms_default>><<link [[Time to go.|House - Front]]>><</link>><</type>>
 <</if>>
-<<link [[Check the Fridge|Fridge]]>><</link>> <span><<- " visited: " + visited('Fridge')>></span>
-<<link [[Sort the post|Sort Post]]>><</link>> <span><<- " visited: " + visited('Sort Post')>></span>
+<</timed>>
 
-<<if $chores.water_plants && $chores.check_fridge && $chores.sort_post>>
-    <span><<- "Chores done - chill for a bit?">></span>
-    <<link [[Yes|Study]]>><</link>>
+
+:: Case Envelope
+A flimsy sheet of badly printed text. There is a street address and instructions...
+@@.game-note;
+<<type $type_ms_default>>>Detected 1 rune - up to you to find the rift interface.
+>Human made, proceed with caution. 
+>Unknown if creation was intentional.
+>Solar flare in 3 days, make the most of it.
+<</type>>
+@@\
+@@.note-img;//img : Pixel art letter & rune symbol//@@
+
+<<link [[You tuck the envelope into your jacket.|Intro]]>><</link>>
+
+
+:: Intro - eat drink
+<<if visited()>1>>
+    <<timed 40ms t8n>>
+    <<next $line_delay>>You've already eaten the last of the food in your fridge.
+    
+    <<next $line_delay>>Drinking too much tepid water is enough to make you feel sick.
+
+    <<link [[Check if you need anything else before you go. | Intro]]>><</link>>
+    <</timed>>\
+
+    <<else>>\
+        <<nobr>>
+            <<set $line_delay = "1500ms">>
+        <</nobr>>
+        <<timed 40ms t8n>>\
+        <<next $line_delay>>You cross the hallway into the kitchen.
+
+        <<next $line_delay>>The fridge is largely empty, not much point keeping too much food in.
+
+        <<next $line_delay>>You heat up last night's takeaway and tuck in.
+
+        <<next $line_delay>>You run a glass of tepid water and down it too.
+
+        <<next $line_delay>>The view from the kitchen looks down over a narrow strip of shops, several storeys down. Grey slate roofs give way to skyscrapers in the distance.
+
+        <<next $line_delay>><<link [[Check if you need anything else before you go. | Intro]]>><</link>>
+        <</timed>>
+
 <</if>>
-@@
-
-
-:: Water Plants
-You go to the kitchen and fill up small metal can.
-A monstera in the sitting room.
-Two spider plants in the bathroom.
-The mint plant on the kitchen window sill is starting to wilt, so you give it some extra water and pluck the brown leaves.
-<<set $chores.water_plants = true>>
-
-<<link [[Done|House]]>><</link>>
-
-
-:: Fridge
-You keep it stocked just in case.
-
-The foil covered mac and cheese sits untouched, but there's nothing worse than getting back and finding nothing to eat.
-
-So you replace it with a bowl of curry and throw away the sour milk.
-<<set $chores.check_fridge = true>>
-
-<<link [[Done|House]]>><</link>>
-
-
-:: Sort Post
-Nothing today.
-Not that you were expecting anything, since you moved all the bills over to your name.
-<<set $chores.sort_post = true>>
-
-<<link [[Done|House]]>><</link>>
-
-
-:: Study
-You climb upstairs and open the door to the study.
-
-On the opposite wall beside the window, your friend's PC sits on the desk.
-
-Sometimes you <<link [[log in|Game Chapter 1 - Start]]>><</link>> to play through the game they were working on. Maybe they'll come back to finish it one day? 
-
-There's <<link [[other things you need to do today though|Another Day]]>><</link>>
-
-
-:: Another Day
-You leave the house and carry on with your day - bills need paying after all.
-
-<<link [[Sleep|Dream Sequence]]>><</link>> after a long day's work.
