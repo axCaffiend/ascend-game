@@ -1,5 +1,4 @@
-// NOTE: Tweego compiles all files in src directory into a single HTML file in project root, so JS module imports/exports don't work. HOWEVER functions can just be referenced as they would if they were all in the same JS file. (e.g. boxHover() below)
-    // Solution: 
+// NOTE: Tweego compiles all files in src directory into a single HTML file in project root, so JS module imports/exports don't work. HOWEVER functions can just be referenced as they would if they were all in the same JS file, since all JS is present in separate <script> tags in final index.html file. (e.g. boxHover() below)
 
 // Import GSAP in Promise object so game scripts don't start before GSAP is loaded.
 importScripts([

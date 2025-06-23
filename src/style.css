@@ -10,6 +10,8 @@ STORY STYLESHEET
     --colour-link--default: lightgreen;
     --border-green-01rem: solid 0.1rem var(--game-screen-green);
     --main-font: 'Space Mono', Courier, monospace;
+    --passage-header-footer-dividers: dashed 0.1rem rgb(118, 118, 118);
+    --passage-header-footer-padding: 1.5em;
 }
 
 html {
@@ -80,18 +82,35 @@ body {
     line-height: 2em;
 }
 
-/* --- Passage Footer --- */
-.passage-footer {
+/* --- Passage Header & Footer --- */
+.passage-footer, .passage-header {
     /* border: solid 1px red; */
     text-align: center;
-    margin-top: auto;
-    justify-self: flex-end;
-    padding-top: 1.5rem;
-    border-top: dashed 0.1rem rgb(118, 118, 118);
     color: rgb(118, 118, 118);
     font-size: 1rem;
-    
+}
 
+.passage-footer {
+    margin-top: auto;
+    justify-self: flex-end;
+    padding-top: var(--passage-header-footer-padding);
+    border-top: var(--passage-header-footer-dividers);
+}
+
+.passage-header {
+    margin-bottom: 1.5rem;
+    justify-self: flex-start;
+    padding-bottom: var(--passage-header-footer-padding);
+    border-bottom: var(--passage-header-footer-dividers);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.passage-header .inventory {
+    flex: 100%; 
+    justify-self: flex-start; 
+    text-align: left;
 }
 
 

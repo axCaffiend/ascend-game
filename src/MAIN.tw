@@ -1,3 +1,12 @@
+/* GENERAL NOTES */
+/*  
+- Links break passage text around them onto new lines??? 
+    solution: don't know why, but wrapping in a span fixes it. Nothing seems to change in html markup or css?? Passage text is wrapped in <<timed>> macros, which fixes it...
+- In passage notes (replace or delete in Final)
+    - Sound effects : .note-sfx (light blue)
+    - Images : .note-img (pink)
+*/
+
 :: StoryData
 {
     "ifid": "DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9",
@@ -11,7 +20,22 @@ ASCend
 
 :: StoryMenu
 <<link [[Start|Start]]>><</link>>
-<<link [[Game Chapter 1 - Start]]>><</link>>
+<<link [[House-Front]]>><</link>>
+<<link [[Test]]>><</link>>
+
+:: PassageHeader
+@@.passage-header;
+<<nobr>>
+<<if visited() > 1>>
+    <<set $line_delay = "40ms">>
+    <<else>>
+        <<set $line_delay = "1s">>
+<</if>>
+<span><<print "Day " + "--">></span>
+<span><<print "current passage visited: " + visited()>></span>
+<span class="inventory">Held: <<do tag "update_inventory">><<= $inventory.toString()>><</do>></span>
+<</nobr>>
+@@
 
 :: PassageFooter
 @@.passage-footer;
@@ -19,8 +43,9 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 @@
 
 :: StoryInit
-<<set $line_delay = "1500ms">>
+<<set $line_delay = "1s">>
 <<set $type_ms_default = "40ms">>
+<<set $inventory = []>>
 
 :: Start
 ! <<link [[Dream...|Dream Sequence]]>><</link>>
@@ -36,16 +61,16 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 <<link [[Wake up|Intro]]>><</link>>
 
 
+/* LINKS TO DAY_1.tw */
 :: Intro
 <<nobr>>
-<<if visited("Intro")> 1>>
-    <<set $line_delay = "40ms">>
-    <<set _letterbox_delay = "40ms">>
-    <<else>>
-        <<set _letterbox_delay = "3s">>
-<</if>>
+    <<if visited("Intro")> 1>>
+        <<set _letterbox_delay = "40ms">>
+        <<else>>
+            <<set _letterbox_delay = "3s">>
+    <</if>>
 <</nobr>>
-<<timed 40ms t8n>>
+<<timed 40ms t8n>>\
 <<next $line_delay>>You've been having the same dream for the past year - at least that's when you realised it wasn't going away.
 
 <<next $line_delay>>The last warm hues of evening light filter through the window to the left of your bed. 
@@ -60,9 +85,9 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 
 <<next $line_delay>>There's still time to grab a bite to <<link [[eat and drink|Intro - eat drink]]>><</link>> before you leave.
 
-<<if visited("Case Envelope", "Intro - eat drink")>>
-    <<type $type_ms_default>><<link [[Time to go.|House - Front]]>><</link>><</type>>
-<</if>>
+<<if visited("Case Envelope", "Intro - eat drink")>>\
+    <<type $type_ms_default>><<link [[Time to go.|House-Front]]>><</link>><</type>>
+<</if>>\
 <</timed>>
 
 
