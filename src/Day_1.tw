@@ -71,70 +71,83 @@
 
 :: House-Front_door
 <<nobr>>
-    /* <<run $inventory.deleteAll("Wire")>> */
+    /* <<run $inventory.deleteAll("Wire")>>
     <<redo "update_inventory">>
-    <<set _a = true>>
+    <<set _a = true>> */
 <</nobr>>
-<<do tag "if_block_status">><<= "if_block_status:" + _a>><</do>>
-    You walk up the concrete path and to the solid wooden door.
-    /* Check if passage visited before */\
-<<if visited() <= 1>>\
-    <<redo "if_block_status">>\
-    /* First time visiting (knock) */
-        <<timed 40ms t8n>>\
-            <<next $line_delay>>@@.note-sfx; sfx : Knocking on door@@
+    You walk up the concrete path and to the solid wooden door.\
+    /* Check if passage visited before */
+<<if visited() == 1>>\
+    <<timed 40ms t8n>>
+        <<next $line_delay>>@@.note-sfx; sfx : Knocking on door@@
 
-            <<next $line_delay>>...\
+        <<next $line_delay>>...
 
-            <<next 4s>>No answer.
-            <<next $line_delay>><<set _a = false>><<redo "if_block_status">>
+        <<next 4s>>No answer.
+            <<include "House-Front_door_unlock">>
+    <</timed>>
+    /* Visited before (don't knock) */
+    <<else>>\
+        <<timed 40ms t8n>>
+            <<next $line_delay>>Seems as though no one is about.
+                <<include "House-Front_door_unlock">>
         <</timed>>
-    /* Visited before (don't knock) */\
-            <<else>>\
-                <<timed 40ms t8n>>\
-                    <<next $line_delay>>Seems as though no one is about.
-                    <<next $line_delay>><<set _a = false>><<redo "if_block_status">>\
-                <</timed>>\
 <</if>>
-\
+
+
+:: House-Front_door_unlock
 /* Check if "Wire" in inventory? */\
 <<if $inventory.includes("Wire")>>\
-        /* Yes - Show Pick lock and enter house */\
+    /* Yes - Show Pick lock and enter house */\
+    <<timed 40ms t8n>>\
+        <<next $line_delay>>@@.note-sfx; sfx : rustling in the bushes@@
+
+        <<next 3s>>Something emerges from the hedge behind you ...
+        <<next $line_delay>>...
+        <<next 4s>>... Just a fox. Its amber eyes glint, just as startled as you.
+
+        <<next 2s>>After a moment, it trots down the path and down the empty street.
+
+        <<next 2s>>You turn back to the door and start picking the lock with the wire.
+
+        <<next $line_delay>>@@.note-sfx; sfx : Lock clicking @@
+
+        <<next 3s>>The door opens silently and you <<link [[step through...|House-Hallway]]>><</link>>
+
+    <</timed>>\
+    \
+    <<else>>\
+    /* No - Show Links back to garden */
         <<timed 40ms t8n>>\
-            <<next $line_delay>>@@.note-sfx; sfx : rustling in the bushes@@
-
-            <<next 3s>>Something emerges from the hedge behind you ...
-            <<next $line_delay>>...
-            <<next 4s>>... Just a fox. Its amber eyes glint, just as startled as you.
-
-            <<next 2s>>After a moment, it trots down the path and down the empty street.
-
-            <<next 2s>>You turn back to the door and start picking the lock with the wire.
-
-            <<next $line_delay>>@@.note-sfx; sfx : Lock clicking @@
-
-            <<next 3s>>The door opens silently and you <<link [[step through...|House-Hallway]]>><</link>>
-
-        <</timed>>\
-        \
-        <<else>>\
-        /* No - Show Links back to garden */\
-            <<timed 40ms t8n>>\
-                <<next $line_delay>>Standing on the <<link [[doormat|House-Front_door_doormat]]>><</link>>, you turn back towards the <<link [[garden.|House-Front]]>><</link>>
-            <</timed>>\
-    <</if>>\
+            <<next $line_delay>><<nobr>>
+                Standing on the <<linkreplace "doormat">>
+                    <<append "span.macro-timed-insert:last-of-type" t8n>>
+                        <<include "House-Front_door_doormat">>
+                    <</append>>
+                    doormat\
+                <</linkreplace>>, 
+                you turn back towards the <<link [[garden.|House-Front]]>><</link>>
+                <</nobr>>
+        <</timed>>
+<</if>>\
 
 
 :: House-Front_door_doormat
-<<timed 40ms t8n>>\
-    <<next $line_delay>>You lift up the doormat... Nothing. A single woodlouse crawls off.
+<<if visited() > 1>>
+    You already checked under the doormat - there's nothing there.
+    <<timed 5s>>
+        <<goto "House-Front_door">>
+    <</timed>>
+    <<else>>
+        <<timed 40ms t8n>>\
+            <<next $line_delay>>You lift up the doormat... Nothing. A single woodlouse crawls off.
 
-    <<next $line_delay>>You stand up and check the street...
+            <<next $line_delay>>You stand up and check the street...
 
-    <<next $line_delay>>All the lights are out and no-one is about.
+            <<next $line_delay>>All the lights are out and no-one is about.
 
-    <<next $line_delay>>You could check the <<link [[garden|House-Front]]>><</link>> again, or turn back to the <<link [[door|House-Front_door]]>><</link>>.
-<</timed>>
+        <</timed>>
+<</if>>
 
 
 :: House-Hallway
