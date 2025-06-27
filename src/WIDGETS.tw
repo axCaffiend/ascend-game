@@ -1,0 +1,12 @@
+/* appendPBody - single use inline link that appends contents to .passage-body container */
+:: Append Passage Body [widget]
+<<nobr>>
+<<widget "appendPBody" container>>
+        <<set _linkText = _args[0]>>
+        <<linkreplace _linkText>>
+            <<append ".passage-body" t8n>>
+                <div><<= _contents>></div>
+            <</append>> _linkText
+        <</linkreplace>>
+<</widget>>
+<</nobr>>

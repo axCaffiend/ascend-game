@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="17" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
+	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="23" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
 STORY STYLESHEET
 - Tweego automatically compiles supported file types including css and JavaScript files into the head element of the html file
  */
@@ -455,9 +455,9 @@ Config.addVisitedLinkClass = true;
 // Do not type on previously visited passages
 Config.macros.typeVisitedPassages = false;
 
-// 
+// Wraps Passage content in .passage-body div before PassageHeader and PassageFooter are added to rendered passage. Excluding special passages, widget passages and tagged subPassages (only included in other passages).
 Config.passages.onProcess = function (p) {
-    if (p.title == "PassageHeader" || p.title == "PassageFooter") {
+    if (p.title == "StoryTitle" || p.title == "StoryData" || p.title == "StoryInit" ||p.title == "PassageHeader" || p.title == "PassageFooter" || p.title =="StoryMenu" || p.tags.includes("widget")|| p.tags.includes("subPassage")) {
         return p.text;
     }
     p.text = "<div class='passage-body'>" + p.text + "</div>";
@@ -924,11 +924,22 @@ Macro.add('mytestmacro', {
             &lt;&lt;next $line_delay&gt;&gt;All the lights are out and no-one is about.
 
         &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="1_House-Hallway" tags="" position="1100,100" size="100,100">You close the door behind you and look around a narrow hallway.
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="1_House-Hallway" tags="" position="1100,100" size="100,100">&lt;&lt;switch visited()&gt;&gt;
+    &lt;&lt;case 1&gt;&gt;
+        You close the front door behind you and look around a narrow hallway.
 
-Faint light spills down the stairs ahead, so you can see a small table to your left.
+        Faint warm light spills down the &lt;&lt;link [[stairs|1_House-Upstairs]]&gt;&gt;&lt;&lt;/link&gt;&gt; ahead, so you can see a small table to your left.
 
-A door to your right stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.</tw-passagedata><tw-passagedata pid="10" name="1_House-LivingRoom" tags="" position="1225,100" size="100,100">&lt;&lt;switch visited()&gt;&gt;\
+        A &lt;&lt;link [[door to your right|1_House-LivingRoom]]&gt;&gt;&lt;&lt;/link&gt;&gt; stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.
+
+    &lt;&lt;default&gt;&gt;
+        You&#39;re in the downstairs hallway, by the front door.
+
+        There&#39;s not much here apart from a small table and a few coats hanging up next to it.
+
+        &lt;&lt;link [[Go Upstairs|1_House-Upstairs]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+        &lt;&lt;link [[Go to Living Room|1_House-LivingRoom]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="1_House-Hallway_table" tags="" position="1225,100" size="100,100">There&#39;s a letter and envelope next to bowl with a set of keys in it.</tw-passagedata><tw-passagedata pid="11" name="1_House-LivingRoom" tags="" position="100,225" size="100,100">&lt;&lt;switch visited()&gt;&gt;\
     &lt;&lt;case 1&gt;&gt;\
         &lt;&lt;if previous() == &quot;1_House-Front_window-entry&quot;&gt;&gt;\
             &lt;&lt;nobr&gt;&gt;
@@ -948,23 +959,37 @@ A door to your right stands partially open, dim streetlight reveals the edge of 
 
         Clutter covers a &lt;&lt;link [[coffee table|1_House-LivingRoom_coffee-table]]&gt;&gt;&lt;&lt;/link&gt;&gt; in the middle of the room.
 
-        A flat TV sits on sideboard on one side, next to a large bookshelf in the corner.
+        A flat &lt;&lt;link [[TV|1_House-LivingRoom_tv]]&gt;&gt;&lt;&lt;/link&gt;&gt; sits on sideboard on one side, next to a large &lt;&lt;link [[bookshelf|1_House-LivingRoom_bookshelf]]&gt;&gt;&lt;&lt;/link&gt;&gt; in the corner.
 
-        On the opposite wall, there is a door partially opened.
+        Towards the back of the house, you can see the outline of a table and chairs in the next room.
 
-        Towards the back of the house, you can see the outline of a table and chairs in a dining room.
+        Behind you is the hallway.
     &lt;&lt;default&gt;&gt;
         You&#39;re in the living room at the front of the house.
 
         There&#39;s the cluttered &lt;&lt;link [[coffee table|1_House-LivingRoom_coffee-table]]&gt;&gt;&lt;&lt;/link&gt;&gt; in the middle of the room.
         
-        A TV on a sideboard stands along one wall, next to the large bookshelf in the corner.
+        A &lt;&lt;link [[TV|1_House-LivingRoom_tv]]&gt;&gt;&lt;&lt;/link&gt;&gt; on a sideboard stands along one wall, next to the large &lt;&lt;link [[bookshelf|1_House-LivingRoom_bookshelf]]&gt;&gt;&lt;&lt;/link&gt;&gt; in the corner.
 
-        The dining room joins this room towards the back of the house.
-        
-        The door to the side goes to the hallway.
-&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="1_House-LivingRoom_coffee-table" tags="" position="100,225" size="100,100">Several letters, a crisp packet, two coffee mugs...&lt;&lt;link &quot;Hello&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;
-The dark wood coffee table has two drawers in the side</tw-passagedata><tw-passagedata pid="12" name="Game Screen" tags="game-screen" position="225,225" size="100,100">&lt;html&gt;
+        &lt;&lt;link [[Go to the Kitchen|1_House-Kitchen]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+
+        &lt;&lt;link [[Go to the Hallway|1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="1_House-LivingRoom_coffee-table" tags="" position="225,225" size="100,100">Several letters, a crisp packet, two coffee mugs...
+
+The dark wood coffee table has two drawers in the side</tw-passagedata><tw-passagedata pid="13" name="1_House-LivingRoom_tv" tags="" position="350,225" size="100,100">It&#39;s a large flat-screen TV - nothing is on.</tw-passagedata><tw-passagedata pid="14" name="1_House-LivingRoom_bookshelf" tags="" position="475,225" size="100,100">The bookshelf is stuffed with crime thrillers, historical fiction, and the odd travel or recipe book.
+
+There are a few books scattered in front, thrown onto the floor in a hurry.
+
+On the bottom shelf, the weathered spine of a large &lt;&lt;appendPBody &quot;black book&quot;&gt;&gt;&lt;&lt;include &quot;Rift-book&quot;&gt;&gt;&lt;&lt;/appendPBody&gt;&gt;</tw-passagedata><tw-passagedata pid="15" name="Rift-book" tags="subPassage" position="600,225" size="100,100">@@.note-img; img : black book @@
+
+There is no title, but flicking the thin pages shows familiar text and etchings. There is handwriting inside the front cover.
+&lt;&lt;type $type_ms_default &gt;&gt;\
+    @@.game-note;
+    &quot;There are many skins around our world. This book will guide you through the inner sanctums and the outer hells - I hope you find what you are looking for. - S&quot;
+    @@
+&lt;&lt;/type&gt;&gt;
+
+&lt;&lt;run $inventory.push(&quot;Rift book&quot;)&gt;&gt;&lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="1_House-Upstairs" tags="" position="725,225" size="100,100">You go upstairs to the first floor, stairs creaking...</tw-passagedata><tw-passagedata pid="17" name="1_House-Kitchen" tags="" position="850,225" size="100,100">You&#39;re in the kitchen.</tw-passagedata><tw-passagedata pid="18" name="Game Screen" tags="game-screen" position="975,225" size="100,100">&lt;html&gt;
     &lt;div class=&quot;display&quot;&gt;
         &lt;p class=&quot;output-title&quot;&gt;Output&lt;/p&gt;
         &lt;div class=&quot;output&quot;&gt;&lt;/div&gt;
@@ -994,9 +1019,11 @@ The dark wood coffee table has two drawers in the side</tw-passagedata><tw-passa
         &lt;!-- User controls  container end --&gt;
     &lt;/div&gt;
 &lt;/html&gt;
-/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="13" name="StoryMenu" tags="" position="350,225" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="19" name="StoryMenu" tags="" position="1100,225" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="PassageHeader" tags="" position="475,225" size="100,100">@@.passage-header;
+&lt;&lt;link [[1_House-Front_plant-pots]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="PassageHeader" tags="" position="1225,225" size="100,100">@@.passage-header;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if visited() &gt; 1&gt;&gt;
     &lt;&lt;set $line_delay = &quot;40ms&quot;&gt;&gt;
@@ -1007,20 +1034,20 @@ The dark wood coffee table has two drawers in the side</tw-passagedata><tw-passa
 &lt;span&gt;&lt;&lt;print &quot;current passage visited: &quot; + visited()&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;inventory&quot;&gt;Held: &lt;&lt;do tag &quot;update_inventory&quot;&gt;&gt;&lt;&lt;= $inventory.toString()&gt;&gt;&lt;&lt;/do&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
-@@</tw-passagedata><tw-passagedata pid="15" name="PassageFooter" tags="" position="600,225" size="100,100">@@.passage-footer;
+@@</tw-passagedata><tw-passagedata pid="21" name="PassageFooter" tags="" position="100,350" size="100,100">@@.passage-footer;
 Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
-@@</tw-passagedata><tw-passagedata pid="16" name="StoryInit" tags="" position="725,225" size="100,100">&lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;
+@@</tw-passagedata><tw-passagedata pid="22" name="StoryInit" tags="" position="225,350" size="100,100">&lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;
 &lt;&lt;set $type_ms_default = &quot;40ms&quot;&gt;&gt;
-&lt;&lt;set $inventory = []&gt;&gt;</tw-passagedata><tw-passagedata pid="17" name="Start" tags="" position="850,225" size="100,100">! &lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;set $inventory = []&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Start" tags="" position="350,350" size="100,100">! &lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;message&gt;&gt;Hello&lt;&lt;/message&gt;&gt;
 &lt;&lt;mytestmacro&gt;&gt;Hello myTestMacro is running successfully!&lt;&lt;/mytestmacro&gt;&gt;
 /* &lt;&lt;link [[Test page|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt; */
-/* &lt;span&gt;&lt;&lt;- $chores.water_plants&gt;&gt;&lt;/span&gt; */</tw-passagedata><tw-passagedata pid="18" name="Dream Sequence" tags="" position="975,225" size="100,100">@@.dream-img;@@
+/* &lt;span&gt;&lt;&lt;- $chores.water_plants&gt;&gt;&lt;/span&gt; */</tw-passagedata><tw-passagedata pid="24" name="Dream Sequence" tags="" position="475,350" size="100,100">@@.dream-img;@@
 &lt;&lt;link [[Ignore it|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 
 
-/* LINKS TO DAY_1.tw */</tw-passagedata><tw-passagedata pid="19" name="Intro" tags="" position="1100,225" size="100,100">&lt;&lt;nobr&gt;&gt;
+/* LINKS TO DAY_1.tw */</tw-passagedata><tw-passagedata pid="25" name="Intro" tags="" position="600,350" size="100,100">&lt;&lt;nobr&gt;&gt;
     &lt;&lt;if visited(&quot;Intro&quot;)&gt; 1&gt;&gt;
         &lt;&lt;set _letterbox_delay = &quot;40ms&quot;&gt;&gt;
         &lt;&lt;else&gt;&gt;
@@ -1043,9 +1070,9 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 &lt;&lt;next $line_delay&gt;&gt;There&#39;s still time to grab a bite to &lt;&lt;link [[eat and drink|Intro - eat drink]]&gt;&gt;&lt;&lt;/link&gt;&gt; before you leave.
 
 &lt;&lt;if visited(&quot;Case Envelope&quot;, &quot;Intro - eat drink&quot;)&gt;&gt;\
-    &lt;&lt;type $type_ms_default&gt;&gt;&lt;&lt;link [[Time to go.|House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/type&gt;&gt;
+    &lt;&lt;type $type_ms_default&gt;&gt;&lt;&lt;link [[Time to go.|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/type&gt;&gt;
 &lt;&lt;/if&gt;&gt;\
-&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="Case Envelope" tags="" position="1225,225" size="100,100">A flimsy sheet of badly printed text. There is a street address and instructions...
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="Case Envelope" tags="" position="725,350" size="100,100">A flimsy sheet of badly printed text. There is a street address and instructions...
 @@.game-note;
 &lt;&lt;type $type_ms_default&gt;&gt;&gt;Detected 1 rune - up to you to find the rift interface.
 &gt;Human made, proceed with caution. 
@@ -1055,7 +1082,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 @@\
 @@.note-img;//img : Pixel art letter &amp; rune symbol//@@
 
-&lt;&lt;link [[You tuck the envelope into your jacket.|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="Intro - eat drink" tags="" position="100,350" size="100,100">&lt;&lt;if visited()&gt;1&gt;&gt;
+&lt;&lt;link [[You tuck the envelope into your jacket.|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="27" name="Intro - eat drink" tags="" position="850,350" size="100,100">&lt;&lt;if visited()&gt;1&gt;&gt;
     &lt;&lt;timed 40ms t8n&gt;&gt;
     &lt;&lt;next $line_delay&gt;&gt;You&#39;ve already eaten the last of the food in your fridge.
     
@@ -1072,14 +1099,23 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 
         &lt;&lt;next $line_delay&gt;&gt;You heat up last night&#39;s takeaway and tuck in.
 
-        &lt;&lt;next $line_delay&gt;&gt;You run a glass of tepid water and down it too.
+        &lt;&lt;next $line_delay&gt;&gt;You run a glass of tepid water and down it.
 
         &lt;&lt;next $line_delay&gt;&gt;The view from the kitchen looks down over a narrow strip of shops, several storeys down. Grey slate roofs give way to skyscrapers in the distance.
 
         &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Check if you need anything else before you go. | Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
         &lt;&lt;/timed&gt;&gt;
 
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="Game Chapter 1 - Start" tags="chapter1" position="225,350" size="100,100">&lt;&lt;set $gameCh1 = [
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="Append Passage Body" tags="widget" position="975,350" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;widget &quot;appendPBody&quot; container&gt;&gt;
+        &lt;&lt;set _linkText = _args[0]&gt;&gt;
+        &lt;&lt;linkreplace _linkText&gt;&gt;
+            &lt;&lt;append &quot;.passage-body&quot; t8n&gt;&gt;
+                &lt;div&gt;&lt;&lt;= _contents&gt;&gt;&lt;/div&gt;
+            &lt;&lt;/append&gt;&gt; _linkText
+        &lt;&lt;/linkreplace&gt;&gt;
+&lt;&lt;/widget&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="29" name="Game Chapter 1 - Start" tags="chapter1" position="1100,350" size="100,100">&lt;&lt;set $gameCh1 = [
     &quot;Ta daaa!! My first ever game!!&quot;,
     &quot;Work in progress - let me know what you think!&quot;,
     &quot;All feedback is constructive :)&quot;,
@@ -1098,8 +1134,8 @@ Speech Num: &lt;&lt;do tag &quot;game-ch1&quot;&gt;&gt;$speech_num&lt;&lt;/do&gt
         &lt;&lt;elseif $speech_num &lt;= $speech_len&gt;&gt;
             &lt;&lt;goto &quot;Game Chapter 1a&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Game Chapter 1a" tags="game-screen chapter1" position="350,350" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
-@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="24" name="Test" tags="" position="475,350" size="100,100">This is a test page 
+&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="Game Chapter 1a" tags="game-screen chapter1" position="1225,350" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
+@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="31" name="Test" tags="" position="100,475" size="100,100">This is a test page 
 Hello :)
 @@.box;
 Another box using .box class.

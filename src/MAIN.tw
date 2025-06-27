@@ -10,6 +10,9 @@
     - Sound effects : .note-sfx (light blue)
     - Images : .note-img (pink)
 
+===== CUSTOM PASSAGE TAGS =====
+[subPassage]
+    Used for passages which are only included in others. Prevents their content being wrapped in another .passage-body container.
 */
 
 :: StoryData
@@ -26,6 +29,8 @@ ASCend
 :: StoryMenu
 <<link [[Start|Start]]>><</link>>
 <<link [[1_House-Front]]>><</link>>
+<<link [[1_House-Front_plant-pots]]>><</link>>
+<<link [[1_House-Hallway]]>><</link>>
 <<link [[Test]]>><</link>>
 
 :: PassageHeader
@@ -91,7 +96,7 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 <<next $line_delay>>There's still time to grab a bite to <<link [[eat and drink|Intro - eat drink]]>><</link>> before you leave.
 
 <<if visited("Case Envelope", "Intro - eat drink")>>\
-    <<type $type_ms_default>><<link [[Time to go.|House-Front]]>><</link>><</type>>
+    <<type $type_ms_default>><<link [[Time to go.|1_House-Front]]>><</link>><</type>>
 <</if>>\
 <</timed>>
 
@@ -128,7 +133,7 @@ A flimsy sheet of badly printed text. There is a street address and instructions
 
         <<next $line_delay>>You heat up last night's takeaway and tuck in.
 
-        <<next $line_delay>>You run a glass of tepid water and down it too.
+        <<next $line_delay>>You run a glass of tepid water and down it.
 
         <<next $line_delay>>The view from the kitchen looks down over a narrow strip of shops, several storeys down. Grey slate roofs give way to skyscrapers in the distance.
 

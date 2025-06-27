@@ -40,9 +40,9 @@ Config.addVisitedLinkClass = true;
 // Do not type on previously visited passages
 Config.macros.typeVisitedPassages = false;
 
-// 
+// Wraps Passage content in .passage-body div before PassageHeader and PassageFooter are added to rendered passage. Excluding special passages, widget passages and tagged subPassages (only included in other passages).
 Config.passages.onProcess = function (p) {
-    if (p.title == "PassageHeader" || p.title == "PassageFooter") {
+    if (p.title == "StoryTitle" || p.title == "StoryData" || p.title == "StoryInit" ||p.title == "PassageHeader" || p.title == "PassageFooter" || p.title =="StoryMenu" || p.tags.includes("widget")|| p.tags.includes("subPassage")) {
         return p.text;
     }
     p.text = "<div class='passage-body'>" + p.text + "</div>";

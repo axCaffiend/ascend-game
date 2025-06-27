@@ -5,11 +5,26 @@
 */
 
 :: 1_House-Hallway
-You close the door behind you and look around a narrow hallway.
+<<switch visited()>>
+    <<case 1>>
+        You close the front door behind you and look around a narrow hallway.
 
-Faint light spills down the stairs ahead, so you can see a small table to your left.
+        Faint warm light spills down the <<link [[stairs|1_House-Upstairs]]>><</link>> ahead, so you can see a small table to your left.
 
-A door to your right stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.
+        A <<link [[door to your right|1_House-LivingRoom]]>><</link>> stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.
+
+    <<default>>
+        You're in the downstairs hallway, by the front door.
+
+        There's not much here apart from a small table and a few coats hanging up next to it.
+
+        <<link [[Go Upstairs|1_House-Upstairs]]>><</link>>
+        <<link [[Go to Living Room|1_House-LivingRoom]]>><</link>>
+<</switch>>
+
+
+:: 1_House-Hallway_table
+There's a letter and envelope next to bowl with a set of keys in it.
 
 
 :: 1_House-LivingRoom
@@ -33,26 +48,60 @@ A door to your right stands partially open, dim streetlight reveals the edge of 
 
         Clutter covers a <<link [[coffee table|1_House-LivingRoom_coffee-table]]>><</link>> in the middle of the room.
 
-        A flat TV sits on sideboard on one side, next to a large bookshelf in the corner.
+        A flat <<link [[TV|1_House-LivingRoom_tv]]>><</link>> sits on sideboard on one side, next to a large <<link [[bookshelf|1_House-LivingRoom_bookshelf]]>><</link>> in the corner.
 
-        On the opposite wall, there is a door partially opened.
+        Towards the back of the house, you can see the outline of a table and chairs in the next room.
 
-        Towards the back of the house, you can see the outline of a table and chairs in a dining room.
+        Behind you is the hallway.
     <<default>>
         You're in the living room at the front of the house.
 
         There's the cluttered <<link [[coffee table|1_House-LivingRoom_coffee-table]]>><</link>> in the middle of the room.
         
-        A TV on a sideboard stands along one wall, next to the large bookshelf in the corner.
+        A <<link [[TV|1_House-LivingRoom_tv]]>><</link>> on a sideboard stands along one wall, next to the large <<link [[bookshelf|1_House-LivingRoom_bookshelf]]>><</link>> in the corner.
 
-        The dining room joins this room towards the back of the house.
-        
-        The door to the side goes to the hallway.
+        <<link [[Go to the Kitchen|1_House-Kitchen]]>><</link>>
+
+        <<link [[Go to the Hallway|1_House-Hallway]]>><</link>>
 <</switch>>
 
+
 :: 1_House-LivingRoom_coffee-table
-Several letters, a crisp packet, two coffee mugs...<<link "Hello">><</link>>
+Several letters, a crisp packet, two coffee mugs...
+
 The dark wood coffee table has two drawers in the side
 
 
+:: 1_House-LivingRoom_tv
+It's a large flat-screen TV - nothing is on.
+
+
+:: 1_House-LivingRoom_bookshelf
+The bookshelf is stuffed with crime thrillers, historical fiction, and the odd travel or recipe book.
+
+There are a few books scattered in front, thrown onto the floor in a hurry.
+
+On the bottom shelf, the weathered spine of a large <<appendPBody "black book">><<include "Rift-book">><</appendPBody>>
+
+
+
+:: Rift-book [subPassage]
+@@.note-img; img : black book @@
+
+There is no title, but flicking the thin pages shows familiar text and etchings. There is handwriting inside the front cover.
+<<type $type_ms_default >>\
+    @@.game-note;
+    "There are many skins around our world. This book will guide you through the inner sanctums and the outer hells - I hope you find what you are looking for. - S"
+    @@
+<</type>>
+
+<<run $inventory.push("Rift book")>><<redo "update_inventory">>
+
+
+:: 1_House-Upstairs
+You go upstairs to the first floor, stairs creaking...
+
+
+:: 1_House-Kitchen
+You're in the kitchen.
 
