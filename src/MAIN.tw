@@ -23,8 +23,17 @@
     "start": "Start"
 }
 
+
 :: StoryTitle
 ASCend
+
+
+:: StoryInit
+<<set $line_delay = "1s">>
+<<set $type_ms_default = "40ms">>
+<<set $inventory = []>>
+<<set $dayCounter = 1>>
+
 
 :: StoryMenu
 <<link [[Start|Start]]>><</link>>
@@ -32,6 +41,7 @@ ASCend
 <<link [[1_House-Front_plant-pots]]>><</link>>
 <<link [[1_House-Hallway]]>><</link>>
 <<link [[Test]]>><</link>>
+
 
 :: PassageHeader
 @@.passage-header;
@@ -41,21 +51,18 @@ ASCend
     <<else>>
         <<set $line_delay = "1s">>
 <</if>>
-<span><<print "Day " + "--">></span>
+<span><<print "Day " + $dayCounter>></span>
 <span><<print "current passage visited: " + visited()>></span>
-<span class="inventory">Held: <<do tag "update_inventory">><<= $inventory.toString()>><</do>></span>
+<span class="inventory">Held: <<do tag "update_inventory">><<= $inventory.join(", ")>><</do>></span>
 <</nobr>>
 @@
+
 
 :: PassageFooter
 @@.passage-footer;
 Press 'Spacebar' on keyboard to skip typewriter animated text
 @@
 
-:: StoryInit
-<<set $line_delay = "1s">>
-<<set $type_ms_default = "40ms">>
-<<set $inventory = []>>
 
 :: Start
 ! <<link [[Dream...|Dream Sequence]]>><</link>>
