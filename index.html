@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="13" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
+	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="17" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
 STORY STYLESHEET
 - Tweego automatically compiles supported file types including css and JavaScript files into the head element of the html file
  */
@@ -136,13 +136,11 @@ body {
 /* --- ALL PASSAGES --- */
 .passage {
     /* border: solid 1px red; */
-    display: flex;
-    flex-flow: column nowrap;
     margin: 0 auto;
-    /* align-items: center; */
-    justify-content: flex-start;
     height: 90vh;
     max-width: 72ch;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .passage a {
@@ -150,6 +148,12 @@ body {
     text-underline-offset: 0.5rem;
     color: var(--colour-link--default);
     font-weight: 700;
+}
+
+.macro-link {
+    display: inline-block;
+    width: auto;
+    margin: 0;
 }
 
 .passage .box {
@@ -196,16 +200,8 @@ body {
     font-size: 1rem;
 }
 
-.passage-footer {
-    margin-top: auto;
-    justify-self: flex-end;
-    padding-top: var(--passage-header-footer-padding);
-    border-top: var(--passage-header-footer-dividers);
-}
-
 .passage-header {
     margin-bottom: 1.5rem;
-    justify-self: flex-start;
     padding-bottom: var(--passage-header-footer-padding);
     border-bottom: var(--passage-header-footer-dividers);
     display: flex;
@@ -217,6 +213,16 @@ body {
     flex: 100%; 
     justify-self: flex-start; 
     text-align: left;
+}
+
+.passage-body {
+    /* border: solid 1px red; */
+    margin-bottom: auto;
+}
+
+.passage-footer {
+    padding-top: var(--passage-header-footer-padding);
+    border-top: var(--passage-header-footer-dividers);
 }
 
 
@@ -416,14 +422,6 @@ importScripts([
 
 ]).then(function() {
     console.log("*** GSAP Loaded ***");
-    $(document).on(':passagerender', function (ev) {
-        /* Log details about the current moment. */
-        console.group('Details about the current moment');
-        console.log('buffer:', ev.detail.content);
-        console.log('passage name:', ev.detail.passage.name);
-        console.log('passage tags:', ev.detail.passage.tags);
-        console.groupEnd();
-    });
 
     // Register Plugins
     gsap.registerPlugin(TextPlugin);
@@ -456,6 +454,15 @@ importScripts([
 Config.addVisitedLinkClass = true;
 // Do not type on previously visited passages
 Config.macros.typeVisitedPassages = false;
+
+// 
+Config.passages.onProcess = function (p) {
+    if (p.title == "PassageHeader" || p.title == "PassageFooter") {
+        return p.text;
+    }
+    p.text = "<div class='passage-body'>" + p.text + "</div>";
+    return p.text;
+}
 
 // Hides default UIBar and reclaims space with stow
 // ** ADD .hide() WHEN DONE
@@ -750,43 +757,80 @@ Macro.add('mytestmacro', {
         $outputPara.appendTo(this.output);
     }
 })
-</script><tw-passagedata pid="1" name="House-Front" tags="" position="100,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
+</script><tw-passagedata pid="1" name="1_House-Front" tags="" position="100,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
 &lt;&lt;next $line_delay&gt;&gt;The brick terraced house looks like any other in this leafy suburban street. It&#39;s a quiet night and there is a sliver of moon in the sky.
 
 &lt;&lt;next $line_delay&gt;&gt;The front garden is simple but neat with a trimmed lawn and hedge to the side.
 
-&lt;&lt;next $line_delay&gt;&gt;There are several &lt;&lt;link [[plant pots|House-Front_plant-pots]]&gt;&gt;&lt;&lt;/link&gt;&gt; of different sizes in front of the bay window.
+&lt;&lt;next $line_delay&gt;&gt;There are several &lt;&lt;link [[plant pots|1_House-Front_plant-pots]]&gt;&gt;&lt;&lt;/link&gt;&gt; of different sizes in front of the bay window.
 
-&lt;&lt;next $line_delay&gt;&gt;A &lt;&lt;link [[stone wall|House-Front_wall]]&gt;&gt;&lt;&lt;/link&gt;&gt; separates the garden from the street.
+&lt;&lt;next $line_delay&gt;&gt;A &lt;&lt;link [[stone wall|1_House-Front_wall]]&gt;&gt;&lt;&lt;/link&gt;&gt; separates the garden from the street.
 
-&lt;&lt;next $line_delay&gt;&gt;Sometimes the best approach is the simplest, you could try and knock on the &lt;&lt;link [[front door|House-Front_door]]&gt;&gt;&lt;&lt;/link&gt;&gt;.
-&lt;&lt;/timed&gt;&gt;\</tw-passagedata><tw-passagedata pid="2" name="House-Front_plant-pots" tags="" position="225,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;
+&lt;&lt;next $line_delay&gt;&gt;Sometimes the best approach is the simplest, you could try and knock on the &lt;&lt;link [[front door|1_House-Front_door]]&gt;&gt;&lt;&lt;/link&gt;&gt;.
+&lt;&lt;/timed&gt;&gt;\</tw-passagedata><tw-passagedata pid="2" name="1_House-Front_plant-pots" tags="" position="225,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
     &lt;&lt;next $line_delay&gt;&gt;In the plant pots you can see mint, rosemary, red flowers, and a few small strawberry plants growing - the berries are long gone.
 
     &lt;&lt;next $line_delay&gt;&gt;Weeds grow in the cracks between the paving stones.
 
     &lt;&lt;next $line_delay&gt;&gt;The bay window is dark.
-&lt;&lt;next $line_delay&gt;&gt;&lt;&lt;if !$inventory.includes(&quot;Wire&quot;)&gt;&gt;
-    &lt;&lt;timed 40ms t8n&gt;&gt;\
-    &lt;&lt;next $line_delay&gt;&gt;You search through the pots one by one... a small ceramic frog...wooden sticks... some wire and netting.
+    &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;if !$inventory.includes(&quot;Wire&quot;)&gt;&gt;
+        &lt;&lt;linkreplace &quot;Search plant pots&quot; t8n&gt;&gt;
+            &lt;&lt;timed 40ms t8n&gt;&gt;\
+                &lt;&lt;next $line_delay&gt;&gt;You search through the pots one by one... a small ceramic frog...wooden sticks... some wire and netting.
 
-    &lt;&lt;next $line_delay&gt;&gt;You take the wire.
-    &lt;&lt;nobr&gt;&gt;
-    /* Add wire to inventory */
-        &lt;&lt;run $inventory.pushUnique(&quot;Wire&quot;)&gt;&gt;
-        &lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;
-    &lt;&lt;/nobr&gt;&gt;
-    &lt;&lt;next $line_delay&gt;&gt;Standing up, you check the street... &lt;&lt;next 3s&gt;&gt;No one seems to have noticed.
+                &lt;&lt;next $line_delay&gt;&gt;You take the wire.
+                &lt;&lt;nobr&gt;&gt;
+                /* Add wire to inventory */
+                    &lt;&lt;run $inventory.pushUnique(&quot;Wire&quot;)&gt;&gt;
+                    &lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;
+                &lt;&lt;/nobr&gt;&gt;
+                &lt;&lt;next $line_delay&gt;&gt;Standing up, you check the street... &lt;&lt;next 3s&gt;&gt;No one seems to have noticed.
 
-    &lt;&lt;next $line_delay&gt;&gt;You could try the &lt;&lt;link [[front door|House-Front_door]]&gt;&gt;&lt;&lt;/link&gt;&gt; again, or &lt;&lt;link [[check around the garden|House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt; for another way in.
-    &lt;&lt;/timed&gt;&gt;\
-    \
-    &lt;&lt;else&gt;&gt;\
+                &lt;&lt;next $line_delay&gt;&gt;You could try the &lt;&lt;link [[front door|1_House-Front_door]]&gt;&gt;&lt;&lt;/link&gt;&gt; again, or &lt;&lt;link [[check around the garden|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt; for another way in.
+            &lt;&lt;/timed&gt;&gt;\
+        &lt;&lt;/linkreplace&gt;&gt;
+        &lt;&lt;else&gt;&gt;\
+            &lt;&lt;timed 40ms t8n&gt;&gt;\
+                &lt;&lt;next&gt;&gt;The wire you found here could be used &lt;&lt;link [[somewhere else|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;.
+            &lt;&lt;/timed&gt;&gt;
+    &lt;&lt;/if&gt;&gt;\
+    &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;if $inventory.includes(&quot;Stone&quot;)&gt;&gt;\
+        &lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;\
+        &lt;&lt;link [[Smash the window | 1_House-Front_plant-pots_window]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="1_House-Front_plant-pots_window" tags="" position="350,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
+    &lt;&lt;next $line_delay&gt;&gt;@@.note-sfx; sound fx : window smash @@
+
+    &lt;&lt;next $line_delay&gt;&gt;You reach carefully through the broken glass and twist handle of the window.
+
+    &lt;&lt;next $line_delay&gt;&gt;It opens just far enough for you to climb through...
+
+    &lt;&lt;next $line_delay&gt;&gt;A light switches on in the house across the street and a silhouette appears, pulls back the curtain, phone in hand.
+
+    &lt;&lt;linkreplace &quot;Hide&quot; t8n&gt;&gt;\
         &lt;&lt;timed 40ms t8n&gt;&gt;\
-            &lt;&lt;next&gt;&gt;The wire you found here could be used &lt;&lt;link [[somewhere else|House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;.
+            &lt;&lt;next $line_delay&gt;&gt;You duck behind the hedge to the side.
+
+            &lt;&lt;next $line_delay&gt;&gt;@@.note-sfx; Rustling leaves@@
+
+            &lt;&lt;next 2s&gt;&gt;Amber eyes meet yours and rust coloured fur fills your vision...
+
+            &lt;&lt;next $line_delay&gt;&gt;... Just a fox. It darts off into the street.
+
+            &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Is it clear?|1_House-Front_window-entry]]&gt;&gt;&lt;&lt;/link&gt;&gt;
         &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/timed&gt;&gt;\</tw-passagedata><tw-passagedata pid="3" name="House-Front_wall" tags="" position="350,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
+    &lt;&lt;/linkreplace&gt;&gt;
+&lt;&lt;/timed&gt;&gt;
+
+/* &gt;&gt;&gt;&gt;&gt;&gt; FORWARDS TO : Day_1_b.tw ::1_House-Hallway */</tw-passagedata><tw-passagedata pid="4" name="1_House-Front_window-entry" tags="" position="475,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;
+    &lt;&lt;next $line_delay&gt;&gt;The window across has gone dark.
+
+    &lt;&lt;next $line_delay&gt;&gt;You grimace but you&#39;re sure nothing will come of that call.
+
+    &lt;&lt;next $line_delay&gt;&gt;Easy enough to explain to the neighbours.
+
+    &lt;&lt;next $line_delay&gt;&gt;Without wasting any more time, you &lt;&lt;link [[climb through|1_House-LivingRoom]]&gt;&gt;&lt;&lt;/link&gt;&gt; the window...
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="1_House-Front_wall" tags="" position="600,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
 &lt;&lt;next $line_delay&gt;&gt;The rough limestone wall is about waist height and separates the garden from the street.
 
 &lt;&lt;next $line_delay&gt;&gt;Some stones are \
@@ -794,7 +838,7 @@ Macro.add('mytestmacro', {
     &lt;&lt;timed 40ms t8n&gt;&gt;
         &lt;&lt;next $line_delay&gt;&gt;One stone should be enough.
 
-        &lt;&lt;next $line_delay&gt;&gt;Maybe there is &lt;&lt;link [[somewhere else|House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt; you could use it?
+        &lt;&lt;next $line_delay&gt;&gt;Maybe there is &lt;&lt;link [[somewhere else|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt; you could use it?
     &lt;&lt;/timed&gt;&gt;
     &lt;&lt;else&gt;&gt;\
     &lt;&lt;linkappend &quot;loose.&quot; t8n&gt;&gt;
@@ -804,11 +848,11 @@ Macro.add('mytestmacro', {
 
         &lt;&lt;next 3s&gt;&gt;You grab a corner stone and work it free.
         &lt;&lt;next 1s&gt;&gt;&lt;&lt;run $inventory.pushUnique(&quot;Stone&quot;)&gt;&gt;&lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;
-        &lt;&lt;next $line_delay&gt;&gt;The stone fits neatly in your hand, maybe there is &lt;&lt;link [[somewhere else|House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt; you could use it?
+        &lt;&lt;next $line_delay&gt;&gt;The stone fits neatly in your hand, maybe there is &lt;&lt;link [[somewhere else|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt; you could use it?
         &lt;&lt;/timed&gt;&gt;
     &lt;&lt;/linkappend&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="4" name="House-Front_door" tags="" position="475,100" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="6" name="1_House-Front_door" tags="" position="725,100" size="100,100">&lt;&lt;nobr&gt;&gt;
     /* &lt;&lt;run $inventory.deleteAll(&quot;Wire&quot;)&gt;&gt;
     &lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;
     &lt;&lt;set _a = true&gt;&gt; */
@@ -822,15 +866,18 @@ Macro.add('mytestmacro', {
         &lt;&lt;next $line_delay&gt;&gt;...
 
         &lt;&lt;next 4s&gt;&gt;No answer.
-            &lt;&lt;include &quot;House-Front_door_unlock&quot;&gt;&gt;
+            &lt;&lt;include &quot;1_House-Front_door_unlock&quot;&gt;&gt;
     &lt;&lt;/timed&gt;&gt;
     /* Visited before (don&#39;t knock) */
     &lt;&lt;else&gt;&gt;\
         &lt;&lt;timed 40ms t8n&gt;&gt;
             &lt;&lt;next $line_delay&gt;&gt;Seems as though no one is about.
-                &lt;&lt;include &quot;House-Front_door_unlock&quot;&gt;&gt;
+                &lt;&lt;include &quot;1_House-Front_door_unlock&quot;&gt;&gt;
         &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="House-Front_door_unlock" tags="" position="600,100" size="100,100">/* Check if &quot;Wire&quot; in inventory? */\
+&lt;&lt;/if&gt;&gt;
+
+
+/* &gt;&gt;&gt;&gt;&gt;&gt; FORWARDS TO : Day_1_b.tw ::1_House-Hallway */</tw-passagedata><tw-passagedata pid="7" name="1_House-Front_door_unlock" tags="" position="850,100" size="100,100">/* Check if &quot;Wire&quot; in inventory? */\
 &lt;&lt;if $inventory.includes(&quot;Wire&quot;)&gt;&gt;\
     /* Yes - Show Pick lock and enter house */\
     &lt;&lt;timed 40ms t8n&gt;&gt;\
@@ -844,10 +891,10 @@ Macro.add('mytestmacro', {
 
         &lt;&lt;next 2s&gt;&gt;You turn back to the door and start picking the lock with the wire.
 
-        &lt;&lt;next $line_delay&gt;&gt;@@.note-sfx; sfx : Lock clicking @@
+        &lt;&lt;next $line_delay&gt;&gt;@@.note-sfx; sfx : Lock clicking @@&lt;&lt;run $inventory.deleteAll(&quot;Wire&quot;)&gt;&gt;
+        &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;The wire snaps in half.
 
-        &lt;&lt;next 3s&gt;&gt;The door opens silently and you &lt;&lt;link [[step through...|House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-
+        &lt;&lt;next 3s&gt;&gt;The door opens silently and you &lt;&lt;link [[step through...|1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
     &lt;&lt;/timed&gt;&gt;\
     \
     &lt;&lt;else&gt;&gt;\
@@ -856,17 +903,17 @@ Macro.add('mytestmacro', {
             &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;nobr&gt;&gt;
                 Standing on the &lt;&lt;linkreplace &quot;doormat&quot;&gt;&gt;
                     &lt;&lt;append &quot;span.macro-timed-insert:last-of-type&quot; t8n&gt;&gt;
-                        &lt;&lt;include &quot;House-Front_door_doormat&quot;&gt;&gt;
+                        &lt;&lt;include &quot;1_House-Front_door_doormat&quot;&gt;&gt;
                     &lt;&lt;/append&gt;&gt;
                     doormat\
                 &lt;&lt;/linkreplace&gt;&gt;, 
-                you turn back towards the &lt;&lt;link [[garden.|House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+                you turn back towards the &lt;&lt;link [[garden.|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
                 &lt;&lt;/nobr&gt;&gt;
         &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/if&gt;&gt;\</tw-passagedata><tw-passagedata pid="6" name="House-Front_door_doormat" tags="" position="725,100" size="100,100">&lt;&lt;if visited() &gt; 1&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="1_House-Front_door_doormat" tags="" position="975,100" size="100,100">&lt;&lt;if visited() &gt; 1&gt;&gt;
     You already checked under the doormat - there&#39;s nothing there.
     &lt;&lt;timed 5s&gt;&gt;
-        &lt;&lt;goto &quot;House-Front_door&quot;&gt;&gt;
+        &lt;&lt;goto &quot;1_House-Front_door&quot;&gt;&gt;
     &lt;&lt;/timed&gt;&gt;
     &lt;&lt;else&gt;&gt;
         &lt;&lt;timed 40ms t8n&gt;&gt;\
@@ -877,7 +924,47 @@ Macro.add('mytestmacro', {
             &lt;&lt;next $line_delay&gt;&gt;All the lights are out and no-one is about.
 
         &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="House-Hallway" tags="" position="850,100" size="100,100">House hallway day 1</tw-passagedata><tw-passagedata pid="8" name="Game Screen" tags="game-screen" position="975,100" size="100,100">&lt;html&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="1_House-Hallway" tags="" position="1100,100" size="100,100">You close the door behind you and look around a narrow hallway.
+
+Faint light spills down the stairs ahead, so you can see a small table to your left.
+
+A door to your right stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.</tw-passagedata><tw-passagedata pid="10" name="1_House-LivingRoom" tags="" position="1225,100" size="100,100">&lt;&lt;switch visited()&gt;&gt;\
+    &lt;&lt;case 1&gt;&gt;\
+        &lt;&lt;if previous() == &quot;1_House-Front_window-entry&quot;&gt;&gt;\
+            &lt;&lt;nobr&gt;&gt;
+                &lt;&lt;run $inventory.deleteAll(&quot;Stone&quot;)&gt;&gt;
+                &lt;&lt;timed 40ms&gt;&gt;
+                    &lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;
+                &lt;&lt;/timed&gt;&gt;
+            &lt;&lt;/nobr&gt;&gt;\
+            You climb down from the window into the room at the front. 
+
+            Dimly lit by the streetlight outside, you step off something soft - a beige sofa.
+
+            &lt;&lt;elseif previous() == &quot;1_House-Hallway&quot;&gt;&gt;
+                You open the door and it creaks slightly.
+        &lt;&lt;/if&gt;&gt;\
+        The window to the front garden lets in dim streetlight, under it a beige sofa.
+
+        Clutter covers a &lt;&lt;link [[coffee table|1_House-LivingRoom_coffee-table]]&gt;&gt;&lt;&lt;/link&gt;&gt; in the middle of the room.
+
+        A flat TV sits on sideboard on one side, next to a large bookshelf in the corner.
+
+        On the opposite wall, there is a door partially opened.
+
+        Towards the back of the house, you can see the outline of a table and chairs in a dining room.
+    &lt;&lt;default&gt;&gt;
+        You&#39;re in the living room at the front of the house.
+
+        There&#39;s the cluttered &lt;&lt;link [[coffee table|1_House-LivingRoom_coffee-table]]&gt;&gt;&lt;&lt;/link&gt;&gt; in the middle of the room.
+        
+        A TV on a sideboard stands along one wall, next to the large bookshelf in the corner.
+
+        The dining room joins this room towards the back of the house.
+        
+        The door to the side goes to the hallway.
+&lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="1_House-LivingRoom_coffee-table" tags="" position="100,225" size="100,100">Several letters, a crisp packet, two coffee mugs...&lt;&lt;link &quot;Hello&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;
+The dark wood coffee table has two drawers in the side</tw-passagedata><tw-passagedata pid="12" name="Game Screen" tags="game-screen" position="225,225" size="100,100">&lt;html&gt;
     &lt;div class=&quot;display&quot;&gt;
         &lt;p class=&quot;output-title&quot;&gt;Output&lt;/p&gt;
         &lt;div class=&quot;output&quot;&gt;&lt;/div&gt;
@@ -907,9 +994,9 @@ Macro.add('mytestmacro', {
         &lt;!-- User controls  container end --&gt;
     &lt;/div&gt;
 &lt;/html&gt;
-/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="9" name="StoryMenu" tags="" position="1100,100" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="PassageHeader" tags="" position="1225,100" size="100,100">@@.passage-header;
+/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="13" name="StoryMenu" tags="" position="350,225" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="PassageHeader" tags="" position="475,225" size="100,100">@@.passage-header;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if visited() &gt; 1&gt;&gt;
     &lt;&lt;set $line_delay = &quot;40ms&quot;&gt;&gt;
@@ -920,20 +1007,20 @@ Macro.add('mytestmacro', {
 &lt;span&gt;&lt;&lt;print &quot;current passage visited: &quot; + visited()&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;inventory&quot;&gt;Held: &lt;&lt;do tag &quot;update_inventory&quot;&gt;&gt;&lt;&lt;= $inventory.toString()&gt;&gt;&lt;&lt;/do&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
-@@</tw-passagedata><tw-passagedata pid="11" name="PassageFooter" tags="" position="100,225" size="100,100">@@.passage-footer;
+@@</tw-passagedata><tw-passagedata pid="15" name="PassageFooter" tags="" position="600,225" size="100,100">@@.passage-footer;
 Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
-@@</tw-passagedata><tw-passagedata pid="12" name="StoryInit" tags="" position="225,225" size="100,100">&lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;
+@@</tw-passagedata><tw-passagedata pid="16" name="StoryInit" tags="" position="725,225" size="100,100">&lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;
 &lt;&lt;set $type_ms_default = &quot;40ms&quot;&gt;&gt;
-&lt;&lt;set $inventory = []&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="Start" tags="" position="350,225" size="100,100">! &lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;set $inventory = []&gt;&gt;</tw-passagedata><tw-passagedata pid="17" name="Start" tags="" position="850,225" size="100,100">! &lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;message&gt;&gt;Hello&lt;&lt;/message&gt;&gt;
 &lt;&lt;mytestmacro&gt;&gt;Hello myTestMacro is running successfully!&lt;&lt;/mytestmacro&gt;&gt;
 /* &lt;&lt;link [[Test page|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt; */
-/* &lt;span&gt;&lt;&lt;- $chores.water_plants&gt;&gt;&lt;/span&gt; */</tw-passagedata><tw-passagedata pid="14" name="Dream Sequence" tags="" position="475,225" size="100,100">@@.dream-img;@@
+/* &lt;span&gt;&lt;&lt;- $chores.water_plants&gt;&gt;&lt;/span&gt; */</tw-passagedata><tw-passagedata pid="18" name="Dream Sequence" tags="" position="975,225" size="100,100">@@.dream-img;@@
 &lt;&lt;link [[Ignore it|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 
 
-/* LINKS TO DAY_1.tw */</tw-passagedata><tw-passagedata pid="15" name="Intro" tags="" position="600,225" size="100,100">&lt;&lt;nobr&gt;&gt;
+/* LINKS TO DAY_1.tw */</tw-passagedata><tw-passagedata pid="19" name="Intro" tags="" position="1100,225" size="100,100">&lt;&lt;nobr&gt;&gt;
     &lt;&lt;if visited(&quot;Intro&quot;)&gt; 1&gt;&gt;
         &lt;&lt;set _letterbox_delay = &quot;40ms&quot;&gt;&gt;
         &lt;&lt;else&gt;&gt;
@@ -958,7 +1045,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 &lt;&lt;if visited(&quot;Case Envelope&quot;, &quot;Intro - eat drink&quot;)&gt;&gt;\
     &lt;&lt;type $type_ms_default&gt;&gt;&lt;&lt;link [[Time to go.|House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/type&gt;&gt;
 &lt;&lt;/if&gt;&gt;\
-&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="Case Envelope" tags="" position="725,225" size="100,100">A flimsy sheet of badly printed text. There is a street address and instructions...
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="Case Envelope" tags="" position="1225,225" size="100,100">A flimsy sheet of badly printed text. There is a street address and instructions...
 @@.game-note;
 &lt;&lt;type $type_ms_default&gt;&gt;&gt;Detected 1 rune - up to you to find the rift interface.
 &gt;Human made, proceed with caution. 
@@ -968,7 +1055,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 @@\
 @@.note-img;//img : Pixel art letter &amp; rune symbol//@@
 
-&lt;&lt;link [[You tuck the envelope into your jacket.|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="17" name="Intro - eat drink" tags="" position="850,225" size="100,100">&lt;&lt;if visited()&gt;1&gt;&gt;
+&lt;&lt;link [[You tuck the envelope into your jacket.|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="Intro - eat drink" tags="" position="100,350" size="100,100">&lt;&lt;if visited()&gt;1&gt;&gt;
     &lt;&lt;timed 40ms t8n&gt;&gt;
     &lt;&lt;next $line_delay&gt;&gt;You&#39;ve already eaten the last of the food in your fridge.
     
@@ -978,9 +1065,6 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
     &lt;&lt;/timed&gt;&gt;\
 
     &lt;&lt;else&gt;&gt;\
-        &lt;&lt;nobr&gt;&gt;
-            &lt;&lt;set $line_delay = &quot;1500ms&quot;&gt;&gt;
-        &lt;&lt;/nobr&gt;&gt;
         &lt;&lt;timed 40ms t8n&gt;&gt;\
         &lt;&lt;next $line_delay&gt;&gt;You cross the hallway into the kitchen.
 
@@ -995,7 +1079,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
         &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Check if you need anything else before you go. | Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
         &lt;&lt;/timed&gt;&gt;
 
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="18" name="Game Chapter 1 - Start" tags="chapter1" position="975,225" size="100,100">&lt;&lt;set $gameCh1 = [
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="Game Chapter 1 - Start" tags="chapter1" position="225,350" size="100,100">&lt;&lt;set $gameCh1 = [
     &quot;Ta daaa!! My first ever game!!&quot;,
     &quot;Work in progress - let me know what you think!&quot;,
     &quot;All feedback is constructive :)&quot;,
@@ -1014,8 +1098,8 @@ Speech Num: &lt;&lt;do tag &quot;game-ch1&quot;&gt;&gt;$speech_num&lt;&lt;/do&gt
         &lt;&lt;elseif $speech_num &lt;= $speech_len&gt;&gt;
             &lt;&lt;goto &quot;Game Chapter 1a&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="19" name="Game Chapter 1a" tags="game-screen chapter1" position="1100,225" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
-@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="20" name="Test" tags="" position="1225,225" size="100,100">This is a test page 
+&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="Game Chapter 1a" tags="game-screen chapter1" position="350,350" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
+@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="24" name="Test" tags="" position="475,350" size="100,100">This is a test page 
 Hello :)
 @@.box;
 Another box using .box class.

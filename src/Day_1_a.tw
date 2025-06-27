@@ -1,0 +1,201 @@
+/* DAY 1a */
+/* 
+    --- Objective: Find a way to break into the house ---
+    - Option A: Search the plant pots and find a wire - go to the front door to pick the lock
+    - Option B: Get a stone from the wall and smash the living room window to reach the handle and open it.
+*/
+
+:: 1_House-Front
+<<timed 40ms t8n>>\
+<<next $line_delay>>The brick terraced house looks like any other in this leafy suburban street. It's a quiet night and there is a sliver of moon in the sky.
+
+<<next $line_delay>>The front garden is simple but neat with a trimmed lawn and hedge to the side.
+
+<<next $line_delay>>There are several <<link [[plant pots|1_House-Front_plant-pots]]>><</link>> of different sizes in front of the bay window.
+
+<<next $line_delay>>A <<link [[stone wall|1_House-Front_wall]]>><</link>> separates the garden from the street.
+
+<<next $line_delay>>Sometimes the best approach is the simplest, you could try and knock on the <<link [[front door|1_House-Front_door]]>><</link>>.
+<</timed>>\
+
+
+:: 1_House-Front_plant-pots
+<<timed 40ms t8n>>\
+    <<next $line_delay>>In the plant pots you can see mint, rosemary, red flowers, and a few small strawberry plants growing - the berries are long gone.
+
+    <<next $line_delay>>Weeds grow in the cracks between the paving stones.
+
+    <<next $line_delay>>The bay window is dark.
+    <<next $line_delay>><<if !$inventory.includes("Wire")>>
+        <<linkreplace "Search plant pots" t8n>>
+            <<timed 40ms t8n>>\
+                <<next $line_delay>>You search through the pots one by one... a small ceramic frog...wooden sticks... some wire and netting.
+
+                <<next $line_delay>>You take the wire.
+                <<nobr>>
+                /* Add wire to inventory */
+                    <<run $inventory.pushUnique("Wire")>>
+                    <<redo "update_inventory">>
+                <</nobr>>
+                <<next $line_delay>>Standing up, you check the street... <<next 3s>>No one seems to have noticed.
+
+                <<next $line_delay>>You could try the <<link [[front door|1_House-Front_door]]>><</link>> again, or <<link [[check around the garden|1_House-Front]]>><</link>> for another way in.
+            <</timed>>\
+        <</linkreplace>>
+        <<else>>\
+            <<timed 40ms t8n>>\
+                <<next>>The wire you found here could be used <<link [[somewhere else|1_House-Front]]>><</link>>.
+            <</timed>>
+    <</if>>\
+    <<next $line_delay>><<if $inventory.includes("Stone")>>\
+        <<set $line_delay = "1s">>\
+        <<link [[Smash the window | 1_House-Front_plant-pots_window]]>><</link>>
+        <</if>>
+<</timed>>
+
+
+:: 1_House-Front_plant-pots_window
+<<timed 40ms t8n>>\
+    <<next $line_delay>>@@.note-sfx; sound fx : window smash @@
+
+    <<next $line_delay>>You reach carefully through the broken glass and twist handle of the window.
+
+    <<next $line_delay>>It opens just far enough for you to climb through...
+
+    <<next $line_delay>>A light switches on in the house across the street and a silhouette appears, pulls back the curtain, phone in hand.
+
+    <<linkreplace "Hide" t8n>>\
+        <<timed 40ms t8n>>\
+            <<next $line_delay>>You duck behind the hedge to the side.
+
+            <<next $line_delay>>@@.note-sfx; Rustling leaves@@
+
+            <<next 2s>>Amber eyes meet yours and rust coloured fur fills your vision...
+
+            <<next $line_delay>>... Just a fox. It darts off into the street.
+
+            <<next $line_delay>><<link [[Is it clear?|1_House-Front_window-entry]]>><</link>>
+        <</timed>>
+    <</linkreplace>>
+<</timed>>
+
+/* >>>>>> FORWARDS TO : Day_1_b.tw ::1_House-Hallway */
+:: 1_House-Front_window-entry
+<<timed 40ms t8n>>
+    <<next $line_delay>>The window across has gone dark.
+
+    <<next $line_delay>>You grimace but you're sure nothing will come of that call.
+
+    <<next $line_delay>>Easy enough to explain to the neighbours.
+
+    <<next $line_delay>>Without wasting any more time, you <<link [[climb through|1_House-LivingRoom]]>><</link>> the window...
+<</timed>>
+
+
+:: 1_House-Front_wall
+<<timed 40ms t8n>>\
+<<next $line_delay>>The rough limestone wall is about waist height and separates the garden from the street.
+
+<<next $line_delay>>Some stones are \
+<<if (visited() > 1) && ($inventory.includes("Stone"))>>loose.
+    <<timed 40ms t8n>>
+        <<next $line_delay>>One stone should be enough.
+
+        <<next $line_delay>>Maybe there is <<link [[somewhere else|1_House-Front]]>><</link>> you could use it?
+    <</timed>>
+    <<else>>\
+    <<linkappend "loose." t8n>>
+        <br>The mortar is crumbling away in the corner.
+        <<timed 40ms t8n>>
+        <<next $line_delay>>@@.note-sfx; sfx : stone grinding @@
+
+        <<next 3s>>You grab a corner stone and work it free.
+        <<next 1s>><<run $inventory.pushUnique("Stone")>><<redo "update_inventory">>
+        <<next $line_delay>>The stone fits neatly in your hand, maybe there is <<link [[somewhere else|1_House-Front]]>><</link>> you could use it?
+        <</timed>>
+    <</linkappend>>
+<</if>>
+<</timed>>
+
+
+:: 1_House-Front_door
+<<nobr>>
+    /* <<run $inventory.deleteAll("Wire")>>
+    <<redo "update_inventory">>
+    <<set _a = true>> */
+<</nobr>>
+    You walk up the concrete path and to the solid wooden door.\
+    /* Check if passage visited before */
+<<if visited() == 1>>\
+    <<timed 40ms t8n>>
+        <<next $line_delay>>@@.note-sfx; sfx : Knocking on door@@
+
+        <<next $line_delay>>...
+
+        <<next 4s>>No answer.
+            <<include "1_House-Front_door_unlock">>
+    <</timed>>
+    /* Visited before (don't knock) */
+    <<else>>\
+        <<timed 40ms t8n>>
+            <<next $line_delay>>Seems as though no one is about.
+                <<include "1_House-Front_door_unlock">>
+        <</timed>>
+<</if>>
+
+
+/* >>>>>> FORWARDS TO : Day_1_b.tw ::1_House-Hallway */
+:: 1_House-Front_door_unlock
+/* Check if "Wire" in inventory? */\
+<<if $inventory.includes("Wire")>>\
+    /* Yes - Show Pick lock and enter house */\
+    <<timed 40ms t8n>>\
+        <<next $line_delay>>@@.note-sfx; sfx : rustling in the bushes@@
+
+        <<next 3s>>Something emerges from the hedge behind you ...
+        <<next $line_delay>>...
+        <<next 4s>>... Just a fox. Its amber eyes glint, just as startled as you.
+
+        <<next 2s>>After a moment, it trots down the path and down the empty street.
+
+        <<next 2s>>You turn back to the door and start picking the lock with the wire.
+
+        <<next $line_delay>>@@.note-sfx; sfx : Lock clicking @@<<run $inventory.deleteAll("Wire")>>
+        <<next $line_delay>><<redo "update_inventory">>The wire snaps in half.
+
+        <<next 3s>>The door opens silently and you <<link [[step through...|1_House-Hallway]]>><</link>>
+    <</timed>>\
+    \
+    <<else>>\
+    /* No - Show Links back to garden */
+        <<timed 40ms t8n>>\
+            <<next $line_delay>><<nobr>>
+                Standing on the <<linkreplace "doormat">>
+                    <<append "span.macro-timed-insert:last-of-type" t8n>>
+                        <<include "1_House-Front_door_doormat">>
+                    <</append>>
+                    doormat\
+                <</linkreplace>>, 
+                you turn back towards the <<link [[garden.|1_House-Front]]>><</link>>
+                <</nobr>>
+        <</timed>>
+<</if>>
+
+
+:: 1_House-Front_door_doormat
+<<if visited() > 1>>
+    You already checked under the doormat - there's nothing there.
+    <<timed 5s>>
+        <<goto "1_House-Front_door">>
+    <</timed>>
+    <<else>>
+        <<timed 40ms t8n>>\
+            <<next $line_delay>>You lift up the doormat... Nothing. A single woodlouse crawls off.
+
+            <<next $line_delay>>You stand up and check the street...
+
+            <<next $line_delay>>All the lights are out and no-one is about.
+
+        <</timed>>
+<</if>>
+

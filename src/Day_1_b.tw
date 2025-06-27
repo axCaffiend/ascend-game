@@ -1,0 +1,58 @@
+/* DAY 1b */
+/* 
+    --- Objective: Find the rift ---
+
+*/
+
+:: 1_House-Hallway
+You close the door behind you and look around a narrow hallway.
+
+Faint light spills down the stairs ahead, so you can see a small table to your left.
+
+A door to your right stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.
+
+
+:: 1_House-LivingRoom
+<<switch visited()>>\
+    <<case 1>>\
+        <<if previous() == "1_House-Front_window-entry">>\
+            <<nobr>>
+                <<run $inventory.deleteAll("Stone")>>
+                <<timed 40ms>>
+                    <<redo "update_inventory">>
+                <</timed>>
+            <</nobr>>\
+            You climb down from the window into the room at the front. 
+
+            Dimly lit by the streetlight outside, you step off something soft - a beige sofa.
+
+            <<elseif previous() == "1_House-Hallway">>
+                You open the door and it creaks slightly.
+        <</if>>\
+        The window to the front garden lets in dim streetlight, under it a beige sofa.
+
+        Clutter covers a <<link [[coffee table|1_House-LivingRoom_coffee-table]]>><</link>> in the middle of the room.
+
+        A flat TV sits on sideboard on one side, next to a large bookshelf in the corner.
+
+        On the opposite wall, there is a door partially opened.
+
+        Towards the back of the house, you can see the outline of a table and chairs in a dining room.
+    <<default>>
+        You're in the living room at the front of the house.
+
+        There's the cluttered <<link [[coffee table|1_House-LivingRoom_coffee-table]]>><</link>> in the middle of the room.
+        
+        A TV on a sideboard stands along one wall, next to the large bookshelf in the corner.
+
+        The dining room joins this room towards the back of the house.
+        
+        The door to the side goes to the hallway.
+<</switch>>
+
+:: 1_House-LivingRoom_coffee-table
+Several letters, a crisp packet, two coffee mugs...<<link "Hello">><</link>>
+The dark wood coffee table has two drawers in the side
+
+
+
