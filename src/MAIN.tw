@@ -1,10 +1,15 @@
 /* GENERAL NOTES */
 /*  
-- Links break passage text around them onto new lines??? 
-    solution: don't know why, but wrapping in a span fixes it. Nothing seems to change in html markup or css?? Passage text is wrapped in <<timed>> macros, which fixes it...
+===== ONGOING ISSUES =====
+
+===== SOLVED =====
+- Links not displaying inline - SOLVED
+    Wrapped passage content in .passage-body div using SugarCube Config API, so column flow isn't applied to links.
+
 - In passage notes (replace or delete in Final)
     - Sound effects : .note-sfx (light blue)
     - Images : .note-img (pink)
+
 */
 
 :: StoryData
@@ -20,7 +25,7 @@ ASCend
 
 :: StoryMenu
 <<link [[Start|Start]]>><</link>>
-<<link [[House-Front]]>><</link>>
+<<link [[1_House-Front]]>><</link>>
 <<link [[Test]]>><</link>>
 
 :: PassageHeader
@@ -116,9 +121,6 @@ A flimsy sheet of badly printed text. There is a street address and instructions
     <</timed>>\
 
     <<else>>\
-        <<nobr>>
-            <<set $line_delay = "1500ms">>
-        <</nobr>>
         <<timed 40ms t8n>>\
         <<next $line_delay>>You cross the hallway into the kitchen.
 

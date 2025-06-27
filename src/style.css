@@ -30,13 +30,11 @@ body {
 /* --- ALL PASSAGES --- */
 .passage {
     /* border: solid 1px red; */
-    display: flex;
-    flex-flow: column nowrap;
     margin: 0 auto;
-    /* align-items: center; */
-    justify-content: flex-start;
     height: 90vh;
     max-width: 72ch;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 .passage a {
@@ -44,6 +42,12 @@ body {
     text-underline-offset: 0.5rem;
     color: var(--colour-link--default);
     font-weight: 700;
+}
+
+.macro-link {
+    display: inline-block;
+    width: auto;
+    margin: 0;
 }
 
 .passage .box {
@@ -90,16 +94,8 @@ body {
     font-size: 1rem;
 }
 
-.passage-footer {
-    margin-top: auto;
-    justify-self: flex-end;
-    padding-top: var(--passage-header-footer-padding);
-    border-top: var(--passage-header-footer-dividers);
-}
-
 .passage-header {
     margin-bottom: 1.5rem;
-    justify-self: flex-start;
     padding-bottom: var(--passage-header-footer-padding);
     border-bottom: var(--passage-header-footer-dividers);
     display: flex;
@@ -111,6 +107,16 @@ body {
     flex: 100%; 
     justify-self: flex-start; 
     text-align: left;
+}
+
+.passage-body {
+    /* border: solid 1px red; */
+    margin-bottom: auto;
+}
+
+.passage-footer {
+    padding-top: var(--passage-header-footer-padding);
+    border-top: var(--passage-header-footer-dividers);
 }
 
 

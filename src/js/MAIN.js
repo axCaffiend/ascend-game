@@ -7,14 +7,6 @@ importScripts([
 
 ]).then(function() {
     console.log("*** GSAP Loaded ***");
-    $(document).on(':passagerender', function (ev) {
-        /* Log details about the current moment. */
-        console.group('Details about the current moment');
-        console.log('buffer:', ev.detail.content);
-        console.log('passage name:', ev.detail.passage.name);
-        console.log('passage tags:', ev.detail.passage.tags);
-        console.groupEnd();
-    });
 
     // Register Plugins
     gsap.registerPlugin(TextPlugin);
@@ -47,6 +39,15 @@ importScripts([
 Config.addVisitedLinkClass = true;
 // Do not type on previously visited passages
 Config.macros.typeVisitedPassages = false;
+
+// 
+Config.passages.onProcess = function (p) {
+    if (p.title == "PassageHeader" || p.title == "PassageFooter") {
+        return p.text;
+    }
+    p.text = "<div class='passage-body'>" + p.text + "</div>";
+    return p.text;
+}
 
 // Hides default UIBar and reclaims space with stow
 // ** ADD .hide() WHEN DONE
