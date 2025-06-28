@@ -1,6 +1,16 @@
 /* DAY 1b */
 /* 
-    --- Objective: Find the rift ---
+===== NEXT =====
+28/06
+    - Need finish writing descriptions for remaining rooms. Next start adding navigation links and item links.
+
+--- Objectives ---
+    - Find the rift (go to the study)
+        - Examine the body and study
+        - Get hint about item to use for Beacon
+    - Find at least one Beacon item
+    - Choose which item to use as Beacon (place it in the study with the body)
+    - Use the rune (case file) at the computer in the study, starts Day_1_c
 
 */
 
@@ -61,7 +71,6 @@ There's a letter and envelope next to bowl with a set of keys in it.
         A <<link [[TV|1_House-LivingRoom_tv]]>><</link>> on a sideboard stands along one wall, next to the large <<link [[bookshelf|1_House-LivingRoom_bookshelf]]>><</link>> in the corner.
 
         <<link [[Go to the Kitchen|1_House-Kitchen]]>><</link>>
-
         <<link [[Go to the Hallway|1_House-Hallway]]>><</link>>
 <</switch>>
 
@@ -80,28 +89,75 @@ It's a large flat-screen TV - nothing is on.
 The bookshelf is stuffed with crime thrillers, historical fiction, and the odd travel or recipe book.
 
 There are a few books scattered in front, thrown onto the floor in a hurry.
-
+<<nobr>>
+<<if !$inventory.includes("Rift book")>>
 On the bottom shelf, the weathered spine of a large <<appendPBody "black book">><<include "Rift-book">><</appendPBody>>
-
+<</if>>
+<</nobr>>
+Check the rest of the <<return [[living room|1_House-LivingRoom]]>>.
 
 
 :: Rift-book [subPassage]
-@@.note-img; img : black book @@
+<br>@@.note-img; img : black book @@
 
 There is no title, but flicking the thin pages shows familiar text and etchings. There is handwriting inside the front cover.
-<<type $type_ms_default >>\
     @@.game-note;
-    "There are many skins around our world. This book will guide you through the inner sanctums and the outer hells - I hope you find what you are looking for. - S"
+    <<type $type_ms_default >>\
+        "There are many skins around our world. This book will guide you through the inner sanctums and the outer hells - I hope you find what you are looking for. - S"
+    <</type>>\
     @@
-<</type>>
 
-<<run $inventory.push("Rift book")>><<redo "update_inventory">>
-
-
-:: 1_House-Upstairs
-You go upstairs to the first floor, stairs creaking...
+<<run $inventory.pushUnique("Rift book")>><<redo "update_inventory">>
 
 
 :: 1_House-Kitchen
 You're in the kitchen.
 
+
+:: 1_House-Kitchen_Pantry
+The pantry is just large enough to walk into, but you stay in the doorway.
+
+Metal shelves line the walls, filled with boxes, jars, tins... you smell opened spices and dried leaves.
+
+Boxes of salt and bottles of light oil are lined up underneath them.
+
+
+:: 1_House-Upstairs
+<<switch visited()>>
+    <<case 1>>\
+        You go upstairs to the first floor, the bare wooden steps creaking...
+
+        Turning up to the right, you see three doors around the small landing.
+
+        The <<link [[first door|1_House-Bathroom]]>><</link>> on your left has a ceramic octopus embedded on the front. The <<link [[second door|1_House-Bedroom]]>><</link>> is plain.
+
+        The warm yellow light is coming from behind the door at the end of the landing.
+
+        You taste the metallic tinge in the air before you smell it.
+    <<default>>\
+        You're back on the landing. 
+        A moth flutters against the paper lampshade above you.
+
+        From here it's a few steps to the <<link [[bathroom|1_House-Bathroom]]>><</link>>, <<link [[bedroom|1_House-Bedroom]]>><</link>> or study.
+
+<</switch>>
+
+
+:: 1_House-Bathroom
+You open the door into a bathroom, reeking of bleach and artificial citrus.
+
+You dazzle yourself as you turn your torch and catch your reflection in the cabinet mirror.
+
+It's sterile in here, save for a black rim left inside the bath and the sink.
+
+
+:: 1_House-Bedroom
+Down the landing the coppery scent thickens.
+
+Cautious, you open the second door. 
+
+There's a messy double bed in the middle of the room.
+
+Clothes and shoes spill onto the floor out of the wardrobe door.
+
+A side table and chair are on the other side, next to a window - the blinds are shut.
