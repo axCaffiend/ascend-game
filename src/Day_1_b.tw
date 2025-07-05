@@ -1,9 +1,5 @@
 /* DAY 1b */
 /* 
-===== NEXT =====
-28/06
-    - Need finish writing descriptions for remaining rooms. Next start adding navigation links and item links.
-
 --- Objectives ---
     - Find the rift (go to the study)
         - Examine the body and study
@@ -26,7 +22,7 @@
     <<default>>
         You're in the downstairs hallway, by the front door.
 
-        There's not much here apart from a small table and a few coats hanging up next to it.
+        There's not much here apart from a <<link [[small table|1_House-Hallway_table]]>><</link>> and a few coats hanging up next to it.
 
         <<link [[Go Upstairs|1_House-Upstairs]]>><</link>>
         <<link [[Go to Living Room|1_House-LivingRoom]]>><</link>>
@@ -34,7 +30,29 @@
 
 
 :: 1_House-Hallway_table
-There's a letter and envelope next to bowl with a set of keys in it.
+There's a <<appendPBody "letter">><<include "Hallway Letter">><</appendPBody>> and envelope next to bowl with a set of <<appendPBody "keys">><<include "Hallway Keys">><</appendPBody>> in it.
+
+<<link [[Nothing else here|1_House-Hallway]]>><</link>>
+
+
+:: Hallway Letter[subPassage item]
+The letter is printed on heavy paper and a red wax seal has been broken on the pristine white envelope.
+@@.game-note;
+Dear Alice,
+We are pleased to confirm your application for membership has been accepted. As you are an invited candidate, Sal will guide you through the rest.
+
+The Order's contract will follow, please sign and return within the week.
+@@
+
+:: Hallway Keys[subPassage item]
+A thick brass key, a padlock key, and a car key. 
+
+<<if visited("1_House-LivingRoom_coffee-table")>>
+    None of the keys are small enough for the coffee table drawers.
+    <<else>>
+    There's nothing you need to unlock.
+<</if>>
+A stolen car could be more trouble than it's worth.
 
 
 :: 1_House-LivingRoom
@@ -60,9 +78,9 @@ There's a letter and envelope next to bowl with a set of keys in it.
 
         A flat <<link [[TV|1_House-LivingRoom_tv]]>><</link>> sits on sideboard on one side, next to a large <<link [[bookshelf|1_House-LivingRoom_bookshelf]]>><</link>> in the corner.
 
-        Towards the back of the house, you can see the outline of a table and chairs in the next room.
+        Towards the back of the house, you can see the outline of a table and chairs in the <<link [[next room|1_House-Kitchen]]>><</link>>.
 
-        Behind you is the hallway.
+        Behind you is the <<link [[hallway|1_House-Hallway]]>><</link>>.
     <<default>>
         You're in the living room at the front of the house.
 
@@ -76,13 +94,19 @@ There's a letter and envelope next to bowl with a set of keys in it.
 
 
 :: 1_House-LivingRoom_coffee-table
-Several letters, a crisp packet, two coffee mugs...
+The dark wood coffee table is covered in several unopened bills, a crisp packet, two coffee mugs, a stained woven coaster...
 
-The dark wood coffee table has two drawers in the side
+You run your hand down the sides... under one edge, you can feel a tiny <<appendPBody "keyhole.">>
+    Curling your fingernails under the edge, you only find a smooth wooden surface - no cracks that would reveal a drawer.
+<</appendPBody>> 
+
+<<link [[Search somewhere else.|1_House-LivingRoom]]>><</link>>
 
 
 :: 1_House-LivingRoom_tv
 It's a large flat-screen TV - nothing is on.
+
+You don't want to attract any more attention, so you <<link [[leave it|1_House-LivingRoom]]>><</link>> turned off.
 
 
 :: 1_House-LivingRoom_bookshelf
@@ -90,14 +114,15 @@ The bookshelf is stuffed with crime thrillers, historical fiction, and the odd t
 
 There are a few books scattered in front, thrown onto the floor in a hurry.
 <<nobr>>
-<<if !$inventory.includes("Rift book")>>
-On the bottom shelf, the weathered spine of a large <<appendPBody "black book">><<include "Rift-book">><</appendPBody>>
-<</if>>
+    <<if !$inventory.includes("Rift book")>>
+        On the bottom shelf, the weathered spine of a large <<appendPBody "black book">><<include "Rift-book">><</appendPBody>>
+        <<run $inventory.pushUnique("Rift book")>><<redo "update_inventory">>
+    <</if>>
 <</nobr>>
 Check the rest of the <<return [[living room|1_House-LivingRoom]]>>.
 
 
-:: Rift-book [subPassage]
+:: Rift-book [subPassage item beacon]
 <br>@@.note-img; img : black book @@
 
 There is no title, but flicking the thin pages shows familiar text and etchings. There is handwriting inside the front cover.
@@ -107,11 +132,19 @@ There is no title, but flicking the thin pages shows familiar text and etchings.
     <</type>>\
     @@
 
-<<run $inventory.pushUnique("Rift book")>><<redo "update_inventory">>
-
 
 :: 1_House-Kitchen
-You're in the kitchen.
+You're in the kitchen. 
+
+Grey marble patterned worktops and laminated wooden doors look clean at first glance, even though they're peeling at the edges and corners.
+
+A knife block sits on the counter by a cooker, with a dirty pan and dishes by the sink.
+
+A fridge hums in the corner.
+
+Behind the table and chairs, you can see a <<link [[door|1_House-Kitchen_Pantry]]>><</link>> in the back corner.
+
+Return to the <<link [[living room.|1_House-LivingRoom]]>><</link>>
 
 
 :: 1_House-Kitchen_Pantry
@@ -119,7 +152,11 @@ The pantry is just large enough to walk into, but you stay in the doorway.
 
 Metal shelves line the walls, filled with boxes, jars, tins... you smell opened spices and dried leaves.
 
-Boxes of salt and bottles of light oil are lined up underneath them.
+Boxes of salt and bottles of light oil are lined up underneath them. 
+
+A plastic toolbox sits at the end next to a mop and bucket.
+
+<<link [[Back to Kitchen|1_House-Kitchen]]>><</link>>
 
 
 :: 1_House-Upstairs
@@ -131,33 +168,95 @@ Boxes of salt and bottles of light oil are lined up underneath them.
 
         The <<link [[first door|1_House-Bathroom]]>><</link>> on your left has a ceramic octopus embedded on the front. The <<link [[second door|1_House-Bedroom]]>><</link>> is plain.
 
-        The warm yellow light is coming from behind the door at the end of the landing.
+        The warm yellow light is coming from behind <<link "the door at the end of the landing." "1_House-Study">><</link>>
 
         You taste the metallic tinge in the air before you smell it.
     <<default>>\
         You're back on the landing. 
         A moth flutters against the paper lampshade above you.
 
-        From here it's a few steps to the <<link [[bathroom|1_House-Bathroom]]>><</link>>, <<link [[bedroom|1_House-Bedroom]]>><</link>> or study.
-
+        From here it's a few steps to the <<link [[bathroom|1_House-Bathroom]]>><</link>>, <<link [[bedroom|1_House-Bedroom]]>><</link>> or <<link [[study|1_House-Study]]>><</link>>.
 <</switch>>
-
+<<link [[Go downstairs|1_House-Hallway]]>><</link>>
 
 :: 1_House-Bathroom
 You open the door into a bathroom, reeking of bleach and artificial citrus.
 
 You dazzle yourself as you turn your torch and catch your reflection in the cabinet mirror.
 
-It's sterile in here, save for a black rim left inside the bath and the sink.
+It's sterile in here, save for a dark brown rim left inside the bath and the sink.
+
+<<return "Back to Upstairs Landing">>
 
 
 :: 1_House-Bedroom
-Down the landing the coppery scent thickens.
+<<switch visited()>>
+    <<case 1>>
+        Further down the landing that familiar coppery scent thickens.
 
-Cautious, you open the second door. 
-
+        Cautious, you open the second door. 
+    <<default>>
+        You enter the bedroom.
+<</switch>>
 There's a messy double bed in the middle of the room.
 
-Clothes and shoes spill onto the floor out of the wardrobe door.
+Clothes and shoes spill onto the floor out of the <<link "wardrobe" "1_House-Bedroom_wardrobe">><</link>>.
 
-A side table and chair are on the other side, next to a window - the blinds are shut.
+A <<link [[side table|1_House-Bedroom_side-table]]>><</link>> and chair are on the other side, next to a window - the blinds are shut.
+
+<<link "Go back to the Upstairs landing" "1_House-Upstairs">><</link>>
+
+
+:: 1_House-Bedroom_wardrobe
+You shuffle the clothes out of the way to open the wardrobe doors.
+<<if !$inventory.includes("Mask") && (visited() < 2) >>
+    It takes a while to search through a mess of t-shirts and towels in the bottom. A few shirts and trousers hang above them.
+
+    Finally your hand hits <<appendPBody "something">>
+    <<include "Mask">>
+    You pick up the mask.
+    <<run $inventory.pushUnique("Mask")>><<redo "update_inventory">>
+    <</appendPBody>> cool and metallic.
+    <<else>>
+        There are only more clothes and towels in here.
+<</if>>
+<<return "Look around the bedroom.">>
+
+
+:: Mask [subPassage item beacon]
+@@.note-img; img : Silver Mask @@
+A plain burnished silver mask, smooth except for slits for eyes and cut off just above the mouth.
+
+Scratched into the back, it reads "2015-2018"
+
+
+:: 1_House-Bedroom_side-table
+The plain white side table is a little scuffed on the corners.
+
+There's a <<appendPBody "picture frame">>
+<<include "Family Picture">>
+<<run $inventory.pushUnique("Family Picture")>><<redo "update_inventory">>
+<</appendPBody>>propped up on top - a couple embracing a young girl in the middle, all smiling at the camera.
+
+<<return "Look around the bedroom">>
+
+
+:: Family Picture [subPassage item beacon]
+<br>@@.note-img; img : Family picture frame @@
+
+They seem to be a happy family. 
+
+The daughter has inherited her mother's green eyes. The father's smile is infectious.
+
+The sun faded photo sits in a thick wooden frame.
+Something rattles behind the picture when you pick it up.
+
+
+:: 1_House-Study
+The Study
+
+computer
+
+Inspect the body
+
+<<return "Go to Upstairs landing">>

@@ -1,18 +1,31 @@
 /* GENERAL NOTES */
-/*  
+/*
+- In passage notes (replace or delete in Final)
+    - Sound effects : .note-sfx (light blue)
+    - Images : .note-img (pink)
+
+===== TO DO =====
+28/06
+    [90%] Finish writing descriptions for remaining rooms. Next start adding navigation links and item links.
+        ***IN PROGRESS - Added all room passages and all beacon items, EXCEPT Study
+02/07
+    [ ] Add a way to review case letter (to refer back to rune) - as dialog or sidebar?
+
 ===== ONGOING ISSUES =====
 
 ===== SOLVED =====
 - Links not displaying inline - SOLVED
     Wrapped passage content in .passage-body div using SugarCube Config API, so column flow isn't applied to links.
 
-- In passage notes (replace or delete in Final)
-    - Sound effects : .note-sfx (light blue)
-    - Images : .note-img (pink)
-
 ===== CUSTOM PASSAGE TAGS =====
 [subPassage]
     Used for passages which are only included in others. Prevents their content being wrapped in another .passage-body container.
+[gameScreen]
+    For rune input screens (gameScreen.js only recognises elements if passage tagged)
+[item]
+    Items, can be interacted with or picked up at some point
+[beacon], [offering]
+    Items that can be chosen for the tagged ritual.
 */
 
 :: StoryData
@@ -65,7 +78,7 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 
 
 :: Start
-! <<link [[Dream...|Dream Sequence]]>><</link>>
+<<link [[Dream...|Dream Sequence]]>><</link>>
 <<message>>Hello<</message>>
 <<mytestmacro>>Hello myTestMacro is running successfully!<</mytestmacro>>
 /* <<link [[Test page|Test]]>><</link>> */
