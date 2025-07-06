@@ -79,10 +79,6 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 
 :: Start
 <<link [[Dream...|Dream Sequence]]>><</link>>
-<<message>>Hello<</message>>
-<<mytestmacro>>Hello myTestMacro is running successfully!<</mytestmacro>>
-/* <<link [[Test page|Test]]>><</link>> */
-/* <span><<- $chores.water_plants>></span> */
 
 
 :: Dream Sequence

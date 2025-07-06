@@ -1,11 +1,23 @@
 :: Test
 This is a test page 
 Hello :)
+!Box Hover style
 @@.box;
 Another box using .box class.
 @@
 
+!Link append - custom transition
+Wrap inside a .reveal container and overwrite '.macro-linkappend-insert' css style
 @@.reveal;
 Click to <<linkappend "reveal" t8n>> more text here...<</linkappend>>!!
 @@
+
+<<message>>Hello<</message>>
+<<mytestmacro>>Hello myTestMacro is running successfully!<</mytestmacro>>
+
+!AppendPBody Widget Test
+<<appendPBody "Append A">>A content<</appendPBody>>
+<<appendPBody "Append B">>B has some more content<</appendPBody>>
+<<appendPBody "Append C">>C has yet more content<</appendPBody>>
+
 <<link [[Return to start|Start]]>><</link>>

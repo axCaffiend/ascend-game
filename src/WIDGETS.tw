@@ -3,11 +3,10 @@
 :: Append Passage Body [widget]
 <<nobr>>
 <<widget "appendPBody" container>>
-        <<set _linkText = _args[0]>>
-        <<linkreplace _linkText>>
+        <<linkreplace _args[0]>><<= _args[0]>>
             <<append ".passage-body" t8n>>
-                <div><<= _contents>></div>
-            <</append>> _linkText
+                <div class="appendPBody"><br><<= "{{{_args}}}:" + _args[0]>><br><<= _contents>></div>
+            <</append>>
         <</linkreplace>>
 <</widget>>
 <</nobr>>

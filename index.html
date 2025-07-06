@@ -143,55 +143,6 @@ body {
     flex-flow: column nowrap;
 }
 
-.passage a {
-    text-decoration: underline dotted;
-    text-underline-offset: 0.5rem;
-    color: var(--colour-link--default);
-    font-weight: 700;
-}
-
-.macro-link {
-    display: inline-block;
-    width: auto;
-    margin: 0;
-}
-
-.passage .box {
-    color: green;
-    border: solid 1px green;
-    width: 200px;
-    height: 200px;
-}
-
-
-/* For image and sfx notes in passages */
-.passage .note-img {
-    color: rgb(63, 241, 250);
-}
-
-.passage .note-sfx {
-    color: rgb(254, 69, 189);
-}
-
-.reveal {
-    border: green;
-}
-
-.ascii-art {
-    font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
-    white-space: pre;
-    /* line-height: clamp(1rem, 1vw + 1rem, 1.5rem); */
-}
-
-.game-note {
-    border: solid 1px #8f8f8f;
-    padding: 1rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    width: 80%;
-    line-height: 2em;
-}
-
 /* --- Passage Header & Footer --- */
 .passage-footer, .passage-header {
     /* border: solid 1px red; */
@@ -225,7 +176,54 @@ body {
     border-top: var(--passage-header-footer-dividers);
 }
 
+.passage a {
+    text-decoration: underline dotted;
+    text-underline-offset: 0.5rem;
+    color: var(--colour-link--default);
+    font-weight: 700;
+}
 
+.passage .box {
+    color: green;
+    border: solid 1px green;
+    width: 200px;
+    height: 200px;
+}
+
+
+/* For image and sfx notes in passages */
+.passage .note-img {
+    color: rgb(63, 241, 250);
+}
+
+.passage .note-sfx {
+    color: rgb(254, 69, 189);
+}
+
+/* Custom linkappend transition duration*/
+.reveal .macro-linkappend-insert {
+    transition-duration: 3s;
+}
+
+.ascii-art {
+    font-size: clamp(1rem, 1rem + 1vw, 1.1rem);
+    white-space: pre;
+    /* line-height: clamp(1rem, 1vw + 1rem, 1.5rem); */
+}
+
+.game-note {
+    border: solid 1px #8f8f8f;
+    padding: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 80%;
+    line-height: 2em;
+}
+
+/* --- CUSTOM WIDGETS ----------- */
+.appendPBody {
+    display: block;
+}
 
 /* =================================== */
 /* PASSAGE SPECIFIC STYLING            */
@@ -246,6 +244,7 @@ a[data-passage="Dream Sequence"] {
     font-size: 2rem;
     text-align: left;
     font-weight: 300;
+    text-decoration: none;
     display: inl;
     color: #fff;
     transition: all var(--transition-dur) linear;
@@ -1152,11 +1151,7 @@ Inspect the body
 &lt;&lt;/nobr&gt;&gt;
 @@</tw-passagedata><tw-passagedata pid="32" name="PassageFooter" tags="" position="225,475" size="100,100">@@.passage-footer;
 Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
-@@</tw-passagedata><tw-passagedata pid="33" name="Start" tags="" position="350,475" size="100,100">&lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;message&gt;&gt;Hello&lt;&lt;/message&gt;&gt;
-&lt;&lt;mytestmacro&gt;&gt;Hello myTestMacro is running successfully!&lt;&lt;/mytestmacro&gt;&gt;
-/* &lt;&lt;link [[Test page|Test]]&gt;&gt;&lt;&lt;/link&gt;&gt; */
-/* &lt;span&gt;&lt;&lt;- $chores.water_plants&gt;&gt;&lt;/span&gt; */</tw-passagedata><tw-passagedata pid="34" name="Dream Sequence" tags="" position="475,475" size="100,100">@@.dream-img;@@
+@@</tw-passagedata><tw-passagedata pid="33" name="Start" tags="" position="350,475" size="100,100">&lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="Dream Sequence" tags="" position="475,475" size="100,100">@@.dream-img;@@
 &lt;&lt;link [[Ignore it|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 
@@ -1222,11 +1217,10 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 
 &lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="Append Passage Body" tags="widget" position="975,475" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;widget &quot;appendPBody&quot; container&gt;&gt;
-        &lt;&lt;set _linkText = _args[0]&gt;&gt;
-        &lt;&lt;linkreplace _linkText&gt;&gt;
+        &lt;&lt;linkreplace _args[0]&gt;&gt;&lt;&lt;= _args[0]&gt;&gt;
             &lt;&lt;append &quot;.passage-body&quot; t8n&gt;&gt;
-                &lt;div&gt;&lt;&lt;= _contents&gt;&gt;&lt;/div&gt;
-            &lt;&lt;/append&gt;&gt; _linkText
+                &lt;div class=&quot;appendPBody&quot;&gt;&lt;br&gt;&lt;&lt;= &quot;{{{_args}}}:&quot; + _args[0]&gt;&gt;&lt;br&gt;&lt;&lt;= _contents&gt;&gt;&lt;/div&gt;
+            &lt;&lt;/append&gt;&gt;
         &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="Game Chapter 1 - Start" tags="chapter1" position="1100,475" size="100,100">&lt;&lt;set $gameCh1 = [
@@ -1251,13 +1245,25 @@ Speech Num: &lt;&lt;do tag &quot;game-ch1&quot;&gt;&gt;$speech_num&lt;&lt;/do&gt
 &lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="40" name="Game Chapter 1a" tags="game-screen chapter1" position="1225,475" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
 @@.user-input-display;@@</tw-passagedata><tw-passagedata pid="41" name="Test" tags="" position="100,600" size="100,100">This is a test page 
 Hello :)
+!Box Hover style
 @@.box;
 Another box using .box class.
 @@
 
+!Link append - custom transition
+Wrap inside a .reveal container and overwrite &#39;.macro-linkappend-insert&#39; css style
 @@.reveal;
 Click to &lt;&lt;linkappend &quot;reveal&quot; t8n&gt;&gt; more text here...&lt;&lt;/linkappend&gt;&gt;!!
 @@
+
+&lt;&lt;message&gt;&gt;Hello&lt;&lt;/message&gt;&gt;
+&lt;&lt;mytestmacro&gt;&gt;Hello myTestMacro is running successfully!&lt;&lt;/mytestmacro&gt;&gt;
+
+!AppendPBody Widget Test
+&lt;&lt;appendPBody &quot;Append A&quot;&gt;&gt;A content&lt;&lt;/appendPBody&gt;&gt;
+&lt;&lt;appendPBody &quot;Append B&quot;&gt;&gt;B has some more content&lt;&lt;/appendPBody&gt;&gt;
+&lt;&lt;appendPBody &quot;Append C&quot;&gt;&gt;C has yet more content&lt;&lt;/appendPBody&gt;&gt;
+
 &lt;&lt;link [[Return to start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
