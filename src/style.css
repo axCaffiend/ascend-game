@@ -6,7 +6,9 @@ STORY STYLESHEET
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
+    --test-color:rgb(2, 42, 17);
     --game-screen-green: rgb(0, 174, 0);
+    --game-screen-dark-blue: rgb(4, 88, 93);
     --colour-link--default: lightgreen;
     --border-green-01rem: solid 0.1rem var(--game-screen-green);
     --main-font: 'Space Mono', Courier, monospace;
@@ -304,4 +306,15 @@ a[data-passage="Dream Sequence"]:hover {
     overflow: hidden;
     font-family: var(--main-font);
     line-height: 1rem;
+}
+
+
+/* ---- BUTTONS ---- */
+#game-screen-fx {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

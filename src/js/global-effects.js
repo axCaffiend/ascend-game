@@ -16,6 +16,6 @@ function textBreatheFX () {
         duration: 3,
         repeat: -1,
         yoyo: true,
-        easing: "none",
+        easing: "none"
     })
 } 

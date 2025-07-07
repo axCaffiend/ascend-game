@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="37" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
+	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="38" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
 STORY STYLESHEET
 - Tweego automatically compiles supported file types including css and JavaScript files into the head element of the html file
  */
@@ -112,7 +112,9 @@ STORY STYLESHEET
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
+    --test-color:rgb(2, 42, 17);
     --game-screen-green: rgb(0, 174, 0);
+    --game-screen-dark-blue: rgb(4, 88, 93);
     --colour-link--default: lightgreen;
     --border-green-01rem: solid 0.1rem var(--game-screen-green);
     --main-font: 'Space Mono', Courier, monospace;
@@ -411,7 +413,17 @@ a[data-passage="Dream Sequence"]:hover {
     font-family: var(--main-font);
     line-height: 1rem;
 }
-</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "MAIN.js" */
+
+
+/* ---- BUTTONS ---- */
+#game-screen-fx {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* twine-user-script #1: "MAIN.js" */
 // NOTE: Tweego compiles all files in src directory into a single HTML file in project root, so JS module imports/exports don't work. HOWEVER functions can just be referenced as they would if they were all in the same JS file, since all JS is present in separate <script> tags in final index.html file. (e.g. boxHover() below)
 
 // Import GSAP in Promise object so game scripts don't start before GSAP is loaded.
@@ -441,6 +453,7 @@ importScripts([
         if (e.detail.passage.tags.includes("game-screen")) {
             console.log("!! Current Passage = Game Screen");
             gameScreenLoad();
+            pulseFX();
         }
         
     })
@@ -515,7 +528,25 @@ function dreamSequence () {
 
 
 }
-/* twine-user-script #4: "gameScreen.js" */
+/* twine-user-script #4: "gameScreen-testFX.js" */
+function pulseFX () {
+    console.log("--- pulseFX running")
+    let testColor = getComputedStyle(document.documentElement).getPropertyValue('--test-color');
+
+    gsap.fromTo("#game-screen-fx",
+        {
+            backgroundColor: testColor
+        },
+        {
+            backgroundColor: "black",
+            duration: 3,
+            repeat: -1,
+            yoyo: true,
+            ease: "none"
+        }
+    )
+}
+/* twine-user-script #5: "gameScreen.js" */
 
 function gameScreenLoad () {
     console.log("*** gameScreenLoad running ***")
@@ -662,7 +693,7 @@ function gameScreenLoad () {
         }
     })
 }
-/* twine-user-script #5: "global-effects.js" */
+/* twine-user-script #6: "global-effects.js" */
 // For GSAP and other JS effects used throughout the story
 
 function textBreatheFX () {
@@ -681,10 +712,10 @@ function textBreatheFX () {
         duration: 3,
         repeat: -1,
         yoyo: true,
-        easing: "none",
+        easing: "none"
     })
 } 
-/* twine-user-script #6: "message-macro.js" */
+/* twine-user-script #7: "message-macro.js" */
 // message macro, by chapel (with help from T.M. Edwards); for sugarcube 2
 // version 1.0.1
 // see the documentation: https://github.com/ChapelR/custom-macros-for-sugarcube-2#message-macro
@@ -729,7 +760,7 @@ Macro.add('message', {
             .appendTo(this.output);
     }
 });
-/* twine-user-script #7: "test-macro.js" */
+/* twine-user-script #8: "test-macro.js" */
 // TEST MACRO
 // First simple custom macro made for learning how Sugarcube's Macro API works, used Chapel's Message macro code as reference (also in /src)
 // Macro : <<mytestmacro>>OUTPUT_TEXT_HERE<</mytestmacro>>
@@ -952,16 +983,16 @@ Macro.add('mytestmacro', {
         &lt;&lt;link [[Go to Living Room|1_House-LivingRoom]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;/switch&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="1_House-Hallway_table" tags="" position="1225,100" size="100,100">There&#39;s a &lt;&lt;appendPBody &quot;letter&quot;&gt;&gt;&lt;&lt;include &quot;Hallway Letter&quot;&gt;&gt;&lt;&lt;/appendPBody&gt;&gt; and envelope next to bowl with a set of &lt;&lt;appendPBody &quot;keys&quot;&gt;&gt;&lt;&lt;include &quot;Hallway Keys&quot;&gt;&gt;&lt;&lt;/appendPBody&gt;&gt; in it.
 
-&lt;&lt;link [[Nothing else here|1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="Hallway Letter" tags="subPassage item" position="100,225" size="100,100">The letter is printed on heavy paper and a red wax seal has been broken on the pristine white envelope.
+&lt;&lt;link [[Nothing else here|1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;br&gt;</tw-passagedata><tw-passagedata pid="11" name="Hallway Letter" tags="subPassage item" position="100,225" size="100,100">The letter is printed on heavy paper and a red wax seal has been broken on the pristine white envelope.
 @@.game-note;
-Dear Alice,
+&lt;&lt;type $type_ms_default &gt;&gt;Dear Alice,
 We are pleased to confirm your application for membership has been accepted. As you are an invited candidate, Sal will guide you through the rest.
 
-The Order&#39;s contract will follow, please sign and return within the week.
-@@</tw-passagedata><tw-passagedata pid="12" name="Hallway Keys" tags="subPassage item" position="225,225" size="100,100">&lt;br&gt;A thick brass key, a padlock key, and a car key. 
+The Order&#39;s contract will follow, please sign and return within the week.&lt;&lt;/type&gt;&gt;
+@@</tw-passagedata><tw-passagedata pid="12" name="Hallway Keys" tags="subPassage item" position="225,225" size="100,100">A thick brass key, a padlock key, and a car key. 
 
 A stolen car could be more trouble than it&#39;s worth - tempting though.
-
 &lt;&lt;if visited(&quot;1_House-LivingRoom_coffee-table&quot;)&gt;&gt;
     None of the keys are small enough for the coffee table drawers.
     &lt;&lt;else&gt;&gt;\
@@ -1140,11 +1171,15 @@ Something rattles behind the picture when you pick it up.</tw-passagedata><tw-pa
 
 At last the &lt;&lt;link [[body|1_House-Study_body]]&gt;&gt;&lt;&lt;/link&gt;&gt;... well, half of it. 
 
-Legs and abdomen end in a diagonal cut that is too clean. You have placed the &#39;&#39;&lt;&lt;= $beaconItem&gt;&gt;&#39;&#39; in the blood soaked carpet in front of them.
+Legs and abdomen end in a diagonal cut that is too clean.&lt;&lt;nobr&gt;&gt;    
+&lt;&lt;if $beaconItem&gt;&gt;
+    You have placed the &#39;&#39;&lt;&lt;= $beaconItem&gt;&gt;&#39;&#39; in the blood soaked carpet in front of them.
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
 
 Threads of the &lt;&lt;link [[rift|1_House-Study_rift]]&gt;&gt;&lt;&lt;/link&gt;&gt; crackle above the remains.
 
-An old &lt;&lt;link [[computer|1_House-Study_interface]]&gt;&gt;&lt;&lt;/link&gt;&gt; sits on the desk, the chunky monitor is powered off.
+An old &lt;&lt;link [[computer|1_House-Study_computer]]&gt;&gt;&lt;&lt;/link&gt;&gt; sits on the desk, the chunky monitor is powered off.
 
 Go back to the &lt;&lt;link [[upstairs landing|1_House-Upstairs]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="1_House-Study_body" tags="" position="975,350" size="100,100">The half body lies saturated in a pool of blood. You can tell they were a woman, wearing jeans and perhaps a black sweater.
 
@@ -1160,6 +1195,8 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
         &lt;&lt;cycle &quot;$beaconItem&quot; autoselect&gt;&gt;
             &lt;&lt;optionsfrom $inventory&gt;&gt;
         &lt;&lt;/cycle&gt;&gt;.
+        &lt;&lt;else&gt;&gt;
+            something important to the Source.
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 
@@ -1170,13 +1207,15 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
     &lt;&lt;next 3s&gt;&gt;...You turn away from it.
 
     &lt;&lt;next 1s&gt;&gt;&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;
-&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="1_House-Study_interface" tags="game-screen" position="1225,350" size="100,100">The old computer reminds you of your days pushing papers in a stale office cubicle.
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="1_House-Study_computer" tags="" position="1225,350" size="100,100">The old computer reminds you of your days pushing papers in a stale office cubicle.
 
-You sit down at the desk, a faint smell of ozone...
-
-@@.note-img; img : computer screen - flashes green @@
-&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
-
+You sit down at the desk, a faint smell of ozone... every rift has an interface.
+&lt;&lt;if $beaconItem&gt;&gt;
+    &lt;&lt;link [[Turn on the computer|Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+    @@.note-img; img : computer screen - flickers green @@
+    &lt;&lt;else&gt;&gt;
+        First you need an item to act as a Beacon - the rift is still active, so the Source must be on the other side.
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="Death_Consumed" tags="" position="100,475" size="100,100">You wait, but your prey is nowhere in sight.
 
 You see it too late.
@@ -1189,7 +1228,11 @@ Smaller, needle-like teeth pierce your skull and your mind.
 
 The rift is a wound, and predators know this.
 
-&lt;&lt;link [[Stop fighting|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="Game Screen" tags="game-screen subPassage" position="225,475" size="100,100">&lt;html&gt;
+&lt;&lt;link [[Stop fighting|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="Ritual_Beacon" tags="game-screen" position="225,475" size="100,100">@@#game-screen-fx;
+@@
+&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
+&lt;&lt;link [[Leave computer|1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;br&gt;</tw-passagedata><tw-passagedata pid="33" name="Game Screen" tags="game-screen subPassage" position="350,475" size="100,100">&lt;html&gt;
     &lt;div class=&quot;display&quot;&gt;
         &lt;p class=&quot;output-title&quot;&gt;Output&lt;/p&gt;
         &lt;div class=&quot;output&quot;&gt;&lt;/div&gt;
@@ -1219,17 +1262,17 @@ The rift is a wound, and predators know this.
         &lt;!-- User controls  container end --&gt;
     &lt;/div&gt;
 &lt;/html&gt;
-/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="33" name="StoryInit" tags="" position="350,475" size="100,100">&lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;
+/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="34" name="StoryInit" tags="" position="475,475" size="100,100">&lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;
 &lt;&lt;set $type_ms_default = &quot;40ms&quot;&gt;&gt;
 &lt;&lt;set $inventory = []&gt;&gt;
 &lt;&lt;set $dayCounter = 1&gt;&gt;
-&lt;&lt;set $beaconItem&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="StoryMenu" tags="" position="475,475" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;set $beaconItem&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="StoryMenu" tags="" position="600,475" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Front_plant-pots]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Game Chapter 1a]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="PassageHeader" tags="" position="600,475" size="100,100">@@.passage-header;
+&lt;&lt;link [[Game Chapter 1a]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="PassageHeader" tags="" position="725,475" size="100,100">@@.passage-header;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if visited() &gt; 1&gt;&gt;
     &lt;&lt;set $line_delay = &quot;40ms&quot;&gt;&gt;
@@ -1240,14 +1283,14 @@ The rift is a wound, and predators know this.
 &lt;span&gt;&lt;&lt;print &quot;current passage visited: &quot; + visited()&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;inventory&quot;&gt;Held: &lt;&lt;do tag &quot;update_inventory&quot;&gt;&gt;&lt;&lt;= $inventory.join(&quot;, &quot;)&gt;&gt;&lt;&lt;/do&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
-@@</tw-passagedata><tw-passagedata pid="36" name="PassageFooter" tags="" position="725,475" size="100,100">@@.passage-footer;
+@@</tw-passagedata><tw-passagedata pid="37" name="PassageFooter" tags="" position="850,475" size="100,100">@@.passage-footer;
 Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
-@@</tw-passagedata><tw-passagedata pid="37" name="Start" tags="" position="850,475" size="100,100">&lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="Dream Sequence" tags="" position="975,475" size="100,100">@@.dream-img;@@
+@@</tw-passagedata><tw-passagedata pid="38" name="Start" tags="" position="975,475" size="100,100">&lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="Dream Sequence" tags="" position="1100,475" size="100,100">@@.dream-img;@@
 &lt;&lt;link [[Ignore it|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 
 
-/* LINKS TO DAY_1.tw */</tw-passagedata><tw-passagedata pid="39" name="Intro" tags="" position="1100,475" size="100,100">&lt;&lt;nobr&gt;&gt;
+/* LINKS TO DAY_1.tw */</tw-passagedata><tw-passagedata pid="40" name="Intro" tags="" position="1225,475" size="100,100">&lt;&lt;nobr&gt;&gt;
     &lt;&lt;if visited(&quot;Intro&quot;)&gt; 1&gt;&gt;
         &lt;&lt;set _letterbox_delay = &quot;40ms&quot;&gt;&gt;
         &lt;&lt;else&gt;&gt;
@@ -1272,7 +1315,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 &lt;&lt;if visited(&quot;Case Envelope&quot;, &quot;Intro - eat drink&quot;)&gt;&gt;\
     &lt;&lt;type $type_ms_default&gt;&gt;&lt;&lt;link [[Time to go.|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/type&gt;&gt;
 &lt;&lt;/if&gt;&gt;\
-&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="40" name="Case Envelope" tags="" position="1225,475" size="100,100">A flimsy sheet of badly printed text. There is a street address and instructions...
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="Case Envelope" tags="" position="100,600" size="100,100">A flimsy sheet of badly printed text. There is a street address and instructions...
 @@.game-note;
 &lt;&lt;type $type_ms_default&gt;&gt;&gt;Detected 1 rune - up to you to find the rift interface.
 &gt;Human made, proceed with caution. 
@@ -1282,7 +1325,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 @@\
 @@.note-img;//img : Pixel art letter &amp; rune symbol//@@
 
-&lt;&lt;link [[You tuck the envelope into your jacket.|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="Intro - eat drink" tags="" position="100,600" size="100,100">&lt;&lt;if visited()&gt;1&gt;&gt;
+&lt;&lt;link [[You tuck the envelope into your jacket.|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="Intro - eat drink" tags="" position="225,600" size="100,100">&lt;&lt;if visited()&gt;1&gt;&gt;
     &lt;&lt;timed 40ms t8n&gt;&gt;
     &lt;&lt;next $line_delay&gt;&gt;You&#39;ve already eaten the last of the food in your fridge.
     
@@ -1306,7 +1349,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
         &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Check if you need anything else before you go. | Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
         &lt;&lt;/timed&gt;&gt;
 
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="Append Passage Body" tags="widget" position="225,600" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="43" name="Append Passage Body" tags="widget" position="350,600" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;widget &quot;appendPBody&quot; container&gt;&gt;
         &lt;&lt;linkreplace _args[0]&gt;&gt;&lt;&lt;= _args[0]&gt;&gt;
             &lt;&lt;append &quot;.passage-body&quot; t8n&gt;&gt;
@@ -1314,7 +1357,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
             &lt;&lt;/append&gt;&gt;
         &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="43" name="Game Chapter 1 - Start" tags="chapter1" position="350,600" size="100,100">&lt;&lt;set $gameCh1 = [
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="Game Chapter 1 - Start" tags="chapter1" position="475,600" size="100,100">&lt;&lt;set $gameCh1 = [
     &quot;Ta daaa!! My first ever game!!&quot;,
     &quot;Work in progress - let me know what you think!&quot;,
     &quot;All feedback is constructive :)&quot;,
@@ -1333,8 +1376,8 @@ Speech Num: &lt;&lt;do tag &quot;game-ch1&quot;&gt;&gt;$speech_num&lt;&lt;/do&gt
         &lt;&lt;elseif $speech_num &lt;= $speech_len&gt;&gt;
             &lt;&lt;goto &quot;Game Chapter 1a&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="Game Chapter 1a" tags="game-screen chapter1" position="475,600" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
-@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="45" name="Test" tags="" position="600,600" size="100,100">This is a test page 
+&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="45" name="Game Chapter 1a" tags="game-screen chapter1" position="600,600" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
+@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="46" name="Test" tags="" position="725,600" size="100,100">This is a test page 
 Hello :)
 !Box Hover style
 @@.box;

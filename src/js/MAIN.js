@@ -27,6 +27,7 @@ importScripts([
         if (e.detail.passage.tags.includes("game-screen")) {
             console.log("!! Current Passage = Game Screen");
             gameScreenLoad();
+            pulseFX();
         }
         
     })

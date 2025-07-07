@@ -42,22 +42,22 @@
 There's a <<appendPBody "letter">><<include "Hallway Letter">><</appendPBody>> and envelope next to bowl with a set of <<appendPBody "keys">><<include "Hallway Keys">><</appendPBody>> in it.
 
 <<link [[Nothing else here|1_House-Hallway]]>><</link>>
+<br>
 
 
 :: Hallway Letter[subPassage item]
 The letter is printed on heavy paper and a red wax seal has been broken on the pristine white envelope.
 @@.game-note;
-Dear Alice,
+<<type $type_ms_default >>Dear Alice,
 We are pleased to confirm your application for membership has been accepted. As you are an invited candidate, Sal will guide you through the rest.
 
-The Order's contract will follow, please sign and return within the week.
+The Order's contract will follow, please sign and return within the week.<</type>>
 @@
 
 :: Hallway Keys[subPassage item]
-<br>A thick brass key, a padlock key, and a car key. 
+A thick brass key, a padlock key, and a car key. 
 
 A stolen car could be more trouble than it's worth - tempting though.
-
 <<if visited("1_House-LivingRoom_coffee-table")>>
     None of the keys are small enough for the coffee table drawers.
     <<else>>\
@@ -296,11 +296,15 @@ A wave of that metallic scent hits you when you open the door, coating the back 
 
 At last the <<link [[body|1_House-Study_body]]>><</link>>... well, half of it. 
 
-Legs and abdomen end in a diagonal cut that is too clean. You have placed the ''<<= $beaconItem>>'' in the blood soaked carpet in front of them.
+Legs and abdomen end in a diagonal cut that is too clean.<<nobr>>    
+<<if $beaconItem>>
+    You have placed the ''<<= $beaconItem>>'' in the blood soaked carpet in front of them.
+<</if>>
+<</nobr>>
 
 Threads of the <<link [[rift|1_House-Study_rift]]>><</link>> crackle above the remains.
 
-An old <<link [[computer|1_House-Study_interface]]>><</link>> sits on the desk, the chunky monitor is powered off.
+An old <<link [[computer|1_House-Study_computer]]>><</link>> sits on the desk, the chunky monitor is powered off.
 
 Go back to the <<link [[upstairs landing|1_House-Upstairs]]>><</link>>
 
@@ -320,6 +324,8 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
         <<cycle "$beaconItem" autoselect>>
             <<optionsfrom $inventory>>
         <</cycle>>.
+        <<else>>
+            something important to the Source.
     <</if>>
 <</nobr>>
 
@@ -337,14 +343,16 @@ The rift is unstable.
 <</timed>>
 
 
-:: 1_House-Study_interface[game-screen]
+:: 1_House-Study_computer
 The old computer reminds you of your days pushing papers in a stale office cubicle.
 
-You sit down at the desk, a faint smell of ozone...
-
-@@.note-img; img : computer screen - flashes green @@
-<<include "Game Screen">>
-
+You sit down at the desk, a faint smell of ozone... every rift has an interface.
+<<if $beaconItem>>
+    <<link [[Turn on the computer|Ritual_Beacon]]>><</link>>
+    @@.note-img; img : computer screen - flickers green @@
+    <<else>>
+        First you need an item to act as a Beacon - the rift is still active, so the Source must be on the other side.
+<</if>>
 <<return "Look around the study">>
 
 
