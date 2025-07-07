@@ -1,4 +1,4 @@
-:: Game Screen [game-screen]
+:: Game Screen [game-screen subPassage]
 <html>
     <div class="display">
         <p class="output-title">Output</p>

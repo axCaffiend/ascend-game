@@ -12,7 +12,15 @@ function gameScreenLoad () {
     let userInput = [];
     let dialogueData;
 
-    userInputDisplay.textContent = `userInput Array: ${userInput}`
+    // "user-input-display" in passage container.
+    function updateUserInputDisplay () {
+        if (userInputDisplay) {
+            console.log("userInputDisplay detected in Passage")
+            userInputDisplay.textContent = `userInput Array: ${userInput}`
+        } else {
+            console.log("No userInputDisplay detected in Passage")
+        }
+    }
 
     // Upddates userInput array on userControl inputs change
     console.log("Added userControl event listener");
@@ -31,8 +39,7 @@ function gameScreenLoad () {
                     userInput.push(" ");
                 }
             }
-            console.log(userInput);
-            userInputDisplay.textContent = `userInput Array: ${userInput}`;
+            updateUserInputDisplay();
             
             // First checks whether character divs have been added to displayText2 container by checking for child nodes
             if (displayText2.hasChildNodes()) {

@@ -16,7 +16,7 @@
 <<next $line_delay>>A <<link [[stone wall|1_House-Front_wall]]>><</link>> separates the garden from the street.
 
 <<next $line_delay>>Sometimes the best approach is the simplest, you could try and knock on the <<link [[front door|1_House-Front_door]]>><</link>>.
-<</timed>>\
+<</timed>>
 
 
 :: 1_House-Front_plant-pots
@@ -145,7 +145,7 @@
 
 
 /* >>>>>> FORWARDS TO : Day_1_b.tw ::1_House-Hallway */
-:: 1_House-Front_door_unlock
+:: 1_House-Front_door_unlock[subPassage]
 /* Check if "Wire" in inventory? */\
 <<if $inventory.includes("Wire")>>\
     /* Yes - Show Pick lock and enter house */\
@@ -170,19 +170,16 @@
     /* No - Show Links back to garden */
         <<timed 40ms t8n>>\
             <<next $line_delay>><<nobr>>
-                Standing on the <<linkreplace "doormat">>
-                    <<append "span.macro-timed-insert:last-of-type" t8n>>
+                Standing on the <<appendPBody "doormat">>
                         <<include "1_House-Front_door_doormat">>
-                    <</append>>
-                    doormat\
-                <</linkreplace>>, 
+                    <</appendPBody>>
                 you turn back towards the <<link [[garden.|1_House-Front]]>><</link>>
                 <</nobr>>
-        <</timed>>
+        <</timed>>\
 <</if>>
 
 
-:: 1_House-Front_door_doormat
+:: 1_House-Front_door_doormat[subPassage]
 <<if visited() > 1>>
     You already checked under the doormat - there's nothing there.
     <<timed 5s>>
@@ -195,7 +192,5 @@
             <<next $line_delay>>You stand up and check the street...
 
             <<next $line_delay>>All the lights are out and no-one is about.
-
-        <</timed>>
+        <</timed>>\
 <</if>>
-

@@ -20,7 +20,7 @@
 ===== CUSTOM PASSAGE TAGS =====
 [subPassage]
     Used for passages which are only included in others. Prevents their content being wrapped in another .passage-body container.
-[gameScreen]
+[game-screen]
     For rune input screens (gameScreen.js only recognises elements if passage tagged)
 [item]
     Items, can be interacted with or picked up at some point
@@ -46,6 +46,7 @@ ASCend
 <<set $type_ms_default = "40ms">>
 <<set $inventory = []>>
 <<set $dayCounter = 1>>
+<<set $beaconItem>>
 
 
 :: StoryMenu
@@ -54,6 +55,8 @@ ASCend
 <<link [[1_House-Front_plant-pots]]>><</link>>
 <<link [[1_House-Hallway]]>><</link>>
 <<link [[Test]]>><</link>>
+<<link [[1_House-Study]]>><</link>>
+<<link [[Game Chapter 1a]]>><</link>>
 
 
 :: PassageHeader

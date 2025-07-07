@@ -11,13 +11,22 @@
 */
 
 :: 1_House-Hallway
-<<switch visited()>>
-    <<case 1>>
+<<switch visited()>>\
+    <<case 1>>\
+        <<if previous() == "1_House-Front_door">>\
         You close the front door behind you and look around a narrow hallway.
+            <<else>>
+                You find yourself in the narrow hallway, next to the front door.
+        <</if>>
+        Faint warm light spills down the <<link [[stairs|1_House-Upstairs]]>><</link>>
 
-        Faint warm light spills down the <<link [[stairs|1_House-Upstairs]]>><</link>> ahead, so you can see a small table to your left.
+        There's not much here apart from a <<link [[small table|1_House-Hallway_table]]>><</link>> and a few coats hanging up next to it.
 
-        A <<link [[door to your right|1_House-LivingRoom]]>><</link>> stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.
+        <<if previous() == "1_House-Front_door">>\
+            A <<link [[door to your right|1_House-LivingRoom]]>><</link>> stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.
+            <<else>>\
+                The <<link [[living room|1_House-LivingRoom]]>><</link>> door stands ajar behind you.
+        <</if>>
 
     <<default>>
         You're in the downstairs hallway, by the front door.
@@ -45,14 +54,15 @@ The Order's contract will follow, please sign and return within the week.
 @@
 
 :: Hallway Keys[subPassage item]
-A thick brass key, a padlock key, and a car key. 
+<br>A thick brass key, a padlock key, and a car key. 
+
+A stolen car could be more trouble than it's worth - tempting though.
 
 <<if visited("1_House-LivingRoom_coffee-table")>>
     None of the keys are small enough for the coffee table drawers.
-    <<else>>
+    <<else>>\
     There's nothing you need to unlock.
 <</if>>
-A stolen car could be more trouble than it's worth.
 
 
 :: 1_House-LivingRoom
@@ -71,9 +81,9 @@ A stolen car could be more trouble than it's worth.
 
             <<elseif previous() == "1_House-Hallway">>
                 You open the door and it creaks slightly.
+        
+                The window to the front garden lets in dim streetlight, under it a beige sofa.
         <</if>>\
-        The window to the front garden lets in dim streetlight, under it a beige sofa.
-
         Clutter covers a <<link [[coffee table|1_House-LivingRoom_coffee-table]]>><</link>> in the middle of the room.
 
         A flat <<link [[TV|1_House-LivingRoom_tv]]>><</link>> sits on sideboard on one side, next to a large <<link [[bookshelf|1_House-LivingRoom_bookshelf]]>><</link>> in the corner.
@@ -164,7 +174,7 @@ A plastic toolbox sits at the end next to a mop and bucket.
     <<case 1>>\
         You go upstairs to the first floor, the bare wooden steps creaking...
 
-        Turning up to the right, you see three doors around the small landing.
+        Turning up to the right, you see three doors around the small, unlit landing.
 
         The <<link [[first door|1_House-Bathroom]]>><</link>> on your left has a ceramic octopus embedded on the front. The <<link [[second door|1_House-Bedroom]]>><</link>> is plain.
 
@@ -172,19 +182,45 @@ A plastic toolbox sits at the end next to a mop and bucket.
 
         You taste the metallic tinge in the air before you smell it.
     <<default>>\
-        You're back on the landing. 
+        You're back on the darkened landing.
+
         A moth flutters against the paper lampshade above you.
 
-        From here it's a few steps to the <<link [[bathroom|1_House-Bathroom]]>><</link>>, <<link [[bedroom|1_House-Bedroom]]>><</link>> or <<link [[study|1_House-Study]]>><</link>>.
+        From here it's a few steps to the \
+        <<nobr>>
+            /* Bathroom */
+            <<if visited("1_House-Bathroom")>>
+                <<link [[bathroom|1_House-Bathroom]]>><</link>>
+                <<else>>
+                    <<link [[door with a ceramic octopus|1_House-Bathroom]]>><</link>> embedded on the front,
+            <</if>>
+            or the
+            <<if visited("1_House-Bedroom")>>
+                <<link [[bedroom|1_House-Bedroom]]>><</link>>.
+                <<else>>
+                <<link [[plain wooden door.|1_House-Bedroom]]>><</link>>
+            <</if>>
+        <</nobr>>
+
+        <<nobr>>
+            Warm yellow light is coming from
+            <<if visited("1_House-Study")>>
+                behind the <<link [[study|1_House-Study]]>><</link>> door
+                <<else>>
+                    the <<link [[door|1_House-Study]]>><</link>>.
+            <</if>>
+            at the end of the landing.
+        <</nobr>>
 <</switch>>
 <<link [[Go downstairs|1_House-Hallway]]>><</link>>
+
 
 :: 1_House-Bathroom
 You open the door into a bathroom, reeking of bleach and artificial citrus.
 
 You dazzle yourself as you turn your torch and catch your reflection in the cabinet mirror.
 
-It's sterile in here, save for a dark brown rim left inside the bath and the sink.
+It's sterile in here, save for a dark brown rim left inside the bath and the sink. A clean scalpel sits in a dish on the thin window sill.
 
 <<return "Back to Upstairs Landing">>
 
@@ -233,11 +269,14 @@ Scratched into the back, it reads "2015-2018"
 :: 1_House-Bedroom_side-table
 The plain white side table is a little scuffed on the corners.
 
-There's a <<appendPBody "picture frame">>
-<<include "Family Picture">>
-<<run $inventory.pushUnique("Family Picture")>><<redo "update_inventory">>
-<</appendPBody>>propped up on top - a couple embracing a young girl in the middle, all smiling at the camera.
-
+<<if !$inventory.includes("Family Picture")>>
+    There's a lamp and a<<appendPBody "picture frame">>
+    <<include "Family Picture">>
+    <<run $inventory.pushUnique("Family Picture")>><<redo "update_inventory">>
+    <</appendPBody>>propped up on top - a couple embracing a young girl in the middle, all smiling at the camera.
+    <<else>>\
+        You hold a family picture, but only one person is living here.
+<</if>>
 <<return "Look around the bedroom">>
 
 
@@ -253,10 +292,73 @@ Something rattles behind the picture when you pick it up.
 
 
 :: 1_House-Study
-The Study
+A wave of that metallic scent hits you when you open the door, coating the back of your throat.
 
-computer
+At last the <<link [[body|1_House-Study_body]]>><</link>>... well, half of it. 
 
-Inspect the body
+Legs and abdomen end in a diagonal cut that is too clean. You have placed the ''<<= $beaconItem>>'' in the blood soaked carpet in front of them.
 
-<<return "Go to Upstairs landing">>
+Threads of the <<link [[rift|1_House-Study_rift]]>><</link>> crackle above the remains.
+
+An old <<link [[computer|1_House-Study_interface]]>><</link>> sits on the desk, the chunky monitor is powered off.
+
+Go back to the <<link [[upstairs landing|1_House-Upstairs]]>><</link>>
+
+
+:: 1_House-Study_body
+The half body lies saturated in a pool of blood. You can tell they were a woman, wearing jeans and perhaps a black sweater.
+
+The right foot twitches.
+
+It's clear you've found the Source, so there should be something in the house you can use as a Beacon.
+
+Something to trigger a memory, a feeling... A bond strong enough to reach through the membranes between realities...
+
+<<nobr>>
+    It should be the 
+    <<if $inventory.length > 0 >>
+        <<cycle "$beaconItem" autoselect>>
+            <<optionsfrom $inventory>>
+        <</cycle>>.
+    <</if>>
+<</nobr>>
+
+<<return "Look around the study">>
+
+
+:: 1_House-Study_rift
+The rift is unstable.
+<<timed 1s t8n>>
+    <<next $line_delay>>It reaches for your mind...
+
+    <<next 3s>>...You turn away from it.
+
+    <<next 1s>><<return "Look around the study">>
+<</timed>>
+
+
+:: 1_House-Study_interface[game-screen]
+The old computer reminds you of your days pushing papers in a stale office cubicle.
+
+You sit down at the desk, a faint smell of ozone...
+
+@@.note-img; img : computer screen - flashes green @@
+<<include "Game Screen">>
+
+<<return "Look around the study">>
+
+
+:: Death_Consumed
+You wait, but your prey is nowhere in sight.
+
+You see it too late.
+
+Many jaws clamp down on your arms, shoulders and face.
+
+Smaller, needle-like teeth pierce your skull and your mind.
+
+...
+
+The rift is a wound, and predators know this.
+
+<<link [[Stop fighting|1_House-Bedroom]]>><</link>>

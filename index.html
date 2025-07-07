@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="33" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
+	<!-- UUID://DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9// --><tw-storydata name="ASCend" startnode="37" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="DBFFDB73-3ABB-4EAD-9CCC-5C6F95B0B3A9" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/*
 STORY STYLESHEET
 - Tweego automatically compiles supported file types including css and JavaScript files into the head element of the html file
  */
@@ -530,7 +530,15 @@ function gameScreenLoad () {
     let userInput = [];
     let dialogueData;
 
-    userInputDisplay.textContent = `userInput Array: ${userInput}`
+    // "user-input-display" in passage container.
+    function updateUserInputDisplay () {
+        if (userInputDisplay) {
+            console.log("userInputDisplay detected in Passage")
+            userInputDisplay.textContent = `userInput Array: ${userInput}`
+        } else {
+            console.log("No userInputDisplay detected in Passage")
+        }
+    }
 
     // Upddates userInput array on userControl inputs change
     console.log("Added userControl event listener");
@@ -549,8 +557,7 @@ function gameScreenLoad () {
                     userInput.push(" ");
                 }
             }
-            console.log(userInput);
-            userInputDisplay.textContent = `userInput Array: ${userInput}`;
+            updateUserInputDisplay();
             
             // First checks whether character divs have been added to displayText2 container by checking for child nodes
             if (displayText2.hasChildNodes()) {
@@ -766,7 +773,7 @@ Macro.add('mytestmacro', {
 &lt;&lt;next $line_delay&gt;&gt;A &lt;&lt;link [[stone wall|1_House-Front_wall]]&gt;&gt;&lt;&lt;/link&gt;&gt; separates the garden from the street.
 
 &lt;&lt;next $line_delay&gt;&gt;Sometimes the best approach is the simplest, you could try and knock on the &lt;&lt;link [[front door|1_House-Front_door]]&gt;&gt;&lt;&lt;/link&gt;&gt;.
-&lt;&lt;/timed&gt;&gt;\</tw-passagedata><tw-passagedata pid="2" name="1_House-Front_plant-pots" tags="" position="225,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="2" name="1_House-Front_plant-pots" tags="" position="225,100" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
     &lt;&lt;next $line_delay&gt;&gt;In the plant pots you can see mint, rosemary, red flowers, and a few small strawberry plants growing - the berries are long gone.
 
     &lt;&lt;next $line_delay&gt;&gt;Weeds grow in the cracks between the paving stones.
@@ -876,7 +883,7 @@ Macro.add('mytestmacro', {
 &lt;&lt;/if&gt;&gt;
 
 
-/* &gt;&gt;&gt;&gt;&gt;&gt; FORWARDS TO : Day_1_b.tw ::1_House-Hallway */</tw-passagedata><tw-passagedata pid="7" name="1_House-Front_door_unlock" tags="" position="850,100" size="100,100">/* Check if &quot;Wire&quot; in inventory? */\
+/* &gt;&gt;&gt;&gt;&gt;&gt; FORWARDS TO : Day_1_b.tw ::1_House-Hallway */</tw-passagedata><tw-passagedata pid="7" name="1_House-Front_door_unlock" tags="subPassage" position="850,100" size="100,100">/* Check if &quot;Wire&quot; in inventory? */\
 &lt;&lt;if $inventory.includes(&quot;Wire&quot;)&gt;&gt;\
     /* Yes - Show Pick lock and enter house */\
     &lt;&lt;timed 40ms t8n&gt;&gt;\
@@ -900,16 +907,13 @@ Macro.add('mytestmacro', {
     /* No - Show Links back to garden */
         &lt;&lt;timed 40ms t8n&gt;&gt;\
             &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;nobr&gt;&gt;
-                Standing on the &lt;&lt;linkreplace &quot;doormat&quot;&gt;&gt;
-                    &lt;&lt;append &quot;span.macro-timed-insert:last-of-type&quot; t8n&gt;&gt;
+                Standing on the &lt;&lt;appendPBody &quot;doormat&quot;&gt;&gt;
                         &lt;&lt;include &quot;1_House-Front_door_doormat&quot;&gt;&gt;
-                    &lt;&lt;/append&gt;&gt;
-                    doormat\
-                &lt;&lt;/linkreplace&gt;&gt;, 
+                    &lt;&lt;/appendPBody&gt;&gt;
                 you turn back towards the &lt;&lt;link [[garden.|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
                 &lt;&lt;/nobr&gt;&gt;
-        &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="1_House-Front_door_doormat" tags="" position="975,100" size="100,100">&lt;&lt;if visited() &gt; 1&gt;&gt;
+        &lt;&lt;/timed&gt;&gt;\
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="1_House-Front_door_doormat" tags="subPassage" position="975,100" size="100,100">&lt;&lt;if visited() &gt; 1&gt;&gt;
     You already checked under the doormat - there&#39;s nothing there.
     &lt;&lt;timed 5s&gt;&gt;
         &lt;&lt;goto &quot;1_House-Front_door&quot;&gt;&gt;
@@ -921,15 +925,23 @@ Macro.add('mytestmacro', {
             &lt;&lt;next $line_delay&gt;&gt;You stand up and check the street...
 
             &lt;&lt;next $line_delay&gt;&gt;All the lights are out and no-one is about.
-
-        &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="1_House-Hallway" tags="" position="1100,100" size="100,100">&lt;&lt;switch visited()&gt;&gt;
-    &lt;&lt;case 1&gt;&gt;
+        &lt;&lt;/timed&gt;&gt;\
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="1_House-Hallway" tags="" position="1100,100" size="100,100">&lt;&lt;switch visited()&gt;&gt;\
+    &lt;&lt;case 1&gt;&gt;\
+        &lt;&lt;if previous() == &quot;1_House-Front_door&quot;&gt;&gt;\
         You close the front door behind you and look around a narrow hallway.
+            &lt;&lt;else&gt;&gt;
+                You find yourself in the narrow hallway, next to the front door.
+        &lt;&lt;/if&gt;&gt;
+        Faint warm light spills down the &lt;&lt;link [[stairs|1_House-Upstairs]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 
-        Faint warm light spills down the &lt;&lt;link [[stairs|1_House-Upstairs]]&gt;&gt;&lt;&lt;/link&gt;&gt; ahead, so you can see a small table to your left.
+        There&#39;s not much here apart from a &lt;&lt;link [[small table|1_House-Hallway_table]]&gt;&gt;&lt;&lt;/link&gt;&gt; and a few coats hanging up next to it.
 
-        A &lt;&lt;link [[door to your right|1_House-LivingRoom]]&gt;&gt;&lt;&lt;/link&gt;&gt; stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.
+        &lt;&lt;if previous() == &quot;1_House-Front_door&quot;&gt;&gt;\
+            A &lt;&lt;link [[door to your right|1_House-LivingRoom]]&gt;&gt;&lt;&lt;/link&gt;&gt; stands partially open, dim streetlight reveals the edge of a TV and a large bookshelf.
+            &lt;&lt;else&gt;&gt;\
+                The &lt;&lt;link [[living room|1_House-LivingRoom]]&gt;&gt;&lt;&lt;/link&gt;&gt; door stands ajar behind you.
+        &lt;&lt;/if&gt;&gt;
 
     &lt;&lt;default&gt;&gt;
         You&#39;re in the downstairs hallway, by the front door.
@@ -946,14 +958,15 @@ Dear Alice,
 We are pleased to confirm your application for membership has been accepted. As you are an invited candidate, Sal will guide you through the rest.
 
 The Order&#39;s contract will follow, please sign and return within the week.
-@@</tw-passagedata><tw-passagedata pid="12" name="Hallway Keys" tags="subPassage item" position="225,225" size="100,100">A thick brass key, a padlock key, and a car key. 
+@@</tw-passagedata><tw-passagedata pid="12" name="Hallway Keys" tags="subPassage item" position="225,225" size="100,100">&lt;br&gt;A thick brass key, a padlock key, and a car key. 
+
+A stolen car could be more trouble than it&#39;s worth - tempting though.
 
 &lt;&lt;if visited(&quot;1_House-LivingRoom_coffee-table&quot;)&gt;&gt;
     None of the keys are small enough for the coffee table drawers.
-    &lt;&lt;else&gt;&gt;
+    &lt;&lt;else&gt;&gt;\
     There&#39;s nothing you need to unlock.
-&lt;&lt;/if&gt;&gt;
-A stolen car could be more trouble than it&#39;s worth.</tw-passagedata><tw-passagedata pid="13" name="1_House-LivingRoom" tags="" position="350,225" size="100,100">&lt;&lt;switch visited()&gt;&gt;\
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="1_House-LivingRoom" tags="" position="350,225" size="100,100">&lt;&lt;switch visited()&gt;&gt;\
     &lt;&lt;case 1&gt;&gt;\
         &lt;&lt;if previous() == &quot;1_House-Front_window-entry&quot;&gt;&gt;\
             &lt;&lt;nobr&gt;&gt;
@@ -968,9 +981,9 @@ A stolen car could be more trouble than it&#39;s worth.</tw-passagedata><tw-pass
 
             &lt;&lt;elseif previous() == &quot;1_House-Hallway&quot;&gt;&gt;
                 You open the door and it creaks slightly.
+        
+                The window to the front garden lets in dim streetlight, under it a beige sofa.
         &lt;&lt;/if&gt;&gt;\
-        The window to the front garden lets in dim streetlight, under it a beige sofa.
-
         Clutter covers a &lt;&lt;link [[coffee table|1_House-LivingRoom_coffee-table]]&gt;&gt;&lt;&lt;/link&gt;&gt; in the middle of the room.
 
         A flat &lt;&lt;link [[TV|1_House-LivingRoom_tv]]&gt;&gt;&lt;&lt;/link&gt;&gt; sits on sideboard on one side, next to a large &lt;&lt;link [[bookshelf|1_House-LivingRoom_bookshelf]]&gt;&gt;&lt;&lt;/link&gt;&gt; in the corner.
@@ -1033,7 +1046,7 @@ A plastic toolbox sits at the end next to a mop and bucket.
     &lt;&lt;case 1&gt;&gt;\
         You go upstairs to the first floor, the bare wooden steps creaking...
 
-        Turning up to the right, you see three doors around the small landing.
+        Turning up to the right, you see three doors around the small, unlit landing.
 
         The &lt;&lt;link [[first door|1_House-Bathroom]]&gt;&gt;&lt;&lt;/link&gt;&gt; on your left has a ceramic octopus embedded on the front. The &lt;&lt;link [[second door|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt; is plain.
 
@@ -1041,16 +1054,41 @@ A plastic toolbox sits at the end next to a mop and bucket.
 
         You taste the metallic tinge in the air before you smell it.
     &lt;&lt;default&gt;&gt;\
-        You&#39;re back on the landing. 
+        You&#39;re back on the darkened landing.
+
         A moth flutters against the paper lampshade above you.
 
-        From here it&#39;s a few steps to the &lt;&lt;link [[bathroom|1_House-Bathroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;, &lt;&lt;link [[bedroom|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt; or &lt;&lt;link [[study|1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;.
+        From here it&#39;s a few steps to the \
+        &lt;&lt;nobr&gt;&gt;
+            /* Bathroom */
+            &lt;&lt;if visited(&quot;1_House-Bathroom&quot;)&gt;&gt;
+                &lt;&lt;link [[bathroom|1_House-Bathroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+                &lt;&lt;else&gt;&gt;
+                    &lt;&lt;link [[door with a ceramic octopus|1_House-Bathroom]]&gt;&gt;&lt;&lt;/link&gt;&gt; embedded on the front,
+            &lt;&lt;/if&gt;&gt;
+            or the
+            &lt;&lt;if visited(&quot;1_House-Bedroom&quot;)&gt;&gt;
+                &lt;&lt;link [[bedroom|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;.
+                &lt;&lt;else&gt;&gt;
+                &lt;&lt;link [[plain wooden door.|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/nobr&gt;&gt;
+
+        &lt;&lt;nobr&gt;&gt;
+            Warm yellow light is coming from
+            &lt;&lt;if visited(&quot;1_House-Study&quot;)&gt;&gt;
+                behind the &lt;&lt;link [[study|1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt; door
+                &lt;&lt;else&gt;&gt;
+                    the &lt;&lt;link [[door|1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;.
+            &lt;&lt;/if&gt;&gt;
+            at the end of the landing.
+        &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/switch&gt;&gt;
 &lt;&lt;link [[Go downstairs|1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="1_House-Bathroom" tags="" position="100,350" size="100,100">You open the door into a bathroom, reeking of bleach and artificial citrus.
 
 You dazzle yourself as you turn your torch and catch your reflection in the cabinet mirror.
 
-It&#39;s sterile in here, save for a dark brown rim left inside the bath and the sink.
+It&#39;s sterile in here, save for a dark brown rim left inside the bath and the sink. A clean scalpel sits in a dish on the thin window sill.
 
 &lt;&lt;return &quot;Back to Upstairs Landing&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="1_House-Bedroom" tags="" position="225,350" size="100,100">&lt;&lt;switch visited()&gt;&gt;
     &lt;&lt;case 1&gt;&gt;
@@ -1083,11 +1121,14 @@ A plain burnished silver mask, smooth except for slits for eyes and cut off just
 
 Scratched into the back, it reads &quot;2015-2018&quot;</tw-passagedata><tw-passagedata pid="25" name="1_House-Bedroom_side-table" tags="" position="600,350" size="100,100">The plain white side table is a little scuffed on the corners.
 
-There&#39;s a &lt;&lt;appendPBody &quot;picture frame&quot;&gt;&gt;
-&lt;&lt;include &quot;Family Picture&quot;&gt;&gt;
-&lt;&lt;run $inventory.pushUnique(&quot;Family Picture&quot;)&gt;&gt;&lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;
-&lt;&lt;/appendPBody&gt;&gt;propped up on top - a couple embracing a young girl in the middle, all smiling at the camera.
-
+&lt;&lt;if !$inventory.includes(&quot;Family Picture&quot;)&gt;&gt;
+    There&#39;s a lamp and a&lt;&lt;appendPBody &quot;picture frame&quot;&gt;&gt;
+    &lt;&lt;include &quot;Family Picture&quot;&gt;&gt;
+    &lt;&lt;run $inventory.pushUnique(&quot;Family Picture&quot;)&gt;&gt;&lt;&lt;redo &quot;update_inventory&quot;&gt;&gt;
+    &lt;&lt;/appendPBody&gt;&gt;propped up on top - a couple embracing a young girl in the middle, all smiling at the camera.
+    &lt;&lt;else&gt;&gt;\
+        You hold a family picture, but only one person is living here.
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;return &quot;Look around the bedroom&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="Family Picture" tags="subPassage item beacon" position="725,350" size="100,100">&lt;br&gt;@@.note-img; img : Family picture frame @@
 
 They seem to be a happy family. 
@@ -1095,13 +1136,60 @@ They seem to be a happy family.
 The daughter has inherited her mother&#39;s green eyes. The father&#39;s smile is infectious.
 
 The sun faded photo sits in a thick wooden frame.
-Something rattles behind the picture when you pick it up.</tw-passagedata><tw-passagedata pid="27" name="1_House-Study" tags="" position="850,350" size="100,100">The Study
+Something rattles behind the picture when you pick it up.</tw-passagedata><tw-passagedata pid="27" name="1_House-Study" tags="" position="850,350" size="100,100">A wave of that metallic scent hits you when you open the door, coating the back of your throat.
 
-computer
+At last the &lt;&lt;link [[body|1_House-Study_body]]&gt;&gt;&lt;&lt;/link&gt;&gt;... well, half of it. 
 
-Inspect the body
+Legs and abdomen end in a diagonal cut that is too clean. You have placed the &#39;&#39;&lt;&lt;= $beaconItem&gt;&gt;&#39;&#39; in the blood soaked carpet in front of them.
 
-&lt;&lt;return &quot;Go to Upstairs landing&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="Game Screen" tags="game-screen" position="975,350" size="100,100">&lt;html&gt;
+Threads of the &lt;&lt;link [[rift|1_House-Study_rift]]&gt;&gt;&lt;&lt;/link&gt;&gt; crackle above the remains.
+
+An old &lt;&lt;link [[computer|1_House-Study_interface]]&gt;&gt;&lt;&lt;/link&gt;&gt; sits on the desk, the chunky monitor is powered off.
+
+Go back to the &lt;&lt;link [[upstairs landing|1_House-Upstairs]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="1_House-Study_body" tags="" position="975,350" size="100,100">The half body lies saturated in a pool of blood. You can tell they were a woman, wearing jeans and perhaps a black sweater.
+
+The right foot twitches.
+
+It&#39;s clear you&#39;ve found the Source, so there should be something in the house you can use as a Beacon.
+
+Something to trigger a memory, a feeling... A bond strong enough to reach through the membranes between realities...
+
+&lt;&lt;nobr&gt;&gt;
+    It should be the 
+    &lt;&lt;if $inventory.length &gt; 0 &gt;&gt;
+        &lt;&lt;cycle &quot;$beaconItem&quot; autoselect&gt;&gt;
+            &lt;&lt;optionsfrom $inventory&gt;&gt;
+        &lt;&lt;/cycle&gt;&gt;.
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
+
+&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="29" name="1_House-Study_rift" tags="" position="1100,350" size="100,100">The rift is unstable.
+&lt;&lt;timed 1s t8n&gt;&gt;
+    &lt;&lt;next $line_delay&gt;&gt;It reaches for your mind...
+
+    &lt;&lt;next 3s&gt;&gt;...You turn away from it.
+
+    &lt;&lt;next 1s&gt;&gt;&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="1_House-Study_interface" tags="game-screen" position="1225,350" size="100,100">The old computer reminds you of your days pushing papers in a stale office cubicle.
+
+You sit down at the desk, a faint smell of ozone...
+
+@@.note-img; img : computer screen - flashes green @@
+&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
+
+&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="Death_Consumed" tags="" position="100,475" size="100,100">You wait, but your prey is nowhere in sight.
+
+You see it too late.
+
+Many jaws clamp down on your arms, shoulders and face.
+
+Smaller, needle-like teeth pierce your skull and your mind.
+
+...
+
+The rift is a wound, and predators know this.
+
+&lt;&lt;link [[Stop fighting|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="Game Screen" tags="game-screen subPassage" position="225,475" size="100,100">&lt;html&gt;
     &lt;div class=&quot;display&quot;&gt;
         &lt;p class=&quot;output-title&quot;&gt;Output&lt;/p&gt;
         &lt;div class=&quot;output&quot;&gt;&lt;/div&gt;
@@ -1131,14 +1219,17 @@ Inspect the body
         &lt;!-- User controls  container end --&gt;
     &lt;/div&gt;
 &lt;/html&gt;
-/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="29" name="StoryInit" tags="" position="1100,350" size="100,100">&lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;
+/* @@.user-input-display;@@ */</tw-passagedata><tw-passagedata pid="33" name="StoryInit" tags="" position="350,475" size="100,100">&lt;&lt;set $line_delay = &quot;1s&quot;&gt;&gt;
 &lt;&lt;set $type_ms_default = &quot;40ms&quot;&gt;&gt;
 &lt;&lt;set $inventory = []&gt;&gt;
-&lt;&lt;set $dayCounter = 1&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="StoryMenu" tags="" position="1225,350" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;set $dayCounter = 1&gt;&gt;
+&lt;&lt;set $beaconItem&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="StoryMenu" tags="" position="475,475" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Front_plant-pots]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="PassageHeader" tags="" position="100,475" size="100,100">@@.passage-header;
+&lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[Game Chapter 1a]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="PassageHeader" tags="" position="600,475" size="100,100">@@.passage-header;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if visited() &gt; 1&gt;&gt;
     &lt;&lt;set $line_delay = &quot;40ms&quot;&gt;&gt;
@@ -1149,14 +1240,14 @@ Inspect the body
 &lt;span&gt;&lt;&lt;print &quot;current passage visited: &quot; + visited()&gt;&gt;&lt;/span&gt;
 &lt;span class=&quot;inventory&quot;&gt;Held: &lt;&lt;do tag &quot;update_inventory&quot;&gt;&gt;&lt;&lt;= $inventory.join(&quot;, &quot;)&gt;&gt;&lt;&lt;/do&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
-@@</tw-passagedata><tw-passagedata pid="32" name="PassageFooter" tags="" position="225,475" size="100,100">@@.passage-footer;
+@@</tw-passagedata><tw-passagedata pid="36" name="PassageFooter" tags="" position="725,475" size="100,100">@@.passage-footer;
 Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
-@@</tw-passagedata><tw-passagedata pid="33" name="Start" tags="" position="350,475" size="100,100">&lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="Dream Sequence" tags="" position="475,475" size="100,100">@@.dream-img;@@
+@@</tw-passagedata><tw-passagedata pid="37" name="Start" tags="" position="850,475" size="100,100">&lt;&lt;link [[Dream...|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="Dream Sequence" tags="" position="975,475" size="100,100">@@.dream-img;@@
 &lt;&lt;link [[Ignore it|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[Wake up|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 
 
-/* LINKS TO DAY_1.tw */</tw-passagedata><tw-passagedata pid="35" name="Intro" tags="" position="600,475" size="100,100">&lt;&lt;nobr&gt;&gt;
+/* LINKS TO DAY_1.tw */</tw-passagedata><tw-passagedata pid="39" name="Intro" tags="" position="1100,475" size="100,100">&lt;&lt;nobr&gt;&gt;
     &lt;&lt;if visited(&quot;Intro&quot;)&gt; 1&gt;&gt;
         &lt;&lt;set _letterbox_delay = &quot;40ms&quot;&gt;&gt;
         &lt;&lt;else&gt;&gt;
@@ -1181,7 +1272,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 &lt;&lt;if visited(&quot;Case Envelope&quot;, &quot;Intro - eat drink&quot;)&gt;&gt;\
     &lt;&lt;type $type_ms_default&gt;&gt;&lt;&lt;link [[Time to go.|1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;&lt;/type&gt;&gt;
 &lt;&lt;/if&gt;&gt;\
-&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="Case Envelope" tags="" position="725,475" size="100,100">A flimsy sheet of badly printed text. There is a street address and instructions...
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="40" name="Case Envelope" tags="" position="1225,475" size="100,100">A flimsy sheet of badly printed text. There is a street address and instructions...
 @@.game-note;
 &lt;&lt;type $type_ms_default&gt;&gt;&gt;Detected 1 rune - up to you to find the rift interface.
 &gt;Human made, proceed with caution. 
@@ -1191,7 +1282,7 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 @@\
 @@.note-img;//img : Pixel art letter &amp; rune symbol//@@
 
-&lt;&lt;link [[You tuck the envelope into your jacket.|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="Intro - eat drink" tags="" position="850,475" size="100,100">&lt;&lt;if visited()&gt;1&gt;&gt;
+&lt;&lt;link [[You tuck the envelope into your jacket.|Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="Intro - eat drink" tags="" position="100,600" size="100,100">&lt;&lt;if visited()&gt;1&gt;&gt;
     &lt;&lt;timed 40ms t8n&gt;&gt;
     &lt;&lt;next $line_delay&gt;&gt;You&#39;ve already eaten the last of the food in your fridge.
     
@@ -1215,15 +1306,15 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
         &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Check if you need anything else before you go. | Intro]]&gt;&gt;&lt;&lt;/link&gt;&gt;
         &lt;&lt;/timed&gt;&gt;
 
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="Append Passage Body" tags="widget" position="975,475" size="100,100">&lt;&lt;nobr&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="Append Passage Body" tags="widget" position="225,600" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;widget &quot;appendPBody&quot; container&gt;&gt;
         &lt;&lt;linkreplace _args[0]&gt;&gt;&lt;&lt;= _args[0]&gt;&gt;
             &lt;&lt;append &quot;.passage-body&quot; t8n&gt;&gt;
-                &lt;div class=&quot;appendPBody&quot;&gt;&lt;br&gt;&lt;&lt;= &quot;{{{_args}}}:&quot; + _args[0]&gt;&gt;&lt;br&gt;&lt;&lt;= _contents&gt;&gt;&lt;/div&gt;
+                &lt;div class=&quot;appendPBody&quot;&gt;&lt;&lt;= _contents&gt;&gt;&lt;/div&gt;
             &lt;&lt;/append&gt;&gt;
         &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="Game Chapter 1 - Start" tags="chapter1" position="1100,475" size="100,100">&lt;&lt;set $gameCh1 = [
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="43" name="Game Chapter 1 - Start" tags="chapter1" position="350,600" size="100,100">&lt;&lt;set $gameCh1 = [
     &quot;Ta daaa!! My first ever game!!&quot;,
     &quot;Work in progress - let me know what you think!&quot;,
     &quot;All feedback is constructive :)&quot;,
@@ -1242,8 +1333,8 @@ Speech Num: &lt;&lt;do tag &quot;game-ch1&quot;&gt;&gt;$speech_num&lt;&lt;/do&gt
         &lt;&lt;elseif $speech_num &lt;= $speech_len&gt;&gt;
             &lt;&lt;goto &quot;Game Chapter 1a&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="40" name="Game Chapter 1a" tags="game-screen chapter1" position="1225,475" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
-@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="41" name="Test" tags="" position="100,600" size="100,100">This is a test page 
+&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="Game Chapter 1a" tags="game-screen chapter1" position="475,600" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
+@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="45" name="Test" tags="" position="600,600" size="100,100">This is a test page 
 Hello :)
 !Box Hover style
 @@.box;
