@@ -325,7 +325,7 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
             <<optionsfrom $inventory>>
         <</cycle>>.
         <<else>>
-            something important to the Source.
+            something important to the Source. You should place it next to them.
     <</if>>
 <</nobr>>
 
@@ -347,26 +347,30 @@ The rift is unstable.
 The old computer reminds you of your days pushing papers in a stale office cubicle.
 
 You sit down at the desk, a faint smell of ozone... every rift has an interface.
-<<if $beaconItem>>
-    <<link [[Turn on the computer|Ritual_Beacon]]>><</link>>
-    @@.note-img; img : computer screen - flickers green @@
+<<if $beaconItem>>\
+    <<addBgEffect "pulseFX">>
+    <img class="img-s" src="img\dream-sequence\frame_004.png">
+    Using the ''<<= $beaconItem>>'' as the beacon, <<link [[start the ritual...|Ritual_Beacon]]>><</link>>
     <<else>>
+        <img class="img-s" src="img\dream-sequence\frame_001.png">
         First you need an item to act as a Beacon - the rift is still active, so the Source must be on the other side.
-<</if>>
+<</if>>\
 <<return "Look around the study">>
 
 
 :: Death_Consumed
-You wait, but your prey is nowhere in sight.
+<<timed 40ms>>    
+<<next $line_delay>> You wait, but your prey is nowhere in sight.
 
-You see it too late.
+<<next $line_delay>>You see it too late.
 
-Many jaws clamp down on your arms, shoulders and face.
+<<next $line_delay>>Many jaws clamp down on your arms, shoulders and face.
 
-Smaller, needle-like teeth pierce your skull and your mind.
+<<next $line_delay>>Smaller, needle-like teeth pierce your skull and your mind.
 
-...
+<<next $line_delay>>...
 
-The rift is a wound, and predators know this.
+<<next $line_delay>>The rift is a wound, and predators know this.
 
 <<link [[Stop fighting|1_House-Bedroom]]>><</link>>
+<</timed>>

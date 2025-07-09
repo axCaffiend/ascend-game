@@ -42,6 +42,7 @@ ASCend
 <<set $inventory = []>>
 <<set $dayCounter = 1>>
 <<set $beaconItem>>
+<<set $bgEffects = []>>
 
 
 :: StoryMenu

@@ -20,4 +20,15 @@ Click to <<linkappend "reveal" t8n>> more text here...<</linkappend>>!!
 <<appendPBody "Append B">>B has some more content<</appendPBody>>
 <<appendPBody "Append C">>C has yet more content<</appendPBody>>
 
+!add/removeBgEffect and resetBg Macro tests
+<<link "turn off pulseFX">>
+    <<removeBgEffect "pulseFX">>
+<</link>>
+<<link "turn on pulseFX">>
+    <<addBgEffect "pulseFX">>
+<</link>>
+<<link "reset BG">>
+    <<resetBg>>
+<</link>>
+
 <<link [[Return to start|Start]]>><</link>>

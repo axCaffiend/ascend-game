@@ -6,9 +6,8 @@ STORY STYLESHEET
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
-    --test-color:rgb(2, 42, 17);
     --game-screen-green: rgb(0, 174, 0);
-    --game-screen-dark-blue: rgb(4, 88, 93);
+    --game-screen-dark-green:rgb(2, 42, 17);
     --colour-link--default: lightgreen;
     --border-green-01rem: solid 0.1rem var(--game-screen-green);
     --main-font: 'Space Mono', Courier, monospace;
@@ -114,6 +113,14 @@ body {
     margin-bottom: 2rem;
     width: 80%;
     line-height: 2em;
+}
+
+/* Story images - items, events etc. */
+.passage .img-s {
+    display: block;
+    margin: 0 auto;
+    width: 33.33%;
+    height: auto;
 }
 
 /* --- CUSTOM WIDGETS ----------- */
@@ -311,7 +318,7 @@ a[data-passage="Dream Sequence"]:hover {
 
 /* ---- BUTTONS ---- */
 #game-screen-fx {
-    position: fixed;
+    position: absolute;
     z-index: -1;
     top: 0;
     left: 0;

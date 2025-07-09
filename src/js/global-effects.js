@@ -1,5 +1,65 @@
 // For GSAP and other JS effects used throughout the story
 
+setup.updateBgEffects = function () {
+    const bgEffectsArr = variables().bgEffects;
+    console.log("Updating $bgEffects : " + bgEffectsArr.toString());
+    // Kill all GSAP animations (freezes CSS properties as they were)
+    gsap.killTweensOf("body");
+    // Reset background to black
+    document.querySelector("body").style.background = "#000";
+    // Load background effects from story variable $bgEffects
+    if (bgEffectsArr.length > 0) {
+        for(const fx of bgEffectsArr) {
+            console.log("--- Calling bgEffectFuncs." + fx);
+            bgEffectFuncs[fx].apply(this);
+        }
+    } else {
+        console.log("$bgEffects empty");
+    }
+}
+
+// function updateBgEffects () {
+//     const bgEffectsArr = variables().bgEffects;
+//     console.log("$bgEffects : " + bgEffectsArr.toString());
+//     for(const fx of bgEffectsArr) {
+//         console.log("--- Calling bgEffectFuncs." + fx);
+//         bgEffectFuncs[fx].apply(this);
+//     }
+// }
+
+// ======================================================
+// Page Background Effects
+// - Define effect function in bgEffectFuncs object
+// - Add function name to $bgEffects story variable (an array) to use
+// ======================================================
+const bgEffectFuncs = {
+    // Slow pulse effect from dark green to black. Used for ritual passages.
+    pulseFX : function () {
+        console.log("--- pulseFX running");
+        let fillColour = getComputedStyle(document.documentElement).getPropertyValue('--game-screen-dark-green');
+    
+        gsap.fromTo("body",
+            {
+                backgroundColor: fillColour
+            },
+            {
+                backgroundColor: "black",
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "none"
+            }
+        )
+    }
+}
+
+
+
+
+// ======================================================
+// Element specific effects - add selectors to each effect
+// ======================================================
+
 function textBreatheFX () {
     console.log("breatheFX running");
 
@@ -18,4 +78,4 @@ function textBreatheFX () {
         yoyo: true,
         easing: "none"
     })
-} 
+}

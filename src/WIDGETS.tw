@@ -10,3 +10,46 @@
         <</linkreplace>>
 <</widget>>
 <</nobr>>
+
+/* addBgEffect - adds a background effect to page, only accepts 1 arg.*/
+:: Add BG Effect [widget]
+<<nobr>>
+    <<widget "addBgEffect">>
+        <<run $bgEffects.pushUnique(_args[0])>>
+        <<script>>
+            console.group();
+            console.log("Adding BgEffect...");
+            console.groupEnd();
+            setup.updateBgEffects();
+        <</script>>
+    <</widget>>
+<</nobr>>
+
+
+:: Remove BG Effect [widget]
+<<nobr>>
+    <<widget "removeBgEffect">>
+        <<run $bgEffects.deleteAll(_args[0])>>
+        <<script>>
+            console.group();
+            console.log("Removing BgEffect...");
+            console.groupEnd();
+            setup.updateBgEffects();
+        <</script>>
+    <</widget>>
+<</nobr>>
+
+
+:: Reset BG [widget]
+<<nobr>>
+    <<widget "resetBg">>
+        <<run $bgEffects = []>>
+        <<script>>
+            console.group();
+            console.log("--- Resetting BgEffect ---");
+            console.log(variables().bgEffects.toString());
+            console.groupEnd();
+            setup.updateBgEffects();
+        <</script>>
+    <</widget>>
+<</nobr>>
