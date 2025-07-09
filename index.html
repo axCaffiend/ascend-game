@@ -119,6 +119,7 @@ STORY STYLESHEET
     --main-font: 'Space Mono', Courier, monospace;
     --passage-header-footer-dividers: dashed 0.1rem rgb(118, 118, 118);
     --passage-header-footer-padding: 1.5em;
+    --gameover-red : rgb(53, 2, 2);
 }
 
 html {
@@ -725,17 +726,39 @@ const bgEffectFuncs = {
     
         gsap.fromTo("body",
             {
-                backgroundColor: fillColour
+                backgroundColor: "black"
             },
             {
-                backgroundColor: "black",
+                backgroundColor: fillColour,
                 duration: 3,
                 repeat: -1,
                 yoyo: true,
                 ease: "none"
             }
         )
+    },
+    // Death_Consumed, fade in red bg.
+    deathConsumedFX : function () {
+        console.log("--- deathConsumedFX running");
+        let fillColour = getComputedStyle(document.documentElement).getPropertyValue('--gameover-red');
+        gsap.fromTo("body",
+            {
+                background: `radial-gradient(circle,rgba(0, 0, 0, 1) 0%, rgba(0,0,0,1) 100%)`
+            },
+            {
+                background: `radial-gradient(circle,rgba(0, 0, 0, 1) 0%, ${fillColour} 100%)`,
+                duration: 5
+            }
+        )
+
+        gsap.to(".macro-timed-insert",
+            {
+                filter: "blur(3px)",
+                duration: 5
+            }
+        )
     }
+    
 }
 
 
@@ -1262,25 +1285,33 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 &lt;&lt;if $beaconItem&gt;&gt;\
     &lt;&lt;addBgEffect &quot;pulseFX&quot;&gt;&gt;
     &lt;img class=&quot;img-s&quot; src=&quot;img\dream-sequence\frame_004.png&quot;&gt;
-    Using the &#39;&#39;&lt;&lt;= $beaconItem&gt;&gt;&#39;&#39; as the beacon, &lt;&lt;link [[start the ritual...|Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+    Using the &#39;&#39;&lt;&lt;= $beaconItem&gt;&gt;&#39;&#39; as the beacon, 
+    &lt;&lt;nobr&gt;&gt;
+        &lt;&lt;if $beaconItem == &quot;Mask&quot; || $beaconItem == &quot;Rift book&quot;&gt;&gt;
+            &lt;&lt;link [[start the ritual...|Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+            &lt;&lt;else&gt;&gt;
+                &lt;&lt;link [[start the ritual...|Death_Consumed]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/nobr&gt;&gt;
     &lt;&lt;else&gt;&gt;
         &lt;img class=&quot;img-s&quot; src=&quot;img\dream-sequence\frame_001.png&quot;&gt;
         First you need an item to act as a Beacon - the rift is still active, so the Source must be on the other side.
 &lt;&lt;/if&gt;&gt;\
-&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="Death_Consumed" tags="" position="100,475" size="100,100">&lt;&lt;timed 40ms&gt;&gt;    
-&lt;&lt;next $line_delay&gt;&gt; You wait, but your prey is nowhere in sight.
+&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="Death_Consumed" tags="" position="100,475" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
+    &lt;&lt;resetBg&gt;&gt;\
+    &lt;&lt;next $line_delay&gt;&gt;...Sometimes the connection takes time...&lt;&lt;next $line_delay&gt;&gt;You wait but you cannot sense your prey.
 
-&lt;&lt;next $line_delay&gt;&gt;You see it too late.
+    &lt;&lt;next 3s&gt;&gt;You see it too late.
 
-&lt;&lt;next $line_delay&gt;&gt;Many jaws clamp down on your arms, shoulders and face.
+    &lt;&lt;next $line_delay&gt;&gt;Many jaws clamp down on your arms, shoulders and face.&lt;&lt;addBgEffect &quot;deathConsumedFX&quot;&gt;&gt;
 
-&lt;&lt;next $line_delay&gt;&gt;Smaller, needle-like teeth pierce your skull and your mind.
+    &lt;&lt;next $line_delay&gt;&gt;Smaller, needle-like teeth pierce your skull and your mind.
 
-&lt;&lt;next $line_delay&gt;&gt;...
+    &lt;&lt;next $line_delay&gt;&gt;...
 
-&lt;&lt;next $line_delay&gt;&gt;The rift is a wound, and predators know this.
+    &lt;&lt;next 3s&gt;&gt;The rift is a wound, and predators know this.
 
-&lt;&lt;link [[Stop fighting|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+    &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Stop fighting|Dream Sequence]]&gt;&gt;&lt;&lt;run $inventory = []&gt;&gt;&lt;&lt;resetBg&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="Ritual_Beacon" tags="game-screen" position="225,475" size="100,100">@@#game-screen-fx;
 @@
 &lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
