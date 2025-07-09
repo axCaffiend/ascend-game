@@ -1,3 +1,6 @@
+/* ====================== */
+/* Append Passage         */
+/* ====================== */
 /* appendPBody - single use inline link that appends contents to .passage-body container */
 
 :: Append Passage Body [widget]
@@ -11,6 +14,10 @@
 <</widget>>
 <</nobr>>
 
+
+/* ====================== */
+/* Background Effects     */
+/* ====================== */
 /* addBgEffect - adds a background effect to page, only accepts 1 arg.*/
 :: Add BG Effect [widget]
 <<nobr>>
@@ -51,5 +58,54 @@
             console.groupEnd();
             setup.updateBgEffects();
         <</script>>
+    <</widget>>
+<</nobr>>
+
+
+/* ====================== */
+/* Inventory              */
+/* ====================== */
+
+:: Show Inventory [widget]
+<<nobr>>
+    <<widget "showInventory">>
+        <<done>>
+            <<replace ".inventory">>Held: 
+                <<for _i,_val range $inventory>>
+                    <<capture _i,_val>>
+                         / <<link _val>>
+                            <<set $showItem = _val>>
+                            <<include "Inventory Dialog">>
+                        <</link>>
+                    <</capture>>
+                <</for>>
+            <</replace>>
+        <</done>>
+    <</widget>>
+<</nobr>>
+
+
+/* Add Item*/
+/* Add multiple items at once as separate arguments */
+:: Add Inventory Item [widget]
+<<nobr>>
+    <<widget "addInventory">>
+        <<for _i,_val range _args>>
+            <<run $inventory.pushUnique(_val)>>
+        <</for>>
+        <<showInventory>>
+    <</widget>>
+<</nobr>>
+
+
+/* Remove Item*/
+/* Remove multiple items at once as separate arguments */
+:: Remove Inventory Item [widget]
+<<nobr>>
+    <<widget "removeInventory">>
+        <<for _i,_val range _args>>
+            <<run $inventory.deleteAll(_val)>>
+        <</for>>
+        <<showInventory>>
     <</widget>>
 <</nobr>>

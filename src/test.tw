@@ -1,6 +1,11 @@
 :: Test
 This is a test page 
 Hello :)
+
+!Inventory dialog
+<<link "Add test item">><<addInventory "Chocolate">><</link>>
+<<link "Remove test item">><<removeInventory "Chocolate">><</link>>
+
 !Box Hover style
 @@.box;
 Another box using .box class.
@@ -32,3 +37,6 @@ Click to <<linkappend "reveal" t8n>> more text here...<</linkappend>>!!
 <</link>>
 
 <<link [[Return to start|Start]]>><</link>>
+
+:: Chocolate
+A tasty bar of your favourite chocolate.

@@ -31,12 +31,7 @@
             <<timed 40ms t8n>>\
                 <<next $line_delay>>You search through the pots one by one... a small ceramic frog...wooden sticks... some wire and netting.
 
-                <<next $line_delay>>You take the wire.
-                <<nobr>>
-                /* Add wire to inventory */
-                    <<run $inventory.pushUnique("Wire")>>
-                    <<redo "update_inventory">>
-                <</nobr>>
+                <<next $line_delay>>You take the wire.<<addInventory "Wire">>
                 <<next $line_delay>>Standing up, you check the street... <<next 3s>>No one seems to have noticed.
 
                 <<next $line_delay>>You could try the <<link [[front door|1_House-Front_door]]>><</link>> again, or <<link [[check around the garden|1_House-Front]]>><</link>> for another way in.
@@ -52,6 +47,9 @@
         <<link [[Smash the window | 1_House-Front_plant-pots_window]]>><</link>>
         <</if>>
 <</timed>>
+
+:: Wire [subPassage]
+A short piece of wire. It's thin enough to fit into a keyhole.
 
 
 :: 1_House-Front_plant-pots_window
@@ -87,7 +85,7 @@
     <<next $line_delay>>You grimace but you're sure nothing will come of that call.
 
     <<next $line_delay>>Easy enough to explain to the neighbours.
-
+    <<next $line_delay>>You drop the Stone.<<removeInventory "Stone">>
     <<next $line_delay>>Without wasting any more time, you <<link [[climb through|1_House-LivingRoom]]>><</link>> the window...
 <</timed>>
 
@@ -117,6 +115,8 @@
 <</if>>
 <</timed>>
 
+:: Stone [subPassage]
+Rough limestone leaves dust on your hand.
 
 :: 1_House-Front_door
 <<nobr>>
@@ -160,8 +160,9 @@
 
         <<next 2s>>You turn back to the door and start picking the lock with the wire.
 
-        <<next $line_delay>>@@.note-sfx; sfx : Lock clicking @@<<run $inventory.deleteAll("Wire")>>
-        <<next $line_delay>><<redo "update_inventory">>The wire snaps in half.
+        <<next $line_delay>>@@.note-sfx; sfx : Lock clicking @@
+            
+        <<removeInventory "Wire">>The wire snaps in half.
 
         <<next 3s>>The door opens silently and you <<link [[step through...|1_House-Hallway]]>><</link>>
     <</timed>>\

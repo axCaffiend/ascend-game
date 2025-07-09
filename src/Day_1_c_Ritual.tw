@@ -2,5 +2,3 @@
 @@#game-screen-fx;
 @@
 <<include "Game Screen">>
-<<link [[Leave computer|1_House-Study]]>><</link>>
-<br>

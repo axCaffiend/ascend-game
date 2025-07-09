@@ -88,11 +88,11 @@ body {
 
 
 /* For image and sfx notes in passages */
-.passage .note-img {
+.note-img {
     color: rgb(63, 241, 250);
 }
 
-.passage .note-sfx {
+.note-sfx {
     color: rgb(254, 69, 189);
 }
 
@@ -127,6 +127,11 @@ body {
 /* --- CUSTOM WIDGETS ----------- */
 .appendPBody {
     display: block;
+}
+
+/* --- INVENTORY DIALOG ----------- */
+.inventory-dialog {
+    width: 72ch;
 }
 
 /* =================================== */

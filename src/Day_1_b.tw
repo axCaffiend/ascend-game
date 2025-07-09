@@ -125,14 +125,14 @@ The bookshelf is stuffed with crime thrillers, historical fiction, and the odd t
 There are a few books scattered in front, thrown onto the floor in a hurry.
 <<nobr>>
     <<if !$inventory.includes("Rift book")>>
-        On the bottom shelf, the weathered spine of a large <<appendPBody "black book">><<include "Rift-book">><</appendPBody>>
-        <<run $inventory.pushUnique("Rift book")>><<redo "update_inventory">>
+        On the bottom shelf, the weathered spine of a large <<appendPBody "black book">><<include "Rift book">><</appendPBody>>
+        <<addInventory "Rift book">>
     <</if>>
 <</nobr>>
 Check the rest of the <<return [[living room|1_House-LivingRoom]]>>.
 
 
-:: Rift-book [subPassage item beacon]
+:: Rift book [subPassage item beacon]
 <br>@@.note-img; img : black book @@
 
 There is no title, but flicking the thin pages shows familiar text and etchings. There is handwriting inside the front cover.
@@ -251,7 +251,7 @@ You shuffle the clothes out of the way to open the wardrobe doors.
     Finally your hand hits <<appendPBody "something">>
     <<include "Mask">>
     You pick up the mask.
-    <<run $inventory.pushUnique("Mask")>><<redo "update_inventory">>
+    <<addInventory "Mask">>
     <</appendPBody>> cool and metallic.
     <<else>>
         There are only more clothes and towels in here.
@@ -272,7 +272,7 @@ The plain white side table is a little scuffed on the corners.
 <<if !$inventory.includes("Family Picture")>>
     There's a lamp and a<<appendPBody "picture frame">>
     <<include "Family Picture">>
-    <<run $inventory.pushUnique("Family Picture")>><<redo "update_inventory">>
+    <<addInventory "Family Picture">>
     <</appendPBody>>propped up on top - a couple embracing a young girl in the middle, all smiling at the camera.
     <<else>>\
         You hold a family picture, but only one person is living here.

@@ -40,6 +40,7 @@ ASCend
 <<set $line_delay = "1s">>
 <<set $type_ms_default = "40ms">>
 <<set $inventory = []>>
+<<set $showItem = "">>
 <<set $dayCounter = 1>>
 <<set $beaconItem>>
 <<set $bgEffects = []>>
@@ -65,7 +66,8 @@ ASCend
 <</if>>
 <span><<print "Day " + $dayCounter>></span>
 <span><<print "current passage visited: " + visited()>></span>
-<span class="inventory">Held: <<do tag "update_inventory">><<= $inventory.join(", ")>><</do>></span>
+<span class="inventory">Loading inventory...<<showInventory>></span>
+
 <</nobr>>
 @@
 
@@ -75,6 +77,13 @@ ASCend
 Press 'Spacebar' on keyboard to skip typewriter animated text
 @@
 
+:: Inventory Dialog [subPassage]
+<<script>>
+    const showItem = variables().showItem
+    Dialog.create(showItem, "inventory-dialog");
+    Dialog.wikiPassage(showItem);
+    Dialog.open();
+<</script>>
 
 :: Start
 <<link [[Dream...|Dream Sequence]]>><</link>>
@@ -106,11 +115,11 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 
 <<next _letterbox_delay>>A new case has landed. 
 
-<<next $line_delay>>Your hallway is dark. You pick up the brown paper <<link [[envelope|Case Envelope]]>><</link>>. It's blank except for your address on the back.
+<<next $line_delay>>Your hallway is dark. You pick up the brown paper <<appendPBody "envelope">><<addInventory "Case Envelope">><</appendPBody>>. It's blank except for your address on the back.
 
 <<next $line_delay>>There's still time to grab a bite to <<link [[eat and drink|Intro - eat drink]]>><</link>> before you leave.
 
-<<if visited("Case Envelope", "Intro - eat drink")>>\
+<<if visited("Intro - eat drink") && $inventory.includes("Case Envelope")>>\
     <<type $type_ms_default>><<link [[Time to go.|1_House-Front]]>><</link>><</type>>
 <</if>>\
 <</timed>>
@@ -119,15 +128,13 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 :: Case Envelope
 A flimsy sheet of badly printed text. There is a street address and instructions...
 @@.game-note;
+<span class="note-img">//img : Pixel art letter & rune symbol//</span>
 <<type $type_ms_default>>>Detected 1 rune - up to you to find the rift interface.
 >Human made, proceed with caution. 
 >Unknown if creation was intentional.
 >Solar flare in 3 days, make the most of it.
 <</type>>
-@@\
-@@.note-img;//img : Pixel art letter & rune symbol//@@
-
-<<link [[You tuck the envelope into your jacket.|Intro]]>><</link>>
+@@
 
 
 :: Intro - eat drink
