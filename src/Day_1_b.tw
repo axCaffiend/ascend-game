@@ -182,6 +182,11 @@ A plastic toolbox sits at the end next to a mop and bucket.
 
         You taste the metallic tinge in the air before you smell it.
     <<default>>\
+        <<nobr>>
+            <<if $beaconItem && $bgEffects.includes("pulseFX")>>
+                <<resetBg>>
+            <</if>>
+        <</nobr>>
         You're back on the darkened landing.
 
         A moth flutters against the paper lampshade above you.
@@ -334,13 +339,36 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
 
 :: 1_House-Study_rift
 The rift is unstable.
-<<timed 1s t8n>>
-    <<next $line_delay>>It reaches for your mind...
+<<if $beaconItem>>\
+    <<addBgEffect "pulseFX">>\
+    /* <<nobr>>
+        <<set $riftRoll = random(10)>>
+        <<= $riftRoll>>
+    <</nobr>> */
+    <<if $riftRoll > 8 >>\
+        <<timed 1s>>\
+            <<next 2s>>It reaches for your mind...
 
-    <<next 3s>>...You turn away from it.
+            <<next 3s>><<link [[...let it in.|Death_Consumed]]>><</link>>
+        <</timed>>\
+        <<else>>
+            <<timed 1s t8n>>\
+                <<next $line_delay>>It reaches for your mind...
 
-    <<next 1s>><<return "Look around the study">>
-<</timed>>
+                <<next 3s>>...You turn away from it.
+
+                <<next 1s>><<return "Look around the study">>
+            <</timed>> 
+    <</if>>\
+    <<else>>
+        <<timed 1s t8n>>\
+            <<next $line_delay>>It reaches for your mind...
+
+            <<next 3s>>...You turn away from it.
+
+            <<next 1s>><<return "Look around the study">>
+        <</timed>> 
+<</if>>
 
 
 :: 1_House-Study_computer
@@ -350,10 +378,10 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 <<if $beaconItem>>\
     <<addBgEffect "pulseFX">>
     <img class="img-s" src="img\dream-sequence\frame_004.png">
-    Using the ''<<= $beaconItem>>'' as the beacon, 
+    Using the ''<<= $beaconItem>>'' as the beacon...\
     <<nobr>>
         <<if $beaconItem == "Mask" || $beaconItem == "Rift book">>
-            <<link [[start the ritual...|Ritual_Beacon]]>><</link>>
+            <<link [[start the ritual.|Ritual_Beacon]]>><</link>>
             <<else>>
                 <<link [[start the ritual...|Death_Consumed]]>><</link>>
         <</if>>
@@ -380,5 +408,5 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 
     <<next 3s>>The rift is a wound, and predators know this.
 
-    <<next $line_delay>><<link [[Stop fighting|Dream Sequence]]>><<run $inventory = []>><<resetBg>><</link>>
+    <<next $line_delay>><<link [[Stop fighting|Dream Sequence]]>><<set $inventory = []>><<showInventory>><<resetBg>><</link>>
 <</timed>>

@@ -1,4 +1,3 @@
 :: Ritual_Beacon[game-screen]
-@@#game-screen-fx;
-@@
+<<resetBg>>
 <<include "Game Screen">>

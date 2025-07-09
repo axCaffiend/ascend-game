@@ -78,7 +78,6 @@ ASCend
 Press 'Spacebar' on keyboard to skip typewriter animated text
 @@
 
-
 :: Inventory Dialog [subPassage]
 <<script>>
     const showItem = variables().showItem
