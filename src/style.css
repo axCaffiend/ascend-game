@@ -13,6 +13,7 @@ STORY STYLESHEET
     --main-font: 'Space Mono', Courier, monospace;
     --passage-header-footer-dividers: dashed 0.1rem rgb(118, 118, 118);
     --passage-header-footer-padding: 1.5em;
+    --gameover-red : rgb(53, 2, 2);
 }
 
 html {

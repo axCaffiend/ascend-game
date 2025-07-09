@@ -40,17 +40,39 @@ const bgEffectFuncs = {
     
         gsap.fromTo("body",
             {
-                backgroundColor: fillColour
+                backgroundColor: "black"
             },
             {
-                backgroundColor: "black",
+                backgroundColor: fillColour,
                 duration: 3,
                 repeat: -1,
                 yoyo: true,
                 ease: "none"
             }
         )
+    },
+    // Death_Consumed, fade in red bg.
+    deathConsumedFX : function () {
+        console.log("--- deathConsumedFX running");
+        let fillColour = getComputedStyle(document.documentElement).getPropertyValue('--gameover-red');
+        gsap.fromTo("body",
+            {
+                background: `radial-gradient(circle,rgba(0, 0, 0, 1) 0%, rgba(0,0,0,1) 100%)`
+            },
+            {
+                background: `radial-gradient(circle,rgba(0, 0, 0, 1) 0%, ${fillColour} 100%)`,
+                duration: 5
+            }
+        )
+
+        gsap.to(".macro-timed-insert",
+            {
+                filter: "blur(3px)",
+                duration: 5
+            }
+        )
     }
+    
 }
 
 
