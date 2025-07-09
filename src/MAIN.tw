@@ -54,6 +54,7 @@ ASCend
 <<link [[Test]]>><</link>>
 <<link [[1_House-Study]]>><</link>>
 <<link [[Game Chapter 1a]]>><</link>>
+<<link [[Ritual_Beacon]]>><</link>>
 
 
 :: PassageHeader
@@ -77,6 +78,7 @@ ASCend
 Press 'Spacebar' on keyboard to skip typewriter animated text
 @@
 
+
 :: Inventory Dialog [subPassage]
 <<script>>
     const showItem = variables().showItem
@@ -84,6 +86,7 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
     Dialog.wikiPassage(showItem);
     Dialog.open();
 <</script>>
+
 
 :: Start
 <<link [[Dream...|Dream Sequence]]>><</link>>
@@ -111,11 +114,18 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 
 <<next $line_delay>>You're still wearing yesterday's clothes.
 
-<<next $line_delay>>@@.note-sfx;//sfx : letterbox sound (delayed 5 seconds from :passagedisplay)//@@
+<<next $line_delay>>@@.note-sfx;//sfx : letterbox clatters//@@
 
 <<next _letterbox_delay>>A new case has landed. 
 
-<<next $line_delay>>Your hallway is dark. You pick up the brown paper <<appendPBody "envelope">><<addInventory "Case Envelope">><</appendPBody>>. It's blank except for your address on the back.
+<<next $line_delay>>Your hallway is dark. You pick up the brown paper 
+<<nobr>>
+    <<if $inventory.includes("Case Envelope")>>
+        envelope.
+        <<else>>
+            <<appendPBody "envelope">><<addInventory "Case Envelope">><</appendPBody>>
+    <</if>>
+<</nobr>> It's blank except for your address on the back.
 
 <<next $line_delay>>There's still time to grab a bite to <<link [[eat and drink|Intro - eat drink]]>><</link>> before you leave.
 

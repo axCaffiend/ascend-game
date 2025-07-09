@@ -133,7 +133,7 @@ Check the rest of the <<return [[living room|1_House-LivingRoom]]>>.
 
 
 :: Rift book [subPassage item beacon]
-<br>@@.note-img; img : black book @@
+<br><img src="img\items\rift-book.png" class="img-s">
 
 There is no title, but flicking the thin pages shows familiar text and etchings. There is handwriting inside the front cover.
     @@.game-note;
@@ -260,7 +260,7 @@ You shuffle the clothes out of the way to open the wardrobe doors.
 
 
 :: Mask [subPassage item beacon]
-@@.note-img; img : Silver Mask @@
+<img src="img\items\mask.png" class="img-s">
 A plain burnished silver mask, smooth except for slits for eyes and cut off just above the mouth.
 
 Scratched into the back, it reads "2015-2018"
@@ -281,7 +281,7 @@ The plain white side table is a little scuffed on the corners.
 
 
 :: Family Picture [subPassage item beacon]
-<br>@@.note-img; img : Family picture frame @@
+<br><img src="img\items\family-picture.png" class="img-s">
 
 They seem to be a happy family. 
 

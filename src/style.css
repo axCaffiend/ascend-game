@@ -10,14 +10,15 @@ STORY STYLESHEET
     --game-screen-dark-green:rgb(2, 42, 17);
     --colour-link--default: lightgreen;
     --border-green-01rem: solid 0.1rem var(--game-screen-green);
-    --main-font: 'Space Mono', Courier, monospace;
+    --main-font: "Fira Code", "Consolas", monospace;
+    --rune-font: 'Space Mono', Courier, monospace;
     --passage-header-footer-dividers: dashed 0.1rem rgb(118, 118, 118);
     --passage-header-footer-padding: 1.5em;
     --gameover-red : rgb(53, 2, 2);
 }
 
 html {
-    font-family: "Fira Code", "Consolas", monospace;
+    font-family: var(--main-font);
     font-weight: 300;
 }
 
@@ -117,7 +118,7 @@ body {
 }
 
 /* Story images - items, events etc. */
-.passage .img-s {
+.img-s {
     display: block;
     margin: 0 auto;
     width: 33.33%;
@@ -131,7 +132,7 @@ body {
 
 /* --- INVENTORY DIALOG ----------- */
 .inventory-dialog {
-    width: 72ch;
+    max-width: 72ch;
 }
 
 /* =================================== */
@@ -142,7 +143,7 @@ body {
 
 #passage-dream-sequence .dream-img {
     display: block;
-    width: 512px;
+    width: 50%;
     aspect-ratio: 1/1;
     background-image: url("/img/dream-sequence/frame_001.png");
     background-size: contain;
@@ -220,6 +221,7 @@ a[data-passage="Dream Sequence"]:hover {
     grid-template-rows: repeat(3, minmax(0, 1fr));
     line-height: 95%;
     font-size: 2rem;
+    font-family: var(--rune-font);
     animation: 
         float 1s ease-in-out infinite alternate; 
         /* spin 15s linear infinite; */
@@ -276,7 +278,7 @@ a[data-passage="Dream Sequence"]:hover {
     height: 1.25em;
     text-align: center;
     align-content: center;
-    font-family: var(--main-font);
+    font-family: var(--rune-font);
     font-size: 2rem;
 }
 
@@ -317,7 +319,7 @@ a[data-passage="Dream Sequence"]:hover {
     max-width: 3rem;
     height: 3rem;
     overflow: hidden;
-    font-family: var(--main-font);
+    font-family: var(--rune-font);
     line-height: 1rem;
 }
 
