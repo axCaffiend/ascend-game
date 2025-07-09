@@ -1160,6 +1160,11 @@ A plastic toolbox sits at the end next to a mop and bucket.
 
         You taste the metallic tinge in the air before you smell it.
     &lt;&lt;default&gt;&gt;\
+        &lt;&lt;nobr&gt;&gt;
+            &lt;&lt;if $beaconItem &amp;&amp; $bgEffects.includes(&quot;pulseFX&quot;)&gt;&gt;
+                &lt;&lt;resetBg&gt;&gt;
+            &lt;&lt;/if&gt;&gt;
+        &lt;&lt;/nobr&gt;&gt;
         You&#39;re back on the darkened landing.
 
         A moth flutters against the paper lampshade above you.
@@ -1276,22 +1281,45 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
 &lt;&lt;/nobr&gt;&gt;
 
 &lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="1_House-Study_rift" tags="" position="100,475" size="100,100">The rift is unstable.
-&lt;&lt;timed 1s t8n&gt;&gt;
-    &lt;&lt;next $line_delay&gt;&gt;It reaches for your mind...
+&lt;&lt;if $beaconItem&gt;&gt;\
+    &lt;&lt;addBgEffect &quot;pulseFX&quot;&gt;&gt;\
+    /* &lt;&lt;nobr&gt;&gt;
+        &lt;&lt;set $riftRoll = random(10)&gt;&gt;
+        &lt;&lt;= $riftRoll&gt;&gt;
+    &lt;&lt;/nobr&gt;&gt; */
+    &lt;&lt;if $riftRoll &gt; 8 &gt;&gt;\
+        &lt;&lt;timed 1s&gt;&gt;\
+            &lt;&lt;next 2s&gt;&gt;It reaches for your mind...
 
-    &lt;&lt;next 3s&gt;&gt;...You turn away from it.
+            &lt;&lt;next 3s&gt;&gt;&lt;&lt;link [[...let it in.|Death_Consumed]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+        &lt;&lt;/timed&gt;&gt;\
+        &lt;&lt;else&gt;&gt;
+            &lt;&lt;timed 1s t8n&gt;&gt;\
+                &lt;&lt;next $line_delay&gt;&gt;It reaches for your mind...
 
-    &lt;&lt;next 1s&gt;&gt;&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;
-&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="1_House-Study_computer" tags="" position="225,475" size="100,100">The old computer reminds you of your days pushing papers in a stale office cubicle.
+                &lt;&lt;next 3s&gt;&gt;...You turn away from it.
+
+                &lt;&lt;next 1s&gt;&gt;&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;
+            &lt;&lt;/timed&gt;&gt; 
+    &lt;&lt;/if&gt;&gt;\
+    &lt;&lt;else&gt;&gt;
+        &lt;&lt;timed 1s t8n&gt;&gt;\
+            &lt;&lt;next $line_delay&gt;&gt;It reaches for your mind...
+
+            &lt;&lt;next 3s&gt;&gt;...You turn away from it.
+
+            &lt;&lt;next 1s&gt;&gt;&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;
+        &lt;&lt;/timed&gt;&gt; 
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="1_House-Study_computer" tags="" position="225,475" size="100,100">The old computer reminds you of your days pushing papers in a stale office cubicle.
 
 You sit down at the desk, a faint smell of ozone... every rift has an interface.
 &lt;&lt;if $beaconItem&gt;&gt;\
     &lt;&lt;addBgEffect &quot;pulseFX&quot;&gt;&gt;
     &lt;img class=&quot;img-s&quot; src=&quot;img\dream-sequence\frame_004.png&quot;&gt;
-    Using the &#39;&#39;&lt;&lt;= $beaconItem&gt;&gt;&#39;&#39; as the beacon, 
+    Using the &#39;&#39;&lt;&lt;= $beaconItem&gt;&gt;&#39;&#39; as the beacon...\
     &lt;&lt;nobr&gt;&gt;
         &lt;&lt;if $beaconItem == &quot;Mask&quot; || $beaconItem == &quot;Rift book&quot;&gt;&gt;
-            &lt;&lt;link [[start the ritual...|Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+            &lt;&lt;link [[start the ritual.|Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;
             &lt;&lt;else&gt;&gt;
                 &lt;&lt;link [[start the ritual...|Death_Consumed]]&gt;&gt;&lt;&lt;/link&gt;&gt;
         &lt;&lt;/if&gt;&gt;
@@ -1314,9 +1342,8 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 
     &lt;&lt;next 3s&gt;&gt;The rift is a wound, and predators know this.
 
-    &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Stop fighting|Dream Sequence]]&gt;&gt;&lt;&lt;run $inventory = []&gt;&gt;&lt;&lt;resetBg&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="Ritual_Beacon" tags="game-screen" position="475,475" size="100,100">@@#game-screen-fx;
-@@
+    &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Stop fighting|Dream Sequence]]&gt;&gt;&lt;&lt;set $inventory = []&gt;&gt;&lt;&lt;showInventory&gt;&gt;&lt;&lt;resetBg&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="Ritual_Beacon" tags="game-screen" position="475,475" size="100,100">&lt;&lt;resetBg&gt;&gt;
 &lt;&lt;include &quot;Game Screen&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="Game Screen" tags="game-screen subPassage" position="600,475" size="100,100">&lt;html&gt;
     &lt;div class=&quot;display&quot;&gt;
         &lt;p class=&quot;output-title&quot;&gt;Output&lt;/p&gt;
