@@ -112,9 +112,8 @@ STORY STYLESHEET
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 :root {
-    --test-color:rgb(2, 42, 17);
     --game-screen-green: rgb(0, 174, 0);
-    --game-screen-dark-blue: rgb(4, 88, 93);
+    --game-screen-dark-green:rgb(2, 42, 17);
     --colour-link--default: lightgreen;
     --border-green-01rem: solid 0.1rem var(--game-screen-green);
     --main-font: 'Space Mono', Courier, monospace;
@@ -220,6 +219,14 @@ body {
     margin-bottom: 2rem;
     width: 80%;
     line-height: 2em;
+}
+
+/* Story images - items, events etc. */
+.passage .img-s {
+    display: block;
+    margin: 0 auto;
+    width: 33.33%;
+    height: auto;
 }
 
 /* --- CUSTOM WIDGETS ----------- */
@@ -417,7 +424,7 @@ a[data-passage="Dream Sequence"]:hover {
 
 /* ---- BUTTONS ---- */
 #game-screen-fx {
-    position: fixed;
+    position: absolute;
     z-index: -1;
     top: 0;
     left: 0;
@@ -447,13 +454,13 @@ importScripts([
         dreamSequence();
         // In global-effects.js
         textBreatheFX();
+        setup.updateBgEffects();
         
         // LOAD GAME SCREEN JAVASCRIPT ON PASSAGES TAGGED WITH 'game-screen'
         // Uses passage tags since Game Screen content is included in 
         if (e.detail.passage.tags.includes("game-screen")) {
             console.log("!! Current Passage = Game Screen");
             gameScreenLoad();
-            pulseFX();
         }
         
     })
@@ -528,25 +535,7 @@ function dreamSequence () {
 
 
 }
-/* twine-user-script #4: "gameScreen-testFX.js" */
-function pulseFX () {
-    console.log("--- pulseFX running")
-    let testColor = getComputedStyle(document.documentElement).getPropertyValue('--test-color');
-
-    gsap.fromTo("#game-screen-fx",
-        {
-            backgroundColor: testColor
-        },
-        {
-            backgroundColor: "black",
-            duration: 3,
-            repeat: -1,
-            yoyo: true,
-            ease: "none"
-        }
-    )
-}
-/* twine-user-script #5: "gameScreen.js" */
+/* twine-user-script #4: "gameScreen.js" */
 
 function gameScreenLoad () {
     console.log("*** gameScreenLoad running ***")
@@ -693,8 +682,68 @@ function gameScreenLoad () {
         }
     })
 }
-/* twine-user-script #6: "global-effects.js" */
+/* twine-user-script #5: "global-effects.js" */
 // For GSAP and other JS effects used throughout the story
+
+setup.updateBgEffects = function () {
+    const bgEffectsArr = variables().bgEffects;
+    console.log("Updating $bgEffects : " + bgEffectsArr.toString());
+    // Kill all GSAP animations (freezes CSS properties as they were)
+    gsap.killTweensOf("body");
+    // Reset background to black
+    document.querySelector("body").style.background = "#000";
+    // Load background effects from story variable $bgEffects
+    if (bgEffectsArr.length > 0) {
+        for(const fx of bgEffectsArr) {
+            console.log("--- Calling bgEffectFuncs." + fx);
+            bgEffectFuncs[fx].apply(this);
+        }
+    } else {
+        console.log("$bgEffects empty");
+    }
+}
+
+// function updateBgEffects () {
+//     const bgEffectsArr = variables().bgEffects;
+//     console.log("$bgEffects : " + bgEffectsArr.toString());
+//     for(const fx of bgEffectsArr) {
+//         console.log("--- Calling bgEffectFuncs." + fx);
+//         bgEffectFuncs[fx].apply(this);
+//     }
+// }
+
+// ======================================================
+// Page Background Effects
+// - Define effect function in bgEffectFuncs object
+// - Add function name to $bgEffects story variable (an array) to use
+// ======================================================
+const bgEffectFuncs = {
+    // Slow pulse effect from dark green to black. Used for ritual passages.
+    pulseFX : function () {
+        console.log("--- pulseFX running");
+        let fillColour = getComputedStyle(document.documentElement).getPropertyValue('--game-screen-dark-green');
+    
+        gsap.fromTo("body",
+            {
+                backgroundColor: fillColour
+            },
+            {
+                backgroundColor: "black",
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "none"
+            }
+        )
+    }
+}
+
+
+
+
+// ======================================================
+// Element specific effects - add selectors to each effect
+// ======================================================
 
 function textBreatheFX () {
     console.log("breatheFX running");
@@ -714,8 +763,8 @@ function textBreatheFX () {
         yoyo: true,
         easing: "none"
     })
-} 
-/* twine-user-script #7: "message-macro.js" */
+}
+/* twine-user-script #6: "message-macro.js" */
 // message macro, by chapel (with help from T.M. Edwards); for sugarcube 2
 // version 1.0.1
 // see the documentation: https://github.com/ChapelR/custom-macros-for-sugarcube-2#message-macro
@@ -760,7 +809,7 @@ Macro.add('message', {
             .appendTo(this.output);
     }
 });
-/* twine-user-script #8: "test-macro.js" */
+/* twine-user-script #7: "test-macro.js" */
 // TEST MACRO
 // First simple custom macro made for learning how Sugarcube's Macro API works, used Chapel's Message macro code as reference (also in /src)
 // Macro : <<mytestmacro>>OUTPUT_TEXT_HERE<</mytestmacro>>
@@ -1196,7 +1245,7 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
             &lt;&lt;optionsfrom $inventory&gt;&gt;
         &lt;&lt;/cycle&gt;&gt;.
         &lt;&lt;else&gt;&gt;
-            something important to the Source.
+            something important to the Source. You should place it next to them.
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 
@@ -1210,25 +1259,29 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
 &lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="1_House-Study_computer" tags="" position="1225,350" size="100,100">The old computer reminds you of your days pushing papers in a stale office cubicle.
 
 You sit down at the desk, a faint smell of ozone... every rift has an interface.
-&lt;&lt;if $beaconItem&gt;&gt;
-    &lt;&lt;link [[Turn on the computer|Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-    @@.note-img; img : computer screen - flickers green @@
+&lt;&lt;if $beaconItem&gt;&gt;\
+    &lt;&lt;addBgEffect &quot;pulseFX&quot;&gt;&gt;
+    &lt;img class=&quot;img-s&quot; src=&quot;img\dream-sequence\frame_004.png&quot;&gt;
+    Using the &#39;&#39;&lt;&lt;= $beaconItem&gt;&gt;&#39;&#39; as the beacon, &lt;&lt;link [[start the ritual...|Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;
     &lt;&lt;else&gt;&gt;
+        &lt;img class=&quot;img-s&quot; src=&quot;img\dream-sequence\frame_001.png&quot;&gt;
         First you need an item to act as a Beacon - the rift is still active, so the Source must be on the other side.
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="Death_Consumed" tags="" position="100,475" size="100,100">You wait, but your prey is nowhere in sight.
+&lt;&lt;/if&gt;&gt;\
+&lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="Death_Consumed" tags="" position="100,475" size="100,100">&lt;&lt;timed 40ms&gt;&gt;    
+&lt;&lt;next $line_delay&gt;&gt; You wait, but your prey is nowhere in sight.
 
-You see it too late.
+&lt;&lt;next $line_delay&gt;&gt;You see it too late.
 
-Many jaws clamp down on your arms, shoulders and face.
+&lt;&lt;next $line_delay&gt;&gt;Many jaws clamp down on your arms, shoulders and face.
 
-Smaller, needle-like teeth pierce your skull and your mind.
+&lt;&lt;next $line_delay&gt;&gt;Smaller, needle-like teeth pierce your skull and your mind.
 
-...
+&lt;&lt;next $line_delay&gt;&gt;...
 
-The rift is a wound, and predators know this.
+&lt;&lt;next $line_delay&gt;&gt;The rift is a wound, and predators know this.
 
-&lt;&lt;link [[Stop fighting|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="Ritual_Beacon" tags="game-screen" position="225,475" size="100,100">@@#game-screen-fx;
+&lt;&lt;link [[Stop fighting|1_House-Bedroom]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="Ritual_Beacon" tags="game-screen" position="225,475" size="100,100">@@#game-screen-fx;
 @@
 &lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
 &lt;&lt;link [[Leave computer|1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
@@ -1266,7 +1319,8 @@ The rift is a wound, and predators know this.
 &lt;&lt;set $type_ms_default = &quot;40ms&quot;&gt;&gt;
 &lt;&lt;set $inventory = []&gt;&gt;
 &lt;&lt;set $dayCounter = 1&gt;&gt;
-&lt;&lt;set $beaconItem&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="StoryMenu" tags="" position="600,475" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;set $beaconItem&gt;&gt;
+&lt;&lt;set $bgEffects = []&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="StoryMenu" tags="" position="600,475" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Front_plant-pots]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
@@ -1357,7 +1411,40 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
             &lt;&lt;/append&gt;&gt;
         &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="Game Chapter 1 - Start" tags="chapter1" position="475,600" size="100,100">&lt;&lt;set $gameCh1 = [
+&lt;&lt;/nobr&gt;&gt;
+
+/* addBgEffect - adds a background effect to page, only accepts 1 arg.*/</tw-passagedata><tw-passagedata pid="44" name="Add BG Effect" tags="widget" position="475,600" size="100,100">&lt;&lt;nobr&gt;&gt;
+    &lt;&lt;widget &quot;addBgEffect&quot;&gt;&gt;
+        &lt;&lt;run $bgEffects.pushUnique(_args[0])&gt;&gt;
+        &lt;&lt;script&gt;&gt;
+            console.group();
+            console.log(&quot;Adding BgEffect...&quot;);
+            console.groupEnd();
+            setup.updateBgEffects();
+        &lt;&lt;/script&gt;&gt;
+    &lt;&lt;/widget&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="45" name="Remove BG Effect" tags="widget" position="600,600" size="100,100">&lt;&lt;nobr&gt;&gt;
+    &lt;&lt;widget &quot;removeBgEffect&quot;&gt;&gt;
+        &lt;&lt;run $bgEffects.deleteAll(_args[0])&gt;&gt;
+        &lt;&lt;script&gt;&gt;
+            console.group();
+            console.log(&quot;Removing BgEffect...&quot;);
+            console.groupEnd();
+            setup.updateBgEffects();
+        &lt;&lt;/script&gt;&gt;
+    &lt;&lt;/widget&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="46" name="Reset BG" tags="widget" position="725,600" size="100,100">&lt;&lt;nobr&gt;&gt;
+    &lt;&lt;widget &quot;resetBg&quot;&gt;&gt;
+        &lt;&lt;run $bgEffects = []&gt;&gt;
+        &lt;&lt;script&gt;&gt;
+            console.group();
+            console.log(&quot;--- Resetting BgEffect ---&quot;);
+            console.log(variables().bgEffects.toString());
+            console.groupEnd();
+            setup.updateBgEffects();
+        &lt;&lt;/script&gt;&gt;
+    &lt;&lt;/widget&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="Game Chapter 1 - Start" tags="chapter1" position="850,600" size="100,100">&lt;&lt;set $gameCh1 = [
     &quot;Ta daaa!! My first ever game!!&quot;,
     &quot;Work in progress - let me know what you think!&quot;,
     &quot;All feedback is constructive :)&quot;,
@@ -1376,8 +1463,8 @@ Speech Num: &lt;&lt;do tag &quot;game-ch1&quot;&gt;&gt;$speech_num&lt;&lt;/do&gt
         &lt;&lt;elseif $speech_num &lt;= $speech_len&gt;&gt;
             &lt;&lt;goto &quot;Game Chapter 1a&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="45" name="Game Chapter 1a" tags="game-screen chapter1" position="600,600" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
-@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="46" name="Test" tags="" position="725,600" size="100,100">This is a test page 
+&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="Game Chapter 1a" tags="game-screen chapter1" position="975,600" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
+@@.user-input-display;@@</tw-passagedata><tw-passagedata pid="49" name="Test" tags="" position="1100,600" size="100,100">This is a test page 
 Hello :)
 !Box Hover style
 @@.box;
@@ -1397,6 +1484,17 @@ Click to &lt;&lt;linkappend &quot;reveal&quot; t8n&gt;&gt; more text here...&lt;
 &lt;&lt;appendPBody &quot;Append A&quot;&gt;&gt;A content&lt;&lt;/appendPBody&gt;&gt;
 &lt;&lt;appendPBody &quot;Append B&quot;&gt;&gt;B has some more content&lt;&lt;/appendPBody&gt;&gt;
 &lt;&lt;appendPBody &quot;Append C&quot;&gt;&gt;C has yet more content&lt;&lt;/appendPBody&gt;&gt;
+
+!add/removeBgEffect and resetBg Macro tests
+&lt;&lt;link &quot;turn off pulseFX&quot;&gt;&gt;
+    &lt;&lt;removeBgEffect &quot;pulseFX&quot;&gt;&gt;
+&lt;&lt;/link&gt;&gt;
+&lt;&lt;link &quot;turn on pulseFX&quot;&gt;&gt;
+    &lt;&lt;addBgEffect &quot;pulseFX&quot;&gt;&gt;
+&lt;&lt;/link&gt;&gt;
+&lt;&lt;link &quot;reset BG&quot;&gt;&gt;
+    &lt;&lt;resetBg&gt;&gt;
+&lt;&lt;/link&gt;&gt;
 
 &lt;&lt;link [[Return to start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
