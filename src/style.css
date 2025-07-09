@@ -212,7 +212,7 @@ a[data-passage="Dream Sequence"]:hover {
     align-content: center;
 }
 
-.passage[data-tags*="game-screen"] .display-text-2 {
+.passage[data-tags*="game-screen"] .rune-output-1 {
     /* border: solid 1px purple; */
     margin: auto;
     width: 3ch;
@@ -227,7 +227,7 @@ a[data-passage="Dream Sequence"]:hover {
         /* spin 15s linear infinite; */
 }
 
-.passage[data-tags*="game-screen"] .display-text-2>.box {
+.passage[data-tags*="game-screen"] .rune-output-1>.box {
     border: none;
     width: 1em;
     height: 1em;

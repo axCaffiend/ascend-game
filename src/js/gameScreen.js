@@ -6,13 +6,12 @@ function gameScreenLoad () {
     const messageDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display .message");
     const enterBtn = document.querySelector(".passage[data-tags*='game-screen'] .enter-btn");
     // Add a test div for outputting display
-    const displayText2 = output.appendChild(document.createElement("div"));
-    displayText2.classList.add("display-text-2");
+    const runeOutput1 = output.appendChild(document.createElement("div"));
+    runeOutput1.classList.add("rune-output-1");
     const userInputDisplay = document.querySelector(".passage[data-tags*='game-screen'] .user-input-display");
     let userInput = [];
-    let dialogueData;
 
-    // "user-input-display" in passage container.
+    // "user-input-display" in passage container, if present.
     function updateUserInputDisplay () {
         if (userInputDisplay) {
             console.log("userInputDisplay detected in Passage")
@@ -41,18 +40,18 @@ function gameScreenLoad () {
             }
             updateUserInputDisplay();
             
-            // First checks whether character divs have been added to displayText2 container by checking for child nodes
-            if (displayText2.hasChildNodes()) {
+            // First checks whether character divs have been added to runeOutput1 container by checking for child nodes
+            if (runeOutput1.hasChildNodes()) {
 
                 console.log("has child nodes")
-                console.log(displayText2.childNodes);
+                console.log(runeOutput1.childNodes);
 
-                //displayText2 already has character tiles added (i.e. user input has occurred since page load)
-                const displayText2Arr = [...displayText2.childNodes];
-                console.log("DisplayText2 converted to an array");
-                console.log(displayText2Arr);
+                //runeOutput1 already has character tiles added (i.e. user input has occurred since page load)
+                const runeOutput1Arr = [...runeOutput1.childNodes];
+                console.log("runeOutput1 converted to an array");
+                console.log(runeOutput1Arr);
 
-                const currentDisplay = displayText2Arr.map(function (i) {
+                const currentDisplay = runeOutput1Arr.map(function (i) {
                     console.log("map function - adding text content")
                     console.log(i.firstChild.textContent);
                     return i.firstChild.textContent;
@@ -73,7 +72,7 @@ function gameScreenLoad () {
                             console.log("*** Change detected ***");
                             console.log(`User input ${userInput[i]} \n Current Display ${currentDisplay[i]}`)
 
-                            displayText2.children[i].querySelector(".char").textContent = userInput[i];
+                            runeOutput1.children[i].querySelector(".char").textContent = userInput[i];
 
                         } else {
                             // If not - log no change message
@@ -87,7 +86,7 @@ function gameScreenLoad () {
                 }
 
             /* 
-            No child nodes on displayText2 - creates character tiles 
+            No child nodes on runeOutput1 - creates character tiles 
             Structure: (<div class="box">
             <span class="char">INPUT_CHARACTER</span>
             </div>)
@@ -102,7 +101,7 @@ function gameScreenLoad () {
                     const char = document.createElement("span");
                     char.classList.add("char");
                     box.appendChild(char);
-                    displayText2.appendChild(box);
+                    runeOutput1.appendChild(box);
 
                     // Update from userInput
                     console.log(userInput[i]);
