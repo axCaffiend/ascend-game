@@ -116,14 +116,15 @@ STORY STYLESHEET
     --game-screen-dark-green:rgb(2, 42, 17);
     --colour-link--default: lightgreen;
     --border-green-01rem: solid 0.1rem var(--game-screen-green);
-    --main-font: 'Space Mono', Courier, monospace;
+    --main-font: "Fira Code", "Consolas", monospace;
+    --rune-font: 'Space Mono', Courier, monospace;
     --passage-header-footer-dividers: dashed 0.1rem rgb(118, 118, 118);
     --passage-header-footer-padding: 1.5em;
     --gameover-red : rgb(53, 2, 2);
 }
 
 html {
-    font-family: "Fira Code", "Consolas", monospace;
+    font-family: var(--main-font);
     font-weight: 300;
 }
 
@@ -223,7 +224,7 @@ body {
 }
 
 /* Story images - items, events etc. */
-.passage .img-s {
+.img-s {
     display: block;
     margin: 0 auto;
     width: 33.33%;
@@ -237,7 +238,7 @@ body {
 
 /* --- INVENTORY DIALOG ----------- */
 .inventory-dialog {
-    width: 72ch;
+    max-width: 72ch;
 }
 
 /* =================================== */
@@ -248,7 +249,7 @@ body {
 
 #passage-dream-sequence .dream-img {
     display: block;
-    width: 512px;
+    width: 50%;
     aspect-ratio: 1/1;
     background-image: url("/img/dream-sequence/frame_001.png");
     background-size: contain;
@@ -326,6 +327,7 @@ a[data-passage="Dream Sequence"]:hover {
     grid-template-rows: repeat(3, minmax(0, 1fr));
     line-height: 95%;
     font-size: 2rem;
+    font-family: var(--rune-font);
     animation: 
         float 1s ease-in-out infinite alternate; 
         /* spin 15s linear infinite; */
@@ -382,7 +384,7 @@ a[data-passage="Dream Sequence"]:hover {
     height: 1.25em;
     text-align: center;
     align-content: center;
-    font-family: var(--main-font);
+    font-family: var(--rune-font);
     font-size: 2rem;
 }
 
@@ -423,7 +425,7 @@ a[data-passage="Dream Sequence"]:hover {
     max-width: 3rem;
     height: 3rem;
     overflow: hidden;
-    font-family: var(--main-font);
+    font-family: var(--rune-font);
     line-height: 1rem;
 }
 
@@ -1121,7 +1123,7 @@ There are a few books scattered in front, thrown onto the floor in a hurry.
         &lt;&lt;addInventory &quot;Rift book&quot;&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
-Check the rest of the &lt;&lt;return [[living room|1_House-LivingRoom]]&gt;&gt;.</tw-passagedata><tw-passagedata pid="19" name="Rift book" tags="subPassage item beacon" position="1100,225" size="100,100">&lt;br&gt;@@.note-img; img : black book @@
+Check the rest of the &lt;&lt;return [[living room|1_House-LivingRoom]]&gt;&gt;.</tw-passagedata><tw-passagedata pid="19" name="Rift book" tags="subPassage item beacon" position="1100,225" size="100,100">&lt;br&gt;&lt;img src=&quot;img\items\rift-book.png&quot; class=&quot;img-s&quot;&gt;
 
 There is no title, but flicking the thin pages shows familiar text and etchings. There is handwriting inside the front cover.
     @@.game-note;
@@ -1220,7 +1222,7 @@ A &lt;&lt;link [[side table|1_House-Bedroom_side-table]]&gt;&gt;&lt;&lt;/link&gt
     &lt;&lt;else&gt;&gt;
         There are only more clothes and towels in here.
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;return &quot;Look around the bedroom.&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="Mask" tags="subPassage item beacon" position="725,350" size="100,100">@@.note-img; img : Silver Mask @@
+&lt;&lt;return &quot;Look around the bedroom.&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="Mask" tags="subPassage item beacon" position="725,350" size="100,100">&lt;img src=&quot;img\items\mask.png&quot; class=&quot;img-s&quot;&gt;
 A plain burnished silver mask, smooth except for slits for eyes and cut off just above the mouth.
 
 Scratched into the back, it reads &quot;2015-2018&quot;</tw-passagedata><tw-passagedata pid="27" name="1_House-Bedroom_side-table" tags="" position="850,350" size="100,100">The plain white side table is a little scuffed on the corners.
@@ -1233,7 +1235,7 @@ Scratched into the back, it reads &quot;2015-2018&quot;</tw-passagedata><tw-pass
     &lt;&lt;else&gt;&gt;\
         You hold a family picture, but only one person is living here.
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;return &quot;Look around the bedroom&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="Family Picture" tags="subPassage item beacon" position="975,350" size="100,100">&lt;br&gt;@@.note-img; img : Family picture frame @@
+&lt;&lt;return &quot;Look around the bedroom&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="Family Picture" tags="subPassage item beacon" position="975,350" size="100,100">&lt;br&gt;&lt;img src=&quot;img\items\family-picture.png&quot; class=&quot;img-s&quot;&gt;
 
 They seem to be a happy family. 
 
@@ -1357,7 +1359,8 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 &lt;&lt;link [[1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;link [[1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Game Chapter 1a]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="PassageHeader" tags="" position="975,475" size="100,100">@@.passage-header;
+&lt;&lt;link [[Game Chapter 1a]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;link [[Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="PassageHeader" tags="" position="975,475" size="100,100">@@.passage-header;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if visited() &gt; 1&gt;&gt;
     &lt;&lt;set $line_delay = &quot;40ms&quot;&gt;&gt;
@@ -1395,11 +1398,18 @@ Press &#39;Spacebar&#39; on keyboard to skip typewriter animated text
 
 &lt;&lt;next $line_delay&gt;&gt;You&#39;re still wearing yesterday&#39;s clothes.
 
-&lt;&lt;next $line_delay&gt;&gt;@@.note-sfx;//sfx : letterbox sound (delayed 5 seconds from :passagedisplay)//@@
+&lt;&lt;next $line_delay&gt;&gt;@@.note-sfx;//sfx : letterbox clatters//@@
 
 &lt;&lt;next _letterbox_delay&gt;&gt;A new case has landed. 
 
-&lt;&lt;next $line_delay&gt;&gt;Your hallway is dark. You pick up the brown paper &lt;&lt;appendPBody &quot;envelope&quot;&gt;&gt;&lt;&lt;addInventory &quot;Case Envelope&quot;&gt;&gt;&lt;&lt;/appendPBody&gt;&gt;. It&#39;s blank except for your address on the back.
+&lt;&lt;next $line_delay&gt;&gt;Your hallway is dark. You pick up the brown paper 
+&lt;&lt;nobr&gt;&gt;
+    &lt;&lt;if $inventory.includes(&quot;Case Envelope&quot;)&gt;&gt;
+        envelope.
+        &lt;&lt;else&gt;&gt;
+            &lt;&lt;appendPBody &quot;envelope&quot;&gt;&gt;&lt;&lt;addInventory &quot;Case Envelope&quot;&gt;&gt;&lt;&lt;/appendPBody&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt; It&#39;s blank except for your address on the back.
 
 &lt;&lt;next $line_delay&gt;&gt;There&#39;s still time to grab a bite to &lt;&lt;link [[eat and drink|Intro - eat drink]]&gt;&gt;&lt;&lt;/link&gt;&gt; before you leave.
 
