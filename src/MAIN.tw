@@ -45,7 +45,6 @@ ASCend
 <<set $beaconItem>>
 <<set $bgEffects = []>>
 
-
 :: StoryMenu
 <<link [[Start|Start]]>><</link>>
 <<link [[1_House-Front]]>><</link>>
@@ -85,6 +84,12 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
     Dialog.wikiPassage(showItem);
     Dialog.open();
 <</script>>
+
+
+
+/* ========================================== */
+/* STORY STARTS HERE                          */
+/* ========================================== */
 
 
 :: Start

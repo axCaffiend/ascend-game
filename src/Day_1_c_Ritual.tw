@@ -1,3 +1,8 @@
+/* --- BEACON RITUAL ---*/
+/* 'Interface' page - type in runes 
+- Game logic is handled in gameScreen.js
+- runBeaconRitual() runs inside gameScreenLoad() scope
+*/
 :: Ritual_Beacon[game-screen]
-<<resetBg>>
 <<include "Game Screen">>
+<<done>><<resetBg>><</done>>

@@ -18,14 +18,14 @@ setup.updateBgEffects = function () {
     }
 }
 
-// function updateBgEffects () {
-//     const bgEffectsArr = variables().bgEffects;
-//     console.log("$bgEffects : " + bgEffectsArr.toString());
-//     for(const fx of bgEffectsArr) {
-//         console.log("--- Calling bgEffectFuncs." + fx);
-//         bgEffectFuncs[fx].apply(this);
-//     }
-// }
+function updateBgEffects () {
+    const bgEffectsArr = variables().bgEffects;
+    console.log("$bgEffects : " + bgEffectsArr.toString());
+    for(const fx of bgEffectsArr) {
+        console.log("--- Calling bgEffectFuncs." + fx);
+        bgEffectFuncs[fx].apply(this);
+    }
+}
 
 // ======================================================
 // Page Background Effects
