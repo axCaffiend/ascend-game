@@ -7,12 +7,13 @@ function gameScreenLoad () {
 
     // ====== Get page elements ======
     const userControl = document.querySelector(".passage[data-tags*='game-screen'] .control");
-    const output = document.querySelector(".passage[data-tags*='game-screen'] .display .output");
+    const outputDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display");
+    const outputBox = document.querySelector(".passage[data-tags*='game-screen'] .display .output");
     const messageDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display .message");
     const enterBtn = document.querySelector(".passage[data-tags*='game-screen'] .enter-btn");
 
     // Create output <div> for displaying userInput in Output box 
-    const runeOutput1 = output.appendChild(document.createElement("div"));
+    const runeOutput1 = outputBox.appendChild(document.createElement("div"));
     runeOutput1.classList.add("rune-output-1");
 
     // ===== userInput: Array =====
@@ -43,6 +44,7 @@ function gameScreenLoad () {
     // Handles logic for Ritual_Beacon story passage.
     function runBeaconRitual() {
         console.log("=== BEACON RITUAL RUNNING ===");
+        let attempts = 0;
         answerRune = setup.RUNES.beacon;
     }
     

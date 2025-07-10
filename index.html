@@ -597,12 +597,13 @@ function gameScreenLoad () {
 
     // ====== Get page elements ======
     const userControl = document.querySelector(".passage[data-tags*='game-screen'] .control");
-    const output = document.querySelector(".passage[data-tags*='game-screen'] .display .output");
+    const outputDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display");
+    const outputBox = document.querySelector(".passage[data-tags*='game-screen'] .display .output");
     const messageDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display .message");
     const enterBtn = document.querySelector(".passage[data-tags*='game-screen'] .enter-btn");
 
     // Create output <div> for displaying userInput in Output box 
-    const runeOutput1 = output.appendChild(document.createElement("div"));
+    const runeOutput1 = outputBox.appendChild(document.createElement("div"));
     runeOutput1.classList.add("rune-output-1");
 
     // ===== userInput: Array =====
@@ -633,6 +634,7 @@ function gameScreenLoad () {
     // Handles logic for Ritual_Beacon story passage.
     function runBeaconRitual() {
         console.log("=== BEACON RITUAL RUNNING ===");
+        let attempts = 0;
         answerRune = setup.RUNES.beacon;
     }
     
@@ -810,14 +812,14 @@ setup.updateBgEffects = function () {
     }
 }
 
-function updateBgEffects () {
-    const bgEffectsArr = variables().bgEffects;
-    console.log("$bgEffects : " + bgEffectsArr.toString());
-    for(const fx of bgEffectsArr) {
-        console.log("--- Calling bgEffectFuncs." + fx);
-        bgEffectFuncs[fx].apply(this);
-    }
-}
+// function updateBgEffects () {
+//     const bgEffectsArr = variables().bgEffects;
+//     console.log("$bgEffects : " + bgEffectsArr.toString());
+//     for(const fx of bgEffectsArr) {
+//         console.log("--- Calling bgEffectFuncs." + fx);
+//         bgEffectFuncs[fx].apply(this);
+//     }
+// }
 
 // ======================================================
 // Page Background Effects
@@ -1218,8 +1220,8 @@ You don&#39;t want to attract any more attention, so you &lt;&lt;link [[leave it
 There are a few books scattered in front, thrown onto the floor in a hurry.
 &lt;&lt;nobr&gt;&gt;
     &lt;&lt;if !$inventory.includes(&quot;Rift book&quot;)&gt;&gt;
-        On the bottom shelf, the weathered spine of a large &lt;&lt;appendPBody &quot;black book&quot;&gt;&gt;&lt;&lt;include &quot;Rift book&quot;&gt;&gt;&lt;&lt;/appendPBody&gt;&gt;
-        &lt;&lt;addInventory &quot;Rift book&quot;&gt;&gt;
+        On the bottom shelf, the weathered spine of a large &lt;&lt;appendPBody &quot;black book&quot;&gt;&gt;&lt;&lt;include &quot;Rift book&quot;&gt;&gt;&lt;&lt;addInventory &quot;Rift book&quot;&gt;&gt;&lt;&lt;/appendPBody&gt;&gt;
+        
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 Check the rest of the &lt;&lt;return [[living room|1_House-LivingRoom]]&gt;&gt;.</tw-passagedata><tw-passagedata pid="19" name="Rift book" tags="subPassage item beacon" position="1100,225" size="100,100">&lt;br&gt;&lt;img src=&quot;img\items\rift-book.png&quot; class=&quot;img-s&quot;&gt;
@@ -1315,7 +1317,7 @@ Clothes and shoes spill onto the floor out of the &lt;&lt;link &quot;wardrobe&qu
 A &lt;&lt;link [[side table|1_House-Bedroom_side-table]]&gt;&gt;&lt;&lt;/link&gt;&gt; and chair are on the other side, next to a window - the blinds are shut.
 
 &lt;&lt;link &quot;Go back to the Upstairs landing&quot; &quot;1_House-Upstairs&quot;&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="1_House-Bedroom_wardrobe" tags="" position="600,350" size="100,100">You shuffle the clothes out of the way to open the wardrobe doors.
-&lt;&lt;if !$inventory.includes(&quot;Mask&quot;) &amp;&amp; (visited() &lt; 2) &gt;&gt;
+&lt;&lt;if !$inventory.includes(&quot;Mask&quot;) &gt;&gt;
     It takes a while to search through a mess of t-shirts and towels in the bottom. A few shirts and trousers hang above them.
 
     Finally your hand hits &lt;&lt;appendPBody &quot;something&quot;&gt;&gt;
@@ -1441,7 +1443,7 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 
     &lt;&lt;next 3s&gt;&gt;The rift is a wound, and predators know this.
 
-    &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Stop fighting|Dream Sequence]]&gt;&gt;&lt;&lt;set $inventory = []&gt;&gt;&lt;&lt;showInventory&gt;&gt;&lt;&lt;resetBg&gt;&gt;&lt;&lt;/link&gt;&gt;
+    &lt;&lt;next $line_delay&gt;&gt;&lt;&lt;link [[Stop fighting|Dream Sequence]]&gt;&gt;&lt;&lt;set $inventory = []&gt;&gt;&lt;&lt;showInventory&gt;&gt;&lt;&lt;resetBg&gt;&gt;&lt;&lt;script&gt;&gt;UI.restart()&lt;&lt;/script&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;/timed&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="Ritual_Beacon" tags="game-screen" position="475,475" size="100,100">&lt;&lt;include &quot;Game Screen&quot;&gt;&gt;
 &lt;&lt;done&gt;&gt;&lt;&lt;resetBg&gt;&gt;&lt;&lt;/done&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="Game Screen" tags="game-screen subPassage" position="600,475" size="100,100">&lt;html&gt;
     &lt;div class=&quot;display&quot;&gt;

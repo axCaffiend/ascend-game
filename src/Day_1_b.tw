@@ -125,8 +125,8 @@ The bookshelf is stuffed with crime thrillers, historical fiction, and the odd t
 There are a few books scattered in front, thrown onto the floor in a hurry.
 <<nobr>>
     <<if !$inventory.includes("Rift book")>>
-        On the bottom shelf, the weathered spine of a large <<appendPBody "black book">><<include "Rift book">><</appendPBody>>
-        <<addInventory "Rift book">>
+        On the bottom shelf, the weathered spine of a large <<appendPBody "black book">><<include "Rift book">><<addInventory "Rift book">><</appendPBody>>
+        
     <</if>>
 <</nobr>>
 Check the rest of the <<return [[living room|1_House-LivingRoom]]>>.
@@ -250,7 +250,7 @@ A <<link [[side table|1_House-Bedroom_side-table]]>><</link>> and chair are on t
 
 :: 1_House-Bedroom_wardrobe
 You shuffle the clothes out of the way to open the wardrobe doors.
-<<if !$inventory.includes("Mask") && (visited() < 2) >>
+<<if !$inventory.includes("Mask") >>
     It takes a while to search through a mess of t-shirts and towels in the bottom. A few shirts and trousers hang above them.
 
     Finally your hand hits <<appendPBody "something">>
@@ -408,5 +408,5 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 
     <<next 3s>>The rift is a wound, and predators know this.
 
-    <<next $line_delay>><<link [[Stop fighting|Dream Sequence]]>><<set $inventory = []>><<showInventory>><<resetBg>><</link>>
+    <<next $line_delay>><<link [[Stop fighting|Dream Sequence]]>><<set $inventory = []>><<showInventory>><<resetBg>><<script>>UI.restart()<</script>><</link>>
 <</timed>>
