@@ -597,7 +597,7 @@ function gameScreenLoad () {
 
     // ====== Get page elements ======
     const userControl = document.querySelector(".passage[data-tags*='game-screen'] .control");
-    const outputDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display");
+    const displayBox = document.querySelector(".passage[data-tags*='game-screen'] .display");
     const outputBox = document.querySelector(".passage[data-tags*='game-screen'] .display .output");
     const messageDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display .message");
     const enterBtn = document.querySelector(".passage[data-tags*='game-screen'] .enter-btn");
@@ -616,9 +616,11 @@ function gameScreenLoad () {
     // Is set by Ritual (level) functions
     let answerRune;
 
+    let checkUserInputStatus = null;
+
     // ===== Set up userControl elements =====
     enterBtn.addEventListener("click", checkUserInput);
-    userControl.addEventListener("input", updateUserControl)
+    userControl.addEventListener("input", updateUserControl);
 
     // Start Ritual for current passage
     startRitual();
@@ -634,8 +636,41 @@ function gameScreenLoad () {
     // Handles logic for Ritual_Beacon story passage.
     function runBeaconRitual() {
         console.log("=== BEACON RITUAL RUNNING ===");
-        let attempts = 0;
+        let beaconRunning = true;
+        let beaconProgress = 0;
         answerRune = setup.RUNES.beacon;
+
+        console.log("checkUserInputStatus: " + checkUserInputStatus);
+
+        enterBtn.addEventListener("click", stage1);
+
+        function stage1 () {
+            if (checkUserInputStatus == true) {
+                console.log("beaconProgress +1");
+                beaconProgress++;
+                console.log("beaconProgress: " + beaconProgress + "\/3");
+                updateMessage();
+                
+                if (beaconProgress >= 3) {
+                    updateMessage()
+                    enterBtn.removeEventListener("click",stage1);
+                    console.log("=== BEACON END ===");
+
+                    // set completion animation and passage navigation here
+                    outputBox.style.backgroundColor = "green";
+                }
+            } else if (checkUserInputStatus == false) {
+                console.log("beaconProgress: " + beaconProgress + "/3");
+                updateMessage();
+            } else {
+                console.log("stage1 blank")
+                messageDisplay.textContent = "Enter a rune."
+            }
+        }
+
+        function updateMessage () {
+            messageDisplay.textContent = `Progress: ${beaconProgress} /3`
+        }
     }
     
 
@@ -654,18 +689,38 @@ function gameScreenLoad () {
 
 
     // CHECK USER INPUT: returns bool
-    // Check userInput matches answerRune when enterBtn clicked
-    // answerRune is set in Ritual (level) functions
+    // Checks rune from userInput (from userControl)
+    // Sets userInputStatus when enterBtn is clicked
+    // No Rune Entered : array is full of empty strings or whitespace, undefined or null.
+        // Rune Correct : matches value of answerRune;
+        // Rune Incorrect: doesn't match value of answerRune
+        // answerRune is set in Ritual (level) functions
+    // Clears input and runs updateUserControl.
     function checkUserInput() {
-        console.log("*** checkUserInput running ***");
-        console.log("userInput: " + userInput + typeof([...userInput]));
-        console.log("answerRune: " + answerRune + typeof([...answerRune]));
-        console.log(answerRune.equals(userInput));
+        console.group("*** checkUserInput running ***");
+        console.log("userInput: " + userInput + typeof(userInput));
+        console.log("answerRune: " + answerRune + typeof(answerRune));
 
-        if (answerRune.equals(userInput)) {
-            return true;
+        if (userInput == null || userInput == undefined || userInput.every(isBlankArray)) {
+            checkUserInputStatus = null;
+            console.log("--- NO RUNE ENTERED");
+        } else if (answerRune.equals(userInput)) {
+            checkUserInputStatus = true;
+            console.log("--- RUNE CORRECT");
         } else {
-            return false;
+            checkUserInputStatus = false;
+            console.log("--- RUNE INCORRECT");
+        }
+        console.log("checkUserInputStatus: " + checkUserInputStatus);
+        console.groupEnd();
+
+        function isBlankArray (value) {
+            return (value == "" || value == " ")
+        }
+
+        for (const child of userControl.children) {
+            child.value =''
+            updateUserControl();
         }
     }
 
@@ -675,7 +730,7 @@ function gameScreenLoad () {
     // Updates userInput array on userControl input, and overwrites userInput characters from userControl if not matching are detected
     function updateUserControl(e) {
         // Reset
-        console.log(e.target.name + e.data);
+        // console.log(e.target.name + e.data);
         userInput = [];
 
         // Add values from text inputs to userInput array
