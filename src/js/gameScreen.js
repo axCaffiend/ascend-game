@@ -98,9 +98,9 @@ function gameScreenLoad () {
     }
 
 
-    // CHECK USER INPUT: returns bool
+    // CHECK USER INPUT: sets checkUserInputStatus
     // Checks rune from userInput (from userControl)
-    // Sets userInputStatus when enterBtn is clicked
+    // Sets checkUserInputStatus when enterBtn is clicked
     // No Rune Entered : array is full of empty strings or whitespace, undefined or null.
         // Rune Correct : matches value of answerRune;
         // Rune Incorrect: doesn't match value of answerRune
