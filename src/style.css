@@ -186,14 +186,16 @@ a[data-passage="Dream Sequence"]:hover {
 
 .passage[data-tags*="game-screen"] .display {
     display: flex;
+    position: relative;
     flex-flow: column nowrap;
     margin: 1rem auto;
     content: "";
-    width: 250px;
+    width: 18rem;
     color: var(--game-screen-green);
     text-align: center;
     font-size: 1.5rem;
     border: var(--border-green-01rem);
+    /* background: red; */
     background: #000;
 }
 
@@ -210,6 +212,7 @@ a[data-passage="Dream Sequence"]:hover {
     aspect-ratio: 1/1;
     flex-grow: 1;
     align-content: center;
+    position: relative;
 }
 
 .passage[data-tags*="game-screen"] .rune-output-1 {
@@ -244,6 +247,19 @@ a[data-passage="Dream Sequence"]:hover {
         color: rgb(45, 213, 45);
     }
 }
+
+/* .passage[data-tags*="game-screen"] .display-box-glow {
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform-origin: 0 0;
+    transform: translate(-50%, -50%);
+    border: solid 2px var(--game-screen-green);
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+} */
 
 /* ---- USER CONTROLS ---- */
 

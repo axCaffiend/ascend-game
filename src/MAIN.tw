@@ -142,7 +142,7 @@ Press 'Spacebar' on keyboard to skip typewriter animated text
 :: Case Envelope
 A flimsy sheet of badly printed text. There is a street address and instructions...
 @@.game-note;
-<span class="note-img">//img : Pixel art letter & rune symbol//</span>
+<img src="img\runes\rune-beacon.png" class="img-s">
 <<type $type_ms_default>>>Detected 1 rune - up to you to find the rift interface.
 >Human made, proceed with caution. 
 >Unknown if creation was intentional.

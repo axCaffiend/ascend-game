@@ -6,3 +6,37 @@
 :: Ritual_Beacon[game-screen]
 <<include "Game Screen">>
 <<done>><<resetBg>><</done>>
+
+
+:: Beacon-Success
+@@.blurry-vision;
+<<timed 1s t8n>>
+    <<next $line_delay>>The air is charged and the rift crackles behind you.
+    
+    <<next $line_delay>>You sense a flicker of something... a tendril sprouts and unspools into a thread. 
+    
+    <<next 1s>>Something catches and pulls tight on the end of the line.
+
+    <<next 2s>>It seems your work is done for tonight.
+<</timed>>
+@@
+<<timed 9s t8n>>
+    <<link [[You pass out in the bedroom, exhausted.|Dream Sequence]]>><</link>>
+<</timed>>
+
+<<done>>
+    <<script>>
+    // Adds blur to .blurry-vision text with random duration
+        let blurDuration = 0.5;
+        gsap.to(".blurry-vision", {
+            filter: "blur(2px)",
+            duration: gsap.utils.random(3, 5),
+            onRepeat: function() {
+                this.duration(gsap.utils.random(3, 5))},
+            repeat: -1,
+            yoyo: true,
+            delay: 10,
+            ease: "bounce.inOut"
+        })
+    <</script>>
+<</done>>

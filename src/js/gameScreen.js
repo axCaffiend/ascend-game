@@ -8,6 +8,7 @@ function gameScreenLoad () {
     // ====== Get page elements ======
     const userControl = document.querySelector(".passage[data-tags*='game-screen'] .control");
     const displayBox = document.querySelector(".passage[data-tags*='game-screen'] .display");
+    const outputBoxTitle = document.querySelector(".passage[data-tags*='game-screen'] .display .output-title");
     const outputBox = document.querySelector(".passage[data-tags*='game-screen'] .display .output");
     const messageDisplay = document.querySelector(".passage[data-tags*='game-screen'] .display .message");
     const enterBtn = document.querySelector(".passage[data-tags*='game-screen'] .enter-btn");
@@ -54,6 +55,14 @@ function gameScreenLoad () {
 
         enterBtn.addEventListener("click", stage1);
 
+        for(let i=0; i <5; i++) {
+            console.log(i);
+            const displayBoxGlow = document.createElement("div");
+            displayBoxGlow.classList.add("display-box-glow");
+            displayBox.appendChild(displayBoxGlow);
+        }
+
+        // === MAIN LOGIC FOR RITUAL ===
         function stage1 () {
             if (checkUserInputStatus == true) {
                 console.log("beaconProgress +1");
@@ -62,12 +71,12 @@ function gameScreenLoad () {
                 updateMessage();
                 
                 if (beaconProgress >= 3) {
-                    updateMessage()
                     enterBtn.removeEventListener("click",stage1);
+                    updateMessage();
                     console.log("=== BEACON END ===");
 
-                    // set completion animation and passage navigation here
-                    outputBox.style.backgroundColor = "green";
+                    // ---- COMPLETION ANIMATION + TRANSITION TO Beacon-Success PASSAGE -----
+                    setTimeout(addDisplayBoxGlow, 2000);
                 }
             } else if (checkUserInputStatus == false) {
                 console.log("beaconProgress: " + beaconProgress + "/3");
@@ -80,6 +89,85 @@ function gameScreenLoad () {
 
         function updateMessage () {
             messageDisplay.textContent = `Progress: ${beaconProgress} /3`
+        }
+
+        // ---- RITUAL SUCCESS ANIMATION SEQUENCE ---
+        // Runs animation final sequence, fading out output display, adding glow effects
+        // Forces transition to Beacon-Success passage
+        function addDisplayBoxGlow() {
+            const displayBoxGlow = document.querySelectorAll(".display-box-glow");
+
+            gsap.set(displayBoxGlow, {
+                position: "absolute",
+                zIndex: "-1",
+                border: "solid 0.1rem var(--game-screen-green",
+                borderRadius: "0",
+
+                filter: "blur(0.1rem)",
+                width: "100%",
+                height: "100%",
+                }
+            )
+            
+            const scaleGlow = gsap.to(displayBoxGlow,
+                {   stagger: {
+                    each: 0.5,
+                    repeat: -1,
+                    ease: "circ.inOut",
+                    filter: "blur(0.5rem)",
+                    yoyo: true
+                },
+                    scale: 1.25,
+                    borderRadius: "50%",
+                    duration: 1,
+                }
+            )
+            
+            const slowRotate = gsap.to(displayBoxGlow, {
+                stagger: {
+                    each: 2,
+                    repeat: -1,
+                    ease: "none"
+                },
+                    rotation: "+=360deg",
+                    duration: 5
+                })
+                
+                const expand = gsap.to(displayBoxGlow, {
+                    scale: 3,
+                    overwrite: "auto",
+                    ease: "power.inOut",
+                    duration: 7,
+                    // END OF RITUAL - forwards to Beacon-Success passage
+                    onComplete: () => {
+                        console.log("expand finished")
+                        endBeaconRitual();
+                    }
+                })
+
+                const fadeOutput = gsap.to([outputBox, outputBoxTitle, messageDisplay], {
+                    opacity: 0,
+                    duration: 1
+                })
+
+                const morphdisplayBox = gsap.to(displayBox, {
+                    border: "solid 3px #fff",
+                    borderRadius: "50%",
+                    duration: 6
+                })
+
+            const timeline = gsap.timeline();
+            timeline.add(scaleGlow, 0);
+            timeline.add(slowRotate, 0);
+            timeline.add(morphdisplayBox, 1);
+            timeline.add(fadeOutput, 1.5);
+            timeline.add(expand, 3);
+            timeline.play();
+        }
+
+        function endBeaconRitual () {
+            console.log("moving to beacon success");
+            $.wiki("<<goto 'Beacon-Success'>>");
         }
     }
     
