@@ -354,18 +354,6 @@ a[data-passage="Dream Sequence"]:hover {
     }
 }
 
-/* .passage[data-tags*="game-screen"] .display-box-glow {
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform-origin: 0 0;
-    transform: translate(-50%, -50%);
-    border: solid 2px var(--game-screen-green);
-    border-radius: 0;
-    width: 100%;
-    height: 100%;
-} */
 
 /* ---- USER CONTROLS ---- */
 
@@ -508,7 +496,7 @@ Config.passages.onProcess = function (p) {
 }
 
 // Hides default UIBar and reclaims space with stow
-// ** ADD .hide() WHEN DONE
+// ** ADD .hide() FOR DIST
 UIBar.stow();
 
 
@@ -1535,12 +1523,12 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
 &lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="1_House-Study_rift" tags="" position="100,475" size="100,100">The rift is unstable.
 &lt;&lt;if $beaconItem&gt;&gt;\
     &lt;&lt;addBgEffect &quot;pulseFX&quot;&gt;&gt;\
-    /* &lt;&lt;nobr&gt;&gt;
+    &lt;&lt;nobr&gt;&gt;
         &lt;&lt;set $riftRoll = random(10)&gt;&gt;
-        &lt;&lt;= $riftRoll&gt;&gt;
-    &lt;&lt;/nobr&gt;&gt; */
+        /* &lt;&lt;= $riftRoll&gt;&gt; */
+    &lt;&lt;/nobr&gt;&gt;
     &lt;&lt;if $riftRoll &gt; 8 &gt;&gt;\
-        &lt;&lt;timed 1s&gt;&gt;\
+        &lt;&lt;timed 1s t8n&gt;&gt;\
             &lt;&lt;next 2s&gt;&gt;It reaches for your mind...
 
             &lt;&lt;next 3s&gt;&gt;&lt;&lt;link [[...let it in.|Death_Consumed]]&gt;&gt;&lt;&lt;/link&gt;&gt;
@@ -1582,7 +1570,14 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 &lt;&lt;/if&gt;&gt;\
 &lt;&lt;return &quot;Look around the study&quot;&gt;&gt;</tw-passagedata><tw-passagedata pid="33" name="Death_Consumed" tags="" position="350,475" size="100,100">&lt;&lt;timed 40ms t8n&gt;&gt;\
     &lt;&lt;resetBg&gt;&gt;\
-    &lt;&lt;next $line_delay&gt;&gt;...Sometimes the connection takes time...&lt;&lt;next $line_delay&gt;&gt;You wait but you cannot sense your prey.
+    &lt;&lt;next $line_delay&gt;&gt;
+        &lt;&lt;if previous() == &quot;1_House-Study_rift&quot;&gt;&gt;
+            ...You give into an impulse you can&#39;t explain, even after all these years. 
+            
+            Who knows how long you&#39;ve been standing there?
+        &lt;&lt;else&gt;&gt;
+           ...Sometimes the connection takes time...You wait but you cannot sense your prey. 
+    &lt;&lt;/if&gt;&gt;
 
     &lt;&lt;next 3s&gt;&gt;You see it too late.
 
@@ -1608,7 +1603,7 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 &lt;&lt;/timed&gt;&gt;
 @@
 &lt;&lt;timed 9s t8n&gt;&gt;
-    &lt;&lt;link [[You pass out in the bedroom, exhausted.|Dream Sequence]]&gt;&gt;&lt;&lt;/link&gt;&gt;
+    &lt;&lt;link [[You pass out in the bedroom, exhausted.|Dream Sequence]]&gt;&gt;&lt;&lt;set $inventory = []&gt;&gt;&lt;&lt;showInventory&gt;&gt;&lt;&lt;resetBg&gt;&gt;&lt;&lt;script&gt;&gt;UI.restart()&lt;&lt;/script&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;/timed&gt;&gt;
 
 &lt;&lt;done&gt;&gt;
@@ -1662,14 +1657,11 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 &lt;&lt;set $showItem = &quot;&quot;&gt;&gt;
 &lt;&lt;set $dayCounter = 1&gt;&gt;
 &lt;&lt;set $beaconItem&gt;&gt;
-&lt;&lt;set $bgEffects = []&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="StoryMenu" tags="" position="975,475" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[1_House-Front_plant-pots]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Game Chapter 1a]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="PassageHeader" tags="" position="1100,475" size="100,100">@@.passage-header;
+&lt;&lt;set $bgEffects = []&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="StoryMenu" tags="" position="975,475" size="100,100">**A minimal story about inter-dimensional rifts and what to do about them...**
+
+Enjoy! :D
+
+(15/07/2025) Version 1.0 - A demo of Chapter 1:&#39;Beacon&#39;</tw-passagedata><tw-passagedata pid="39" name="PassageHeader" tags="" position="1100,475" size="100,100">@@.passage-header;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if visited() &gt; 1&gt;&gt;
     &lt;&lt;set $line_delay = &quot;40ms&quot;&gt;&gt;
