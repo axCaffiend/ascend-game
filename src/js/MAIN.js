@@ -51,7 +51,7 @@ Config.passages.onProcess = function (p) {
 }
 
 // Hides default UIBar and reclaims space with stow
-// ** ADD .hide() WHEN DONE
+// ** ADD .hide() FOR DIST
 UIBar.stow();
 
 

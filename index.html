@@ -496,7 +496,7 @@ Config.passages.onProcess = function (p) {
 }
 
 // Hides default UIBar and reclaims space with stow
-// ** ADD .hide() WHEN DONE
+// ** ADD .hide() FOR DIST
 UIBar.stow();
 
 
@@ -1657,14 +1657,11 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 &lt;&lt;set $showItem = &quot;&quot;&gt;&gt;
 &lt;&lt;set $dayCounter = 1&gt;&gt;
 &lt;&lt;set $beaconItem&gt;&gt;
-&lt;&lt;set $bgEffects = []&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="StoryMenu" tags="" position="975,475" size="100,100">&lt;&lt;link [[Start|Start]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[1_House-Front]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[1_House-Front_plant-pots]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[1_House-Hallway]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Test]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[1_House-Study]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Game Chapter 1a]]&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;&lt;link [[Ritual_Beacon]]&gt;&gt;&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="PassageHeader" tags="" position="1100,475" size="100,100">@@.passage-header;
+&lt;&lt;set $bgEffects = []&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="StoryMenu" tags="" position="975,475" size="100,100">**A minimal story about inter-dimensional rifts and what to do about them...**
+
+Enjoy! :D
+
+(15/07/2025) Version 1.0 - A demo of Chapter 1:&#39;Beacon&#39;</tw-passagedata><tw-passagedata pid="39" name="PassageHeader" tags="" position="1100,475" size="100,100">@@.passage-header;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if visited() &gt; 1&gt;&gt;
     &lt;&lt;set $line_delay = &quot;40ms&quot;&gt;&gt;

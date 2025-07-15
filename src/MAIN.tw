@@ -46,14 +46,11 @@ ASCend
 <<set $bgEffects = []>>
 
 :: StoryMenu
-<<link [[Start|Start]]>><</link>>
-<<link [[1_House-Front]]>><</link>>
-<<link [[1_House-Front_plant-pots]]>><</link>>
-<<link [[1_House-Hallway]]>><</link>>
-<<link [[Test]]>><</link>>
-<<link [[1_House-Study]]>><</link>>
-<<link [[Game Chapter 1a]]>><</link>>
-<<link [[Ritual_Beacon]]>><</link>>
+**A minimal story about inter-dimensional rifts and what to do about them...**
+
+Enjoy! :D
+
+(15/07/2025) Version 1.0 - A demo of Chapter 1:'Beacon'
 
 
 :: PassageHeader
