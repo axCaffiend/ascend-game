@@ -45,7 +45,7 @@ ASCend
 <<set $beaconItem>>
 <<set $bgEffects = []>>
 
-:: StoryMenu
+:: StoryCaption
 **A minimal story about inter-dimensional rifts and what to do about them...**
 
 Enjoy! :D
