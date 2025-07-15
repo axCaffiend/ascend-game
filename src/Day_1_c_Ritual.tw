@@ -21,7 +21,7 @@
 <</timed>>
 @@
 <<timed 9s t8n>>
-    <<link [[You pass out in the bedroom, exhausted.|Dream Sequence]]>><</link>>
+    <<link [[You pass out in the bedroom, exhausted.|Dream Sequence]]>><<set $inventory = []>><<showInventory>><<resetBg>><<script>>UI.restart()<</script>><</link>>
 <</timed>>
 
 <<done>>

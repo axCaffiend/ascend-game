@@ -341,12 +341,12 @@ Something to trigger a memory, a feeling... A bond strong enough to reach throug
 The rift is unstable.
 <<if $beaconItem>>\
     <<addBgEffect "pulseFX">>\
-    /* <<nobr>>
+    <<nobr>>
         <<set $riftRoll = random(10)>>
-        <<= $riftRoll>>
-    <</nobr>> */
+        /* <<= $riftRoll>> */
+    <</nobr>>
     <<if $riftRoll > 8 >>\
-        <<timed 1s>>\
+        <<timed 1s t8n>>\
             <<next 2s>>It reaches for your mind...
 
             <<next 3s>><<link [[...let it in.|Death_Consumed]]>><</link>>
@@ -396,7 +396,14 @@ You sit down at the desk, a faint smell of ozone... every rift has an interface.
 :: Death_Consumed
 <<timed 40ms t8n>>\
     <<resetBg>>\
-    <<next $line_delay>>...Sometimes the connection takes time...<<next $line_delay>>You wait but you cannot sense your prey.
+    <<next $line_delay>>
+        <<if previous() == "1_House-Study_rift">>
+            ...You give into an impulse you can't explain, even after all these years. 
+            
+            Who knows how long you've been standing there?
+        <<else>>
+           ...Sometimes the connection takes time...You wait but you cannot sense your prey. 
+    <</if>>
 
     <<next 3s>>You see it too late.
 

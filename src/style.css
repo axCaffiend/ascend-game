@@ -248,18 +248,6 @@ a[data-passage="Dream Sequence"]:hover {
     }
 }
 
-/* .passage[data-tags*="game-screen"] .display-box-glow {
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform-origin: 0 0;
-    transform: translate(-50%, -50%);
-    border: solid 2px var(--game-screen-green);
-    border-radius: 0;
-    width: 100%;
-    height: 100%;
-} */
 
 /* ---- USER CONTROLS ---- */
 
